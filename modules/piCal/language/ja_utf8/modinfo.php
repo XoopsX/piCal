@@ -13,7 +13,7 @@ define("_MI_PICAL_NAME","piCal");
 define("_MI_PICAL_DESC","スケジューラ付カレンダー");
 
 // Default Locale
-define("_MI_PICAL_DEFAULTLOCALE","japan");
+define("_MI_PICAL_DEFAULTLOCALE","utf8_japan");
 
 // Names of blocks for this module (Not all module has blocks)
 define("_MI_PICAL_BNAME_MINICAL","ミニカレンダー");

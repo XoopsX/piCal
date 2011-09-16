@@ -113,6 +113,9 @@
 	// クローラーにリンクをへつらせない follow -> nofollow
 	$meta_robots = str_replace( ',follow' , ',nofollow' , $xoopsTpl->get_template_vars( "xoops_meta_robots" ) ) ;
 	$xoopsTpl->assign( "xoops_meta_robots" , $meta_robots ) ;
+	
+	// meta "description"
+	$pical_meta_description = "" ; // naao
 
         // モジュールID  // added by naao
         $module_handler =& xoops_gethandler('module');
@@ -165,6 +168,14 @@
 		$xoopsTpl->assign( 'com_itemid' , intval($_GET['event_id']) ) ; //added naao
 		$xoopsTpl->assign( 'skinpath' , "$cal->images_url" ) ;
 		$xoopsTpl->assign( 'lang_print' , _MB_PICAL_ALT_PRINTTHISEVENT ) ;
+
+		// meta description // naao
+		$pical_meta_description = $cal->event->start_datetime_str. "&nbsp;-&nbsp;" ;
+		$pical_meta_description .= $cal->event->end_datetime_str. "&nbsp;:&nbsp;" ;
+		$pical_meta_description .= htmlspecialchars(strip_tags($cal->event->description),ENT_QUOTES) ;
+		$pical_meta_description = preg_replace('/(\r\n|\n\r|\n|\r|\t)/i','',mb_substr($pical_meta_description,0,250, _CHARSET));
+
+		$xoopsTpl->assign( 'xoops_meta_description' , $pical_meta_description ) ;
 		$HTTP_GET_VARS['event_id'] = $_GET['event_id'] = $cal->original_id ;
 		include XOOPS_ROOT_PATH.'/include/comment_view.php' ;
 		// patch for commentAny 
@@ -193,6 +204,17 @@
 		default :
 			echo $cal->get_monthly( ) ;
 			break ;
+	}
+
+	// For XCL 2.2 Call addMeta //naao
+	if ($pical_meta_description) {
+		if (defined('LEGACY_MODULE_VERSION') && version_compare(LEGACY_MODULE_VERSION, '2.2', '>=')) {
+			$xclRoot =& XCube_Root::getSingleton();
+			$headerScript = $xclRoot->mContext->getAttribute('headerScript');
+			$headerScript->addMeta('description', $pical_meta_description);
+		} elseif (is_object($xoTheme)) {	// for XOOPS 2.3 over
+			$xoTheme->addMeta('meta', 'description', $pical_meta_description);
+		}
 	}
 
 	// 実行時間表示

@@ -10,7 +10,7 @@ CREATE TABLE pical0_event (
   contact VARCHAR(255) NOT NULL DEFAULT '',
   tzid VARCHAR(255) NOT NULL DEFAULT 'GMT',
   description text NOT NULL,
-  dtstamp TIMESTAMP(14),
+  dtstamp TIMESTAMP,
   categories VARCHAR(255) NOT NULL DEFAULT '',
   transp TINYINT NOT NULL DEFAULT 1,
   priority TINYINT NOT NULL DEFAULT 0,
@@ -53,7 +53,7 @@ CREATE TABLE pical0_event (
   KEY (categories),
 
   PRIMARY KEY (id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE pical0_cat (
@@ -74,7 +74,7 @@ CREATE TABLE pical0_cat (
   KEY (weight),
   KEY (cat_depth),
   PRIMARY KEY (cid)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE pical0_plugins (
@@ -96,4 +96,4 @@ CREATE TABLE pical0_plugins (
   KEY (pi_options),
   KEY (pi_enabled),
   PRIMARY KEY (pi_id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

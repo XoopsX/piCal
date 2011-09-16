@@ -119,7 +119,7 @@ $sql = "CREATE TABLE $table_cat (
   KEY (weight),
   KEY (cat_extkey0),
   PRIMARY KEY (cid)
-) TYPE=MyISAM" ;
+) ENGINE=MyISAM" ;
 	$rs = $xoopsDB->query( $sql ) ;
 
 	xoops_cp_header();

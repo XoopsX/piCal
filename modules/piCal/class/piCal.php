@@ -100,13 +100,14 @@ class piCal
 	// 条件付き参照用メンバ
 	var $original_id ;	// $_GET['event_id']を処理した直後に参照可能
 
+	var $event = null ;	// eventの出力データ格納用 //naao
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
 /*******************************************************************/
 
 // Constructor
-function piCal( $target_date = "" , $language = "japanese" , $reload = false )
+public function __construct( $target_date = "" , $language = "japanese" , $reload = false )
 {
 	// 日付のセット
 	if( $target_date ) {
@@ -1665,6 +1666,8 @@ function get_schedule_view_html( $for_print = false )
 	$yrs = mysql_query( "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstamp FROM $this->table WHERE id='$event_id' AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
 	if( mysql_num_rows( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 	$event = mysql_fetch_object( $yrs ) ;
+	
+	$this->event = $event ; // naao
 
 	// rruleによって展開されたデータであれば、初回(親)のデータを取得
 	if( trim( $event->rrule ) != '' ) {
@@ -1885,6 +1888,10 @@ function get_schedule_view_html( $for_print = false )
 		<td width='100%' align='right' colspan='2'>".PICAL_COPYRIGHT."</td>
 	</tr>
 	</table>\n" ;
+
+	// for meta discription // naao
+	$this->event->start_datetime_str = $start_datetime_str ;
+	$this->event->end_datetime_str = $end_datetime_str ;
 
 	return $ret ;
 }

@@ -36,7 +36,7 @@ $mydirnumber = $regs[2] === '' ? '' : intval( $regs[2] ) ;
 
 
 $modversion['name'] = _MI_PICAL_NAME . $mydirnumber ;
-$modversion['version'] = 0.93;
+$modversion['version'] = 0.94;
 $modversion['description'] = _MI_PICAL_DESC;
 $modversion['credits'] = "PEAK Corp.";
 $modversion['author'] = "GIJ=CHECKMATE<br />PEAK Corp.(http://www.peak.ne.jp/)" ;

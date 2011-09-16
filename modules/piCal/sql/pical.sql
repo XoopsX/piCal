@@ -10,7 +10,7 @@ CREATE TABLE pical_event (
   contact VARCHAR(255) NOT NULL DEFAULT '',
   tzid VARCHAR(255) NOT NULL DEFAULT 'GMT',
   description text NOT NULL,
-  dtstamp TIMESTAMP(14),
+  dtstamp TIMESTAMP,
   categories VARCHAR(255) NOT NULL DEFAULT '',
   transp TINYINT NOT NULL DEFAULT 1,
   priority TINYINT NOT NULL DEFAULT 0,
@@ -53,28 +53,28 @@ CREATE TABLE pical_event (
   KEY (categories),
 
   PRIMARY KEY (id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE pical_cat (
   cid smallint(5) unsigned zerofill NOT NULL auto_increment,
   pid smallint(5) unsigned zerofill NOT NULL default '0',
   weight smallint(5) NOT NULL default 0,
-  exportable tinyint NOT NULL default 1,
-  autocreated tinyint NOT NULL default 0,
-  ismenuitem tinyint NOT NULL default 0,
-  enabled tinyint NOT NULL default 1,
+  exportable tinyint(1) NOT NULL default 1,
+  autocreated tinyint(1) NOT NULL default 0,
+  ismenuitem tinyint(1) NOT NULL default 0,
+  enabled tinyint(1) NOT NULL default 1,
   cat_title varchar(255) NOT NULL default '',
   cat_desc text NOT NULL,
-  dtstamp TIMESTAMP(14) NOT NULL,
+  dtstamp TIMESTAMP NOT NULL,
   cat_extkey0 INT(10) unsigned zerofill NOT NULL DEFAULT 0,
-  cat_depth TINYINT unsigned NOT NULL DEFAULT 0,
+  cat_depth tinyint(1) unsigned NOT NULL DEFAULT 0,
   cat_style varchar(255) NOT NULL default '',
   KEY (pid),
   KEY (weight),
   KEY (cat_depth),
   PRIMARY KEY (cid)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE pical_plugins (
@@ -85,7 +85,7 @@ CREATE TABLE pical_plugins (
   pi_file varchar(50) NOT NULL default '',
   pi_dotgif varchar(255) NOT NULL default '',
   pi_options varchar(255) NOT NULL default '',
-  pi_enabled tinyint NOT NULL default 0,
+  pi_enabled tinyint(1) NOT NULL default 0,
   pi_weight smallint(5) unsigned NOT NULL default 0,
   last_modified timestamp ,
 
@@ -96,4 +96,4 @@ CREATE TABLE pical_plugins (
   KEY (pi_options),
   KEY (pi_enabled),
   PRIMARY KEY (pi_id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

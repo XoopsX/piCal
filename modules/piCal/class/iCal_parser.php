@@ -683,7 +683,7 @@ function chooseOffset($time) {
 
 
 // コンストラクタ
-function ical_parser()
+public function __construct()
 {
 }
 

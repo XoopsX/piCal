@@ -42,7 +42,7 @@ if( $ref == '' || strpos( $ref , XOOPS_URL.'/modules/system/admin.php' ) === 0 )
 		  KEY (pi_options),
 		  KEY (pi_enabled),
 		  PRIMARY KEY (pi_id)
-		) TYPE=MyISAM " ) ;
+		) ENGINE=MyISAM " ) ;
 
 	}
 	// DROP TABLE xoops_pical_plugins ;

@@ -212,7 +212,7 @@
 			$xclRoot =& XCube_Root::getSingleton();
 			$headerScript = $xclRoot->mContext->getAttribute('headerScript');
 			$headerScript->addMeta('description', $pical_meta_description);
-		} elseif (is_object($xoTheme)) {	// for XOOPS 2.3 over
+		} elseif (isset($xoTheme) && is_object($xoTheme)) {	// for XOOPS 2.3 over
 			$xoTheme->addMeta('meta', 'description', $pical_meta_description);
 		}
 	}

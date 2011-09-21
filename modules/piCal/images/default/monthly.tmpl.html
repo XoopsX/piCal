@@ -1,38 +1,41 @@
 <pattemplate:tmpl name="WholeBoard">
-  <table border='0' cellspacing='0' cellpadding='0' width='640'>
-    <tr>
-      <td width='640' class='calframe'>
-        <!-- header -->
-        <table border='0' cellspacing='0' cellpadding='0' style='width:640px;border-collapse:collapse;'>
-         <tr>
-           <td><img src='{SKINPATH}/spacer.gif' alt='' width='10' height='30' /></td>
-           <td nowrap='nowrap' colspan='7' align='center' bgcolor='{CALHEAD_BGCOLOR}'>
-             <table border='0' cellspacing='0' cellpadding='0' width='630' class='pical-categoryform'>
-             <tr>
-               <td align='center' valign='middle' style='vertical-align:middle;' class='pical-categoryform'>{CATEGORIES_SELFORM}</td>
-               <td width='8'><img src='{SKINPATH}/spacer.gif' alt='' width='8' height='4' /></td>
-               <td width='18' valign='middle' style='vertical-align:middle;'><a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_YEAR}'><img src='{SKINPATH}/arrowleftleft.gif' width='18' height='14' border='0' alt='{MB_PREV_YEAR}' title='{MB_PREV_YEAR}' /></a></td>
-               <td width='18' valign='middle' style='vertical-align:middle;'><a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_MONTH}'><img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_MONTH}' title='{MB_PREV_MONTH}' /></a></td>
-               <td width='180' align='center' valign='middle' nowrap='nowrap' style='vertical-align:middle;'><img src='{SKINPATH}/spacer.gif' alt='' width='180' height='4' /><br /><font size='4' color='{CALHEAD_COLOR}'><b><span class='calhead'>{YEAR_MONTH_TITLE}</span></b></font><br /><img src='{SKINPATH}/spacer.gif' alt='' width='180' height='4' /></td>
-               <td width='18' valign='middle' style='vertical-align:middle;'><a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_MONTH}'><img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' /></a></td>
-               <td width='18' valign='middle' style='vertical-align:middle;'><a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_YEAR}'><img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' /></a></td>
-               <td align='right' valign='middle' style='vertical-align:middle;'>
-                 <font size='1'><a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}'><img src='{SKINPATH}/year_on.gif' border='0' width='30' height='24' alt='{ICON_YEARLY}' title='{ICON_YEARLY}' /></a></font>
-                 <font size='1'><a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}'><img src='{SKINPATH}/week_on.gif' border='0' width='30' height='24' alt='{ICON_WEEKLY}' title='{ICON_WEEKLY}' /></a></font>
-                 <font size='1'><a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={CALDATE}'><img src='{SKINPATH}/day_on.gif' border='0' width='30' height='24' alt='{ICON_DAILY}' title='{ICON_DAILY}' /></a></font>
-                 <font size='1'><a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}'><img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' /></a></font>
-               </td>
-             </tr>
-             </table>
-           </td>
-         </tr>
-        </table>
+<div class='calframe'>
+<!-- header -->
+<div class='pical-categoryform'>
+  {CATEGORIES_SELFORM}
+  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_YEAR}'>
+    <img src='{SKINPATH}/arrowleftleft.gif' width='18' height='14' border='0' alt='{MB_PREV_YEAR}' title='{MB_PREV_YEAR}' />
+  </a>
+  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_MONTH}'>
+    <img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_MONTH}' title='{MB_PREV_MONTH}' />
+  </a>
+  <font size='4' color='{CALHEAD_COLOR}'>
+  <b><span class='calhead'>
+  {YEAR_MONTH_TITLE}
+  </span></b>
+  </font>
+  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_MONTH}'>
+    <img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' />
+  </a>
+  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_YEAR}'>
+    <img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' />
+  </a>
+  <p>
+    <font size='1'>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}'>
+    <img src='{SKINPATH}/year_on.gif' border='0' width='30' height='24' alt='{ICON_YEARLY}' title='{ICON_YEARLY}' /></a>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}'>
+    <img src='{SKINPATH}/week_on.gif' border='0' width='30' height='24' alt='{ICON_WEEKLY}' title='{ICON_WEEKLY}' /></a>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={CALDATE}'>
+    <img src='{SKINPATH}/day_on.gif' border='0' width='30' height='24' alt='{ICON_DAILY}' title='{ICON_DAILY}' /></a>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}'>
+    <img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' /></a>
+    </font>
+  </p>
+  </div>
+  {CALENDAR_BODY}
+</div>
 
-        {CALENDAR_BODY}
-
-      </td>
-    </tr>
-  </table>
   <br />
   <table border='0' cellspacing='0' cellpadding='0' width='570'>
     <tr>

@@ -1,0 +1,61 @@
+/* for eguide module */
+.calframe p.calhead{
+    background-color: #dddddd;
+	border: solid 2px #888888;
+    color: #444444;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 3em;
+    margin: 0px;
+}
+.calframe table{
+	margin-top: -20;
+	margin-left: auto;
+	margin-right: auto;
+	width:100%;
+    border-spacing: 0;
+}
+table#calbody {
+    border: solid 2px #888888;
+}	
+table#calbody th {
+	background-color: #666666;
+    border: solid 1px #888888;
+	font-style: normal;
+    height: 2.5em;
+    text-align: center;
+}
+table#calbody th.sunday {
+	color: red;
+}
+table#calbody td {
+    background-color: #fff;
+    color: #444444;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 1em;
+    font-style: italic;
+    height: auto;
+    padding: 3px;
+    text-align: center;
+    vertical-align: top;
+    border: solid 1px #dddddd;
+}
+table#calbody p.holiday{
+	color: red;
+    font-size: .75em;
+    font-style: italic;
+}
+table#calbody p.event{
+	clear: both;
+}
+table#calbody a.calday {
+	float:left;
+    color: #444444;
+    font-size: 2em;
+}
+table#calbody a.stencil {
+	float: right;
+}
+table#calbody a.event {
+    font-size: 1em;
+    font-style: normal;
+}

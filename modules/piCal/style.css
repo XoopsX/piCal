@@ -1,31 +1,39 @@
 /* for eguide module */
 .calframe p.calhead{
-    background-color: #dddddd;
-	border: solid 2px #888888;
+    background-color: #eeeeee;
+	border: solid 3px #999999;
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 3em;
-    margin: 0px;
+    margin: 15px 0 0 0;
+    padding: 5px 0;
 }
 .calframe table{
-	margin-top: -20;
 	margin-left: auto;
 	margin-right: auto;
 	width:100%;
     border-spacing: 0;
 }
 table#calbody {
-    border: solid 2px #888888;
+    border: solid 2px #999999;
 }	
 table#calbody th {
-	background-color: #666666;
-    border: solid 1px #888888;
+	background-color: #aaaaaa;
+    border: solid 1px #999999;
 	font-style: normal;
-    height: 2.5em;
     text-align: center;
 }
+table#calbody tr.week_header {
+    height: 10px;
+}
+table#calbody tr {
+    height: 80px;
+}
 table#calbody th.sunday {
-	color: red;
+	color: #dc143c;
+}
+table#calbody th.saturday {
+	color: #3333cd;
 }
 table#calbody td {
     background-color: #fff;
@@ -35,7 +43,7 @@ table#calbody td {
     font-style: italic;
     height: auto;
     padding: 3px;
-    text-align: center;
+    text-align: left;
     vertical-align: top;
     border: solid 1px #dddddd;
 }
@@ -43,14 +51,38 @@ table#calbody p.holiday{
 	color: red;
     font-size: .75em;
     font-style: italic;
+	margin: 0;
 }
 table#calbody p.event{
 	clear: both;
+	margin: 0;
 }
-table#calbody a.calday {
+table#calbody .a {
+	position:relative;
 	float:left;
+}
+table#calbody a.calday_holyday {
+    color: #dc143c;
+    font-size: 2em;
+}
+table#calbody a.calday_sunday {
+	position : relative;
+	top: -16px;
+	color: #dc143c;
+    font-size: 2em;
+}
+table#calbody a.calday_saturday {
+    color: #0000cd;
+    font-size: 2em;
+}
+table#calbody a.calday_weekday {
     color: #444444;
     font-size: 2em;
+}
+table#calbody .week_index {
+	position : relative;
+	top: -5px;
+	left: -5px;
 }
 table#calbody a.stencil {
 	float: right;
@@ -58,4 +90,35 @@ table#calbody a.stencil {
 table#calbody a.event {
     font-size: 1em;
     font-style: normal;
+}
+/*
+** for mini calender
+*/
+.cal_selector{
+    background-color: #eeeeee;
+	border: solid 3px #999999;
+    color: #444444;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 1em;
+    margin: 0 0 15px;
+    padding: 5px 0;
+}
+.minical_left{
+	float:left;
+}
+.minical_right{
+	float:right;
+}
+.cal_footer{
+	clear: both;
+	text-align: right;
+}
+table#minical {
+    background-color: #eeeeee;
+	border: solid 2px #999999;
+	color: #333333;
+	font-family: Georgia,"Times New Roman",Times,serif;
+}
+table#minical th {
+    height: 2em;
 }

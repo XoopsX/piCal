@@ -1016,17 +1016,14 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 	$ret = "
 	 <table id='calbody'>
 	 <!-- week names -->
-	 <tr class='pical-monthly'>
-	   <th class='pical-weekmark'>
-	   	<img src='$this->images_url/spacer.gif' alt='' width='10' height='20' />
-	   </th>
+	 <tr class='week_header'>
 	   $week_top_th
-	   <th class='calweekname'>{$this->week_middle_names[1]}</span></th>
-	   <th class='calweekname'>{$this->week_middle_names[2]}</span></th>
-	   <th class='calweekname'>{$this->week_middle_names[3]}</span></th>
-	   <th class='calweekname'>{$this->week_middle_names[4]}</span></th>
-	   <th class='calweekname'>{$this->week_middle_names[5]}</span></th>
-	   <th align='center'><span class='calweek_saturday'>{$this->week_middle_names[6]}</span></th>
+	   <th class='calweekname'>{$this->week_middle_names[1]}</th>
+	   <th class='calweekname'>{$this->week_middle_names[2]}</th>
+	   <th class='calweekname'>{$this->week_middle_names[3]}</th>
+	   <th class='calweekname'>{$this->week_middle_names[4]}</th>
+	   <th class='calweekname'>{$this->week_middle_names[5]}</th>
+	   <th class='saturday'>{$this->week_middle_names[6]}</th>
 	   $week_end_th
 	 </tr>\n";
 
@@ -1072,9 +1069,12 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 	for( $week = 0 ; $week < 6 ; $week ++ ) {
 
 		// 週表示のインデックス
+		$week_index = "";
 		if( $date < $last_date ) {
 			$alt_week = $this->week_numbering ? sprintf( _PICAL_FMT_WEEKNO , $week + $mtop_weekno ) : $this->week_numbers[$week+1] ;
-			$ret .= "<tr>\n<td><a href='$get_target?cid=$this->now_cid&amp;smode=Weekly&amp;caldate=".date('Y-n-j',mktime(0,0,0,$this->month,$date+1,$this->year))."'><img src='$this->images_url/week_index.gif' width='10' height='70' border='0' alt='$alt_week' title='$alt_week' /></a></td>\n" ;
+			$week_index = "<div class='week_index'><a href='$get_target?cid=$this->now_cid&amp;smode=Weekly&amp;caldate="
+			.date('Y-n-j',mktime(0,0,0,$this->month,$date+1,$this->year))
+			."'><img src='$this->images_url/week_index.gif' alt='$alt_week' title='$alt_week' /></a></div>\n" ;
 		} else {
 			break ;
 		}
@@ -1084,11 +1084,8 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 			// 対象月の範囲外にある日の処理
 			if( ! checkdate($this->month,$date,$this->year) ) {
-				if( $date < 28 ) 
-					$ret .= "<td bgcolor='#EEEEEE' style='$this->frame_css'><span class='calbody'>
-					<img src='$this->images_url/spacer.gif' alt='' height='70' /></span></td>\n" ;
-				else 
-					$ret .= "<td><span class='calbody'><img src='$this->images_url/spacer.gif' alt='' height='70' /></span></td>\n" ;
+				$ret .= "<td>$week_index</td>\n" ;
+				$week_index="";
 				continue ;
 			}
 
@@ -1160,6 +1157,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			$date_part_append = '' ;
 			if( isset( $this->holidays[$link] ) ) {
 				//	Holiday
+				$colorClass = "calday_holyday";
 				$bgcolor = $this->holiday_bgcolor ;
 				$color = $this->holiday_color ;
 				if( $this->holidays[ $link ] != 1 ) {
@@ -1167,14 +1165,17 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 				}
 			} elseif( $wday % 7 == 0 ) { 
 				//	Sunday
+				$colorClass = "calday_sunday";
 				$bgcolor = $this->sunday_bgcolor ;
 				$color = $this->sunday_color ;
 			} elseif( $wday == 6 ) { 
 				//	Saturday
+				$colorClass = "calday_saturday";
 				$bgcolor = $this->saturday_bgcolor ;
 				$color = $this->saturday_color ;
 			} else { 
 				// Weekday
+				$colorClass = "calday_weekday";
 				$bgcolor = $this->weekday_bgcolor ;
 				$color = $this->weekday_color ;
 			}
@@ -1185,7 +1186,8 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			// 長期イベントの描画（背景）
 			if( $long_event ) {
 				$background = "background:url($this->images_url/monthbar_0".dechex($long_event).".gif) top repeat-x $bgcolor;" ;
-			} else $background = "background-color:$bgcolor;" ;
+			} else
+				$background = "background-color:$bgcolor;" ;
 
 			// 予定の追加（鉛筆アイコン）
 			if( $this->insertable )
@@ -1196,15 +1198,14 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 				$insert_link = "<a href='$get_target?cid=$this->now_cid&amp;smode=Monthly&amp;caldate=$link' class='stencil'>
 				<img src='$this->images_url/spacer.gif' alt='' border='0' width='14' height='12' /></a>" ;
 
-			$ret .= 
-			"<td>
-			<a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$link' class='calday'>
-			$date</a>
-			$insert_link
-			$date_part_append
-			$event_str
-			</td>\n" ;
-
+			$ret .= "<td>"
+			.$week_index
+			."<a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$link' class='$colorClass'>$date</a>"
+			.$insert_link
+			.$date_part_append
+			.$event_str
+			."</td>\n" ;
+			$week_index="";
 		}
 		$ret .= "</tr>\n";
 	}

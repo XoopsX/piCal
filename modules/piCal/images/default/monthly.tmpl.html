@@ -30,34 +30,21 @@
   </p>
   {CALENDAR_BODY}
 </div>
-
-  <br />
-  <table>
-    <tr>
-      <td width="20%">
-        {PREV_MINICAL}
-      </td>
-      <td>
-        <form action='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;{QUERY_STRING}' method='post'>
-          <select name='pical_year'>{YEAR_OPTIONS}</select>
-          <br />
-          <select name='pical_month'>{MONTH_OPTIONS}</select>
-          <br />
-          <br />
-          <input type='submit' name='pical_jumpcaldate' value='{LANG_JUMP}'>
-          <br />
-          <br />
-          <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly'>{MB_LINKTODAY}</a>
-          <br />
-          <img src='{SKINPATH}/spacer.gif' alt='' width='100' height='4' />
-        </form>
-      </td>
-      <td width="20%">
-        {NEXT_MINICAL}
-      </td>
-    </tr>
-  </table>
-  <div align="right">
+  <div class = "cal_selector">
+    <form action='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;{QUERY_STRING}' method='post'>
+    <select name='pical_year'>{YEAR_OPTIONS}</select>
+    <select name='pical_month'>{MONTH_OPTIONS}</select>
+    <input type='submit' name='pical_jumpcaldate' value='{LANG_JUMP}'>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly'>{MB_LINKTODAY}</a>
+    </form>
+  </div>
+  <div class = "minical_left">
+    {PREV_MINICAL}
+  </div>
+  <div class = "minical_right">
+    {NEXT_MINICAL}
+  </div>
+  <div class = "cal_footer">
     {COPYRIGHT}
     <a href="{PRINT_LINK}" target="_blank">
       <img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" border="0" {PRINT_ATTRIB} />

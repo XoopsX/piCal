@@ -1,8 +1,8 @@
 <?php
 
-// piCal xoopsÍÑ¥á¥¤¥ó¥â¥¸¥å¡¼¥ë
+// piCal xoopsç”¨ãƒ¡ã‚¤ãƒ³ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 // index.php
-// ¥«¥ì¥ó¥À¡¼¤ÎÉ½¼¨¡¦ÊÔ½¸¡¦¹¹¿·½èÍı
+// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®è¡¨ç¤ºãƒ»ç·¨é›†ãƒ»æ›´æ–°å‡¦ç†
 // by GIJ=CHECKMATE (PEAK Corp. http://www.peak.ne.jp/)
 
 	require( '../../mainfile.php' ) ;
@@ -14,10 +14,10 @@
 
 	require_once( XOOPS_ROOT_PATH."/modules/$mydirname/include/gtickets.php" ) ;
 
-	// ¸À¸ì¥Æ¥¹¥ÈÍÑ
+	// è¨€èªãƒ†ã‚¹ãƒˆç”¨
 	// $xoopsConfig[ 'language' ] = 'french' ;
 
-	// MySQL¤Ø¤ÎÀÜÂ³
+	// MySQLã¸ã®æ¥ç¶š
 	// $conn = mysql_connect( XOOPS_DB_HOST , XOOPS_DB_USER , XOOPS_DB_PASS ) or die( "Could not connect." ) ;
 	// mysql_select_db( XOOPS_DB_NAME , $conn ) ;
 	$conn = $xoopsDB->conn ;
@@ -26,13 +26,13 @@
 	$mod_path = XOOPS_ROOT_PATH."/modules/$mydirname" ;
 	$mod_url = XOOPS_URL."/modules/$mydirname" ;
 
-	// ¥¯¥é¥¹ÄêµÁ¤ÎÆÉ¤ß¹ş¤ß
+	// ã‚¯ãƒ©ã‚¹å®šç¾©ã®èª­ã¿è¾¼ã¿
 	if( ! class_exists( 'piCal_xoops' ) ) {
 		require_once( "$mod_path/class/piCal.php" ) ;
 		require_once( "$mod_path/class/piCal_xoops.php" ) ;
 	}
 
-	// GET,POSTÊÑ¿ô¤Î¼èÆÀ¡¦Á°½èÍı
+	// GET,POSTå¤‰æ•°ã®å–å¾—ãƒ»å‰å‡¦ç†
 	if( empty( $_GET['action'] ) && ! empty( $_GET['event_id'] ) ) $_GET['action'] = 'View' ;
 
 	if( isset( $_GET[ 'action' ] ) ) $action = $_GET[ 'action' ] ;
@@ -50,9 +50,9 @@
 	$cal->images_path = "$mod_path/images/$skin_folder" ;
 
 
-	// ¥Ç¡¼¥¿¥Ù¡¼¥¹¹¹¿·´Ø·¸¤Î½èÍı¡Ê¤¤¤º¤ì¤â¡¢Location¤ÇÈô¤Ğ¤¹¡Ë
+	// ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ›´æ–°é–¢ä¿‚ã®å‡¦ç†ï¼ˆã„ãšã‚Œã‚‚ã€Locationã§é£›ã°ã™ï¼‰
 	if( isset( $_POST[ 'update' ] ) ) {
-		// ¹¹¿·
+		// æ›´æ–°
 		if( ! $editable ) die( _MB_PICAL_ERR_NOPERMTOUPDATE ) ;
 		// Ticket Check
 		if ( ! $xoopsGTicket->check() ) {
@@ -60,7 +60,7 @@
 		}
 		$cal->update_schedule( "$admission_update_sql" , $whr_sql_append ) ;
 	} else if( isset( $_POST[ 'insert' ] ) || isset( $_POST[ 'saveas' ] ) ) {
-		// saveas ¤Ş¤¿¤Ï ¿·µ¬ÅĞÏ¿
+		// saveas ã¾ãŸã¯ æ–°è¦ç™»éŒ²
 		if( ! $insertable ) die( _MB_PICAL_ERR_NOPERMTOINSERT ) ;
 		$_POST[ 'event_id' ] = "" ;
 		// Ticket Check
@@ -69,7 +69,7 @@
 		}
 		$cal->update_schedule( ",uid='$user_id' $admission_insert_sql" , '' , 'notify_new_event' ) ;
 	} else if( ! empty( $_POST[ 'delete' ] ) ) {
-		// ºï½ü
+		// å‰Šé™¤
 		if( ! $deletable ) die( _MB_PICAL_ERR_NOPERMTODELETE ) ;
 		// Ticket Check
 		if ( ! $xoopsGTicket->check() ) {
@@ -77,7 +77,7 @@
 		}
 		$cal->delete_schedule( $whr_sql_append , 'global $xoopsModule; xoops_comment_delete($xoopsModule->mid(),$id);' ) ;
 	} else if( ! empty( $_POST[ 'delete_one' ] ) ) {
-		// °ì·ïºï½ü
+		// ä¸€ä»¶å‰Šé™¤
 		if( ! $deletable ) die( _MB_PICAL_ERR_NOPERMTODELETE ) ;
 		// Ticket Check
 		if ( ! $xoopsGTicket->check() ) {
@@ -89,49 +89,49 @@
 		$cal->output_ics( ) ;
 	}
 
-	// smode¤Î½èÍı
+	// smodeã®å‡¦ç†
 	if( ! empty( $_GET[ 'smode' ] ) ) $smode = $_GET[ 'smode' ] ;
 	else $smode = $default_view ;
 
-	// XOOP¥Ø¥Ã¥À½ĞÎÏÁ°¤Î½èÍı
+	// XOOPãƒ˜ãƒƒãƒ€å‡ºåŠ›å‰ã®å‡¦ç†
 	if( $action == 'View' ) {
 		$xoopsOption['template_main'] = "pical{$mydirnumber}_event_detail.html" ;
 	} else {
-		// View°Ê³°¤Ç¤Ï¥³¥á¥ó¥È¶Ø»ß
+		// Viewä»¥å¤–ã§ã¯ã‚³ãƒ¡ãƒ³ãƒˆç¦æ­¢
 		$xoopsModuleConfig['com_rule'] = 0 ;
 		if( $smode == 'List' && $action != 'Edit' ) {
 			$xoopsOption['template_main'] = "pical{$mydirnumber}_event_list.html" ;
 		}
 	}
 
-	// XOOPS¥Ø¥Ã¥À½ĞÎÏ
+	// XOOPSãƒ˜ãƒƒãƒ€å‡ºåŠ›
 	include( XOOPS_ROOT_PATH.'/header.php' ) ;
 
-	// embed style sheet ¤Î½ĞÎÏ (thx Ryuji)
+	// embed style sheet ã®å‡ºåŠ› (thx Ryuji)
 	$xoopsTpl->assign( "xoops_module_header" , "<style><!-- \n" . $cal->get_embed_css() . "\n--></style>\n" . $xoopsTpl->get_template_vars( "xoops_module_header" ) ) ;
 
-	// ¥¯¥í¡¼¥é¡¼¤Ë¥ê¥ó¥¯¤ò¤Ø¤Ä¤é¤»¤Ê¤¤ follow -> nofollow
+	// ã‚¯ãƒ­ãƒ¼ãƒ©ãƒ¼ã«ãƒªãƒ³ã‚¯ã‚’ã¸ã¤ã‚‰ã›ãªã„ follow -> nofollow
 	$meta_robots = str_replace( ',follow' , ',nofollow' , $xoopsTpl->get_template_vars( "xoops_meta_robots" ) ) ;
 	$xoopsTpl->assign( "xoops_meta_robots" , $meta_robots ) ;
 	
 	// meta "description"
 	$pical_meta_description = "" ; // naao
 
-        // ¥â¥¸¥å¡¼¥ëID  // added by naao
+        // ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ID  // added by naao
         $module_handler =& xoops_gethandler('module');
         $this_module =& $module_handler->getByDirname($mydirname);
         $mid = $this_module->getVar('mid');
  
-        // ¥â¥¸¥å¡¼¥ëconfig  // added by naao
+        // ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«config  // added by naao
         $config_handler =& xoops_gethandler("config");
         $mod_config = $config_handler->getConfigsByCat(0, $mid);
         $xoopsTpl->assign("moduleConfig", $mod_config);
 
-	// ¼Â¹Ô»ş´Ö·×Â¬¥¹¥¿¡¼¥È
+	// å®Ÿè¡Œæ™‚é–“è¨ˆæ¸¬ã‚¹ã‚¿ãƒ¼ãƒˆ
 	// list( $usec , $sec ) = explode( " " , microtime() ) ;
 	// $picalstarttime = $sec + $usec ;
 
-	// ¥Ú¡¼¥¸É½¼¨´ØÏ¢¤Î½èÍıÊ¬¤±
+	// ãƒšãƒ¼ã‚¸è¡¨ç¤ºé–¢é€£ã®å‡¦ç†åˆ†ã‘
 	if( $action == 'Edit' ) {
 		if( is_dir( XOOPS_ROOT_PATH . '/common/jscalendar' ) ) {
 			// jscalendar in common (recommend)
@@ -217,13 +217,15 @@
 		}
 	}
 
-	// ¼Â¹Ô»ş´ÖÉ½¼¨
+	// å®Ÿè¡Œæ™‚é–“è¡¨ç¤º
 	// list( $usec , $sec ) = explode( " " , microtime() ) ;
 	// echo "<p>" . ( $sec + $usec - $picalstarttime ) . "sec.</p>" ;
 
-//	var_dump( $xoopsTpl ) ;
-
-	// XOOPS¥Õ¥Ã¥¿½ĞÎÏ
+	// by Bluemoon inc.
+	$header = $xoopsTpl->get_template_vars('xoops_module_header');
+	$header .= '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
+	$xoopsTpl->assign('xoops_module_header', $header);
+	// XOOPSãƒ•ãƒƒã‚¿å‡ºåŠ›
 	include( XOOPS_ROOT_PATH.'/footer.php' ) ;
 
 ?>

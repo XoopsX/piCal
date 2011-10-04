@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-// piCal xoopsÍÑ¥â¥¸¥å¡¼¥ëµ­½Ò¥Õ¥¡¥¤¥ë
+// piCal xoopsç”¨ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«è¨˜è¿°ãƒ•ã‚¡ã‚¤ãƒ«
 // xoops_version.php
 // by GIJ=CHECKMATE (PEAK Corp. http://www.peak.ne.jp/)
 
@@ -171,7 +171,7 @@ if( isset( $cal ) && strtolower( get_class( $cal ) ) == 'pical_xoops' ) {
 // Config Settings
 $modversion['hasconfig'] = 1;
 
-// 'name' ¤¬ 'pical_' ¤«¤é»Ï¤Ş¤é¤Ê¤¤¤â¤Î¤Ï¡¢xoopsÂ¦¤ÎÀßÄê
+// 'name' ãŒ 'pical_' ã‹ã‚‰å§‹ã¾ã‚‰ãªã„ã‚‚ã®ã¯ã€xoopså´ã®è¨­å®š
 $modversion['config'][1] = array( 
 	'name'			=> 'users_authority' ,
 	'title'			=> '_MI_USERS_AUTHORITY' ,
@@ -223,7 +223,7 @@ $modversion['config'][5] = array(
 ) ;
 
 
-// 'name' ¤¬ 'pical_' ¤«¤é»Ï¤Ş¤ë¤â¤Î¤Ï¡¢piCal¥ª¥Ö¥¸¥§¥¯¥È¤Î¥×¥í¥Ñ¥Æ¥£
+// 'name' ãŒ 'pical_' ã‹ã‚‰å§‹ã¾ã‚‹ã‚‚ã®ã¯ã€piCalã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 $modversion['config'][6] = array( 
 	'name'			=> 'pical_locale' ,
 	'title'			=> '_MI_PICAL_LOCALE' ,
@@ -350,7 +350,7 @@ $modversion['config'][18] = array(
 	'description'	=> '' ,
 	'formtype'		=> 'textbox' ,
 	'valuetype'		=> 'text' ,
-	'default'		=> 'border:solid 1px green; background-color:white;' ,
+	'default'		=> '' ,
 	'options'		=> array()
 ) ;
 

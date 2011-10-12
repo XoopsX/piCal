@@ -5,7 +5,7 @@ if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( 'PICAL_CNST_LOADED' ) ) {
 define( 'PICAL_CNST_LOADED' , 1 ) ;
 
 // the language file for jscalendar "DHTML Date/Time Selector"
-define('_PICAL_JS_CALENDAR','calendar-jp.js') ;
+define('_PICAL_JS_CALENDAR','calendar-ja_utf8.js') ;
 
 // format for jscalendar. see common/jscalendar/doc/html/reference.html
 define('_PICAL_JSFMT_YMDN','%Y年 %B %d日 (%A)') ;

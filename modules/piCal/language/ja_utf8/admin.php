@@ -2,14 +2,6 @@
 
 if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( 'PICAL_AM_LOADED' ) ) {
 
-
-// Appended by Xoops Language Checker -GIJOE- in 2007-02-04 05:11:48
-define('_AM_PICAL_DBUPDATED','Database Updated Successfully!');
-define('_AM_PICAL_PERMADDNG','Could not add %s permission to %s for group %s');
-define('_AM_PICAL_PERMADDOK','Added %s permission to %s for group %s');
-define('_AM_PICAL_PERMRESETNG','Could not reset group permission for module %s');
-define('_AM_PICAL_PERMADDNGP','All parent items must be selected.');
-
 define( 'PICAL_AM_LOADED' , 1 ) ;
 
 
@@ -135,11 +127,17 @@ define( '_AM_PI_VIEWWEEKLY' , '週間ビュー' ) ;
 define( '_AM_PI_VIEWDAILY' , '日毎ビュー' ) ;
 
 // groupperm
-define("_MD_AM_DBUPDATED","データベースを更新しました");
-define('_MD_AM_PERMADDNG', 'グループ・パーミッションの追加に失敗しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
-define('_MD_AM_PERMADDOK','グループ・パーミッションを追加しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
-define('_MD_AM_PERMRESETNG','「%s」モジュールのグループ・パーミッション設定の初期化に失敗しました');
-define('_MD_AM_PERMADDNGP', 'このアイテムの上位アイテム全てにパーミッションを与える必要があります');
+//define("_MD_AM_DBUPDATED","データベースを更新しました");
+//define('_MD_AM_PERMADDNG', 'グループ・パーミッションの追加に失敗しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+//define('_MD_AM_PERMADDOK','グループ・パーミッションを追加しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+//define('_MD_AM_PERMRESETNG','「%s」モジュールのグループ・パーミッション設定の初期化に失敗しました');
+//define('_MD_AM_PERMADDNGP', 'このアイテムの上位アイテム全てにパーミッションを与える必要があります');
+// Appended by Xoops Language Checker -GIJOE- in 2007-02-04 05:11:48
+define('_AM_PICAL_DBUPDATED','データベースを更新しました');
+define('_AM_PICAL_PERMADDNG','グループ・パーミッションの追加に失敗しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+define('_AM_PICAL_PERMADDOK','グループ・パーミッションを追加しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+define('_AM_PICAL_PERMRESETNG','「%s」モジュールのグループ・パーミッション設定の初期化に失敗しました');
+define('_AM_PICAL_PERMADDNGP','このアイテムの上位アイテム全てにパーミッションを与える必要があります');
 
 
 }

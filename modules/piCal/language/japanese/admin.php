@@ -2,14 +2,6 @@
 
 if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( 'PICAL_AM_LOADED' ) ) {
 
-
-// Appended by Xoops Language Checker -GIJOE- in 2007-02-04 05:11:48
-define('_AM_PICAL_DBUPDATED','Database Updated Successfully!');
-define('_AM_PICAL_PERMADDNG','Could not add %s permission to %s for group %s');
-define('_AM_PICAL_PERMADDOK','Added %s permission to %s for group %s');
-define('_AM_PICAL_PERMRESETNG','Could not reset group permission for module %s');
-define('_AM_PICAL_PERMADDNGP','All parent items must be selected.');
-
 define( 'PICAL_AM_LOADED' , 1 ) ;
 
 
@@ -92,7 +84,7 @@ define( '_AM_ALRT_TOOOLDTABLE' , "テーブルエラーです。<br />\nおそらく、piCal 0.
 define( '_AM_FMT_SERVER_TZ_ALL' , "このサーバの冬季タイムゾーン: %+2.1f<br />このサーバの夏季タイムゾーン: %+2.1f<br />サーバのタイムゾーン名: %s<br />XOOPSでの設定値: %+2.1f<br />piCalでの採用値: %+2.1f<br />" ) ;
 define( '_AM_TH_SERVER_TZ_COUNT' , "予定個数" ) ;
 define( '_AM_TH_SERVER_TZ_VALUE' , "タイムゾーン" ) ;
-define( '_AM_TH_SERVER_TZ_VALUE_TO' , "変更値(-14.0〜14.0)" ) ;
+define( '_AM_TH_SERVER_TZ_VALUE_TO' , "変更値(-14.0~14.0)" ) ;
 define( '_AM_JSALRT_SERVER_TZ' , "この操作を行う前にデータのバックアップを推奨します" ) ;
 define( '_AM_NOTICE_SERVER_TZ' , "お使いのサーバが、サマータイム(Day Light Saving)の存在する地域としてセットアップされている場合、0.8未満のバージョンで登録した季節により、１時間前後のタイムゾーンのずれが発生していることがあります。その場合は決してこのボタンを押さないでください" ) ;
 define( '_AM_MB_SUCCESSTZUPDATE' , "各イベントについて、このサーバのタイムゾーンに合わせました" ) ;
@@ -135,11 +127,17 @@ define( '_AM_PI_VIEWWEEKLY' , '週間ビュー' ) ;
 define( '_AM_PI_VIEWDAILY' , '日毎ビュー' ) ;
 
 // groupperm
-define("_MD_AM_DBUPDATED","データベースを更新しました");
-define('_MD_AM_PERMADDNG', 'グループ・パーミッションの追加に失敗しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
-define('_MD_AM_PERMADDOK','グループ・パーミッションを追加しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
-define('_MD_AM_PERMRESETNG','「%s」モジュールのグループ・パーミッション設定の初期化に失敗しました');
-define('_MD_AM_PERMADDNGP', 'このアイテムの上位アイテム全てにパーミッションを与える必要があります');
+//define("_MD_AM_DBUPDATED","データベースを更新しました");
+//define('_MD_AM_PERMADDNG', 'グループ・パーミッションの追加に失敗しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+//define('_MD_AM_PERMADDOK','グループ・パーミッションを追加しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+//define('_MD_AM_PERMRESETNG','「%s」モジュールのグループ・パーミッション設定の初期化に失敗しました');
+//define('_MD_AM_PERMADDNGP', 'このアイテムの上位アイテム全てにパーミッションを与える必要があります');
+// Appended by Xoops Language Checker -GIJOE- in 2007-02-04 05:11:48
+define('_AM_PICAL_DBUPDATED','データベースを更新しました');
+define('_AM_PICAL_PERMADDNG','グループ・パーミッションの追加に失敗しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+define('_AM_PICAL_PERMADDOK','グループ・パーミッションを追加しました（パーミッション名：%s 対象アイテム：%s 対象グループ：%s）');
+define('_AM_PICAL_PERMRESETNG','「%s」モジュールのグループ・パーミッション設定の初期化に失敗しました');
+define('_AM_PICAL_PERMADDNGP','このアイテムの上位アイテム全てにパーミッションを与える必要があります');
 
 
 }

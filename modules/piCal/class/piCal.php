@@ -439,7 +439,7 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 		$ret[ $i ] = 0 ;
 	}
 
-	// add margin -86400 and +86400 
+	// add margin -86400 and +86400
 	$range_start_s -= 86400 ;
 	$range_end_s += 86400 ;
 
@@ -467,7 +467,7 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 		}
 	}*/
 
-	
+
 
 	// 全日イベント以外の処理
 	$result = mysql_query( "SELECT summary,id,start FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday <= 0" , $this->conn ) ;
@@ -568,15 +568,15 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 	// 曜日名ループ
 	$rows = array() ;
 	for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ ) {
-		if( $wday % 7 == 0 ) { 
+		if( $wday % 7 == 0 ) {
 			//	Sunday
 			$bgcolor = $this->sunday_bgcolor ;
 			$color = $this->sunday_color ;
-		} elseif( $wday == 6 ) { 
+		} elseif( $wday == 6 ) {
 			//	Saturday
 			$bgcolor = $this->saturday_bgcolor ;
 			$color = $this->saturday_color ;
-		} else { 
+		} else {
 			// Weekday
 			$bgcolor = $this->weekday_bgcolor ;
 			$color = $this->weekday_color ;
@@ -621,15 +621,15 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 				//	Holiday
 				$bgcolor = $this->holiday_bgcolor ;
 				$color = $this->holiday_color ;
-			} elseif( $wday % 7 == 0 ) { 
+			} elseif( $wday % 7 == 0 ) {
 				//	Sunday
 				$bgcolor = $this->sunday_bgcolor ;
 				$color = $this->sunday_color ;
-			} elseif( $wday == 6 ) { 
+			} elseif( $wday == 6 ) {
 				//	Saturday
 				$bgcolor = $this->saturday_bgcolor ;
 				$color = $this->saturday_color ;
-			} else { 
+			} else {
 				// Weekday
 				$bgcolor = $this->weekday_bgcolor ;
 				$color = $this->weekday_color ;
@@ -1168,17 +1168,17 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 				if( $this->holidays[ $link ] != 1 ) {
 					$date_part_append = "<p class='holiday'>{$this->holidays[ $link ]}</p>\n" ;
 				}
-			} elseif( $wday % 7 == 0 ) { 
+			} elseif( $wday % 7 == 0 ) {
 				//	Sunday
 				$colorClass = "calday_sunday";
 				$bgcolor = $this->sunday_bgcolor ;
 				$color = $this->sunday_color ;
-			} elseif( $wday == 6 ) { 
+			} elseif( $wday == 6 ) {
 				//	Saturday
 				$colorClass = "calday_saturday";
 				$bgcolor = $this->saturday_bgcolor ;
 				$color = $this->saturday_color ;
-			} else { 
+			} else {
 				// Weekday
 				$colorClass = "calday_weekday";
 				$bgcolor = $this->weekday_bgcolor ;
@@ -1457,15 +1457,15 @@ function get_weekly_html( )
 			if( $this->holidays[ $link ] != 1 ) {
 				$date_part_append .= "<font color='$this->holiday_color'>{$this->holidays[ $link ]}</font>\n" ;
 			}
-		} elseif( $wday % 7 == 0 ) { 
+		} elseif( $wday % 7 == 0 ) {
 			//	Sunday
 			$bgcolor = $this->sunday_bgcolor ;
 			$color = $this->sunday_color ;
-		} elseif( $wday == 6 ) { 
+		} elseif( $wday == 6 ) {
 			//	Saturday
 			$bgcolor = $this->saturday_bgcolor ;
 			$color = $this->saturday_color ;
-		} else { 
+		} else {
 			// Weekday
 			$bgcolor = $this->weekday_bgcolor ;
 			$color = $this->weekday_color ;
@@ -1580,7 +1580,7 @@ function get_daily_html( )
 	         <td vlalign='top'>
 	           <font size='3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></font><br />
 	           <font size='2'>$description</font><br />
-	           &nbsp; 
+	           &nbsp;
 	         </td>
 	       </tr>\n" ;
 	}
@@ -1626,7 +1626,7 @@ function get_daily_html( )
 	         <td valign='top'>
 	           <font size='3'><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></font><br />
 	           <font size='2'>{$item['description']}</font><br />
-	           &nbsp; 
+	           &nbsp;
 	         </td>
 	       </tr>\n" ;
 		}
@@ -1678,7 +1678,7 @@ function get_schedule_view_html( $for_print = false )
 	$yrs = mysql_query( "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstamp FROM $this->table WHERE id='$event_id' AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
 	if( mysql_num_rows( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 	$event = mysql_fetch_object( $yrs ) ;
-	
+
 	$this->event = $event ; // naao
 
 	// rruleによって展開されたデータであれば、初回(親)のデータを取得
@@ -1928,8 +1928,8 @@ function get_schedule_edit_html( )
 		if( mysql_num_rows( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 		$event = mysql_fetch_object( $yrs ) ;
 
-		// ���Ƃ��ƕҏW�E�폜�\�̐ݒ�ł��A�{������uid�ƃ��R�[�h��uid��
-		// ��v�����A���AAdmin���[�h�łȂ����́A�ҏW�E�폜�s�Ƃ���
+		// もともと編集・削除可能の設定でも、閲覧中のuidとレコードのuidが
+		// 一致せず、かつ、Adminモードでない時は、編集・削除不可とする
 		if( $event->uid != $this->user_id && ! $this->isadmin ) {
 			$editable = false ;
 			$deletable = false ;
@@ -2137,7 +2137,7 @@ function get_schedule_edit_html( )
 	<tr>
 		<td class='head'>"._PICAL_TH_ENDDATETIME."</td>
 		<td class='even'>
-			$textbox_end_date &nbsp; 
+			$textbox_end_date &nbsp;
 			{$select_end_hour} {$select_end_min}"._PICAL_MB_MINUTE_SUF."
 		</td>
 	</tr>
@@ -2553,7 +2553,7 @@ function get_vtimezones_str( $timezones )
 {
 	if( empty( $timezones ) ) {
 
-		return 
+		return
 "BEGIN:VTIMEZONE\r
 TZID:GMT\r
 BEGIN:STANDARD\r
@@ -2571,7 +2571,7 @@ END:VTIMEZONE\r\n" ;
 
 			list( $for_tzoffset , $for_tzid ) = $this->get_timezone_desc( $tz ) ;
 
-			$ret .= 
+			$ret .=
 "BEGIN:VTIMEZONE\r
 TZID:$for_tzid\r
 BEGIN:STANDARD\r
@@ -3269,7 +3269,9 @@ function rrule_to_human_language( $rrule )
 
 	// rrule の各要素を変数に展開
 	$rrule = strtoupper( $rrule ) ;
-	$rules = split( ';' , $rrule ) ;
+//HACK by domifara for php5.3+
+//	$rules = split( ';' , $rrule ) ;
+	$rules = explode( ';' , $rrule ) ;
 	foreach( $rules as $rule ) {
 		list( $key , $val ) = explode( '=' , $rule , 2 ) ;
 		$key = trim( $key ) ;
@@ -3373,7 +3375,9 @@ function rrule_to_form( $rrule , $until_init )
 
 		// rrule の各要素を変数に展開
 		$rrule = strtoupper( $rrule ) ;
-		$rules = split( ';' , $rrule ) ;
+//HACK by domifara for php5.3+
+//		$rules = split( ';' , $rrule ) ;
+		$rules = explode( ';' , $rrule ) ;
 		foreach( $rules as $rule ) {
 			list( $key , $val ) = explode( '=' , $rule , 2 ) ;
 			$key = trim( $key ) ;
@@ -3486,11 +3490,11 @@ function rrule_to_form( $rrule , $until_init )
 				<br />
 				<fieldset>
 					<legend class='blockTitle'><input type='radio' name='rrule_freq' value='monthly' $monthly_checked />"._PICAL_RR_FREQMONTHLY."</legend>
-					"._PICAL_RR_FREQMONTHLY_PRE."<input type='text' size='2' name='rrule_monthly_interval' value='$monthly_interval_init' /> "._PICAL_RR_FREQMONTHLY_SUF." &nbsp; 
+					"._PICAL_RR_FREQMONTHLY_PRE."<input type='text' size='2' name='rrule_monthly_interval' value='$monthly_interval_init' /> "._PICAL_RR_FREQMONTHLY_SUF." &nbsp;
 					<select name='rrule_monthly_byday'>
 						<option value=''>"._PICAL_RR_S_NOTSELECTED."</option>
 						$byday_m_options
-					</select> &nbsp; "._PICAL_RR_OR." &nbsp; 
+					</select> &nbsp; "._PICAL_RR_OR." &nbsp;
 					<input type='text' size='10' name='rrule_bymonthday' value='$bymonthday_init' />"._PICAL_NTC_MONTHLYBYMONTHDAY."
 				</fieldset>
 				<br />
@@ -3624,7 +3628,9 @@ function rrule_extract( $event_id )
 
 	// rrule の各要素を変数に展開
 	$rrule = strtoupper( $event->rrule ) ;
-	$rules = split( ';' , $rrule ) ;
+//HACK by domifara for php5.3+
+//	$rules = split( ';' , $rrule ) ;
+	$rules = explode( ';' , $rrule ) ;
 	foreach( $rules as $rule ) {
 		list( $key , $val ) = explode( '=' , $rule , 2 ) ;
 		$key = trim( $key ) ;
@@ -3703,7 +3709,7 @@ function rrule_extract( $event_id )
 				$sqls[] = $base_sql . ",start=UNIX_TIMESTAMP('".gmdate("Y-m-d H:i:s", $gmstart)."'),end=UNIX_TIMESTAMP('".gmdate("Y-m-d H:i:s", $gmend)."')";
 			}
 			break ;
-			
+
 		case 'WEEKLY' :
 			$gmstart = $event->start + date( "Z" , $event->start ) ;
 			$gmstartbase = $gmstart ;
@@ -3839,7 +3845,7 @@ function rrule_extract( $event_id )
 				return ;
 			}
 			break ;
-			
+
 		case 'YEARLY' :
 			$gmstart = $event->start + date( "Z" , $event->start ) ;
 			$gmstartbase = $gmstart ;
@@ -3934,7 +3940,7 @@ function rrule_extract( $event_id )
 				}
 			}
 			break ;
-			
+
 		default :
 			return ;
 	}

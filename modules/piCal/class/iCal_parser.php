@@ -22,7 +22,7 @@
 // Blaine Cook    <lattice@resist.ca>
 
 
-// mb_internal_encoding¤Î¥¨¥ß¥å¥ì¡¼¥È (¾ï¤ËASCII¤òÊÖ¤¹)
+// mb_internal_encodingã®ã‚¨ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆ (å¸¸ã«ASCIIã‚’è¿”ã™)
 if( ! function_exists( 'mb_internal_encoding' ) ) {
 	function mb_internal_encoding() {
 		return "ASCII" ;
@@ -559,7 +559,7 @@ function dateOfWeek($Ymd, $day) {
 	return $ret;
 }
 
-// function to compare to dates in Ymd and return the number of weeks 
+// function to compare to dates in Ymd and return the number of weeks
 // that differ between them. requires dateOfWeek()
 function weekCompare($now, $then) {
 	$sun_now = $this->dateOfWeek($now, $this->week_start_day);
@@ -575,7 +575,7 @@ function weekCompare($now, $then) {
 	return $diff_weeks;
 }
 
-// function to compare to dates in Ymd and return the number of days 
+// function to compare to dates in Ymd and return the number of days
 // that differ between them.
 function dayCompare($now, $then) {
 	$seconds_now = strtotime($now);
@@ -584,15 +584,18 @@ function dayCompare($now, $then) {
 	$diff_minutes = $diff_seconds/60;
 	$diff_hours = $diff_minutes/60;
 	$diff_days = round($diff_hours/24);
-	
+
 	return $diff_days;
 }
 
-// function to compare to dates in Ymd and return the number of months 
+// function to compare to dates in Ymd and return the number of months
 // that differ between them.
 function monthCompare($now, $then) {
-	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $now, $date_now);
-	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $then, $date_then);
+//HACK by domifara for php5.3+
+//	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $now, $date_now);
+//	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $then, $date_then);
+	preg_match ("/([0-9]{4})([0-9]{2})([0-9]{2})/", $now, $date_now);
+	preg_match ("/([0-9]{4})([0-9]{2})([0-9]{2})/", $then, $date_then);
 	$diff_years = $date_now[1] - $date_then[1];
 	$diff_months = $date_now[2] - $date_then[2];
 	if ($date_now[2] < $date_then[2]) {
@@ -605,8 +608,11 @@ function monthCompare($now, $then) {
 }
 
 function yearCompare($now, $then) {
-	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $now, $date_now);
-	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $then, $date_then);
+//HACK by domifara for php5.3+
+//	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $now, $date_now);
+//	ereg ("([0-9]{4})([0-9]{2})([0-9]{2})", $then, $date_then);
+	preg_match ("/([0-9]{4})([0-9]{2})([0-9]{2})/", $now, $date_now);
+	preg_match ("/([0-9]{4})([0-9]{2})([0-9]{2})/", $then, $date_then);
 	$diff_years = $date_now[1] - $date_then[1];
 	return $diff_years;
 }
@@ -620,16 +626,16 @@ function yearCompare($now, $then) {
 	$month = date("n", $timestamp)-1;
 	$day = date("j", $timestamp);
 	$dayofweek = date("w", $timestamp);
-	
+
 	$date = str_replace('%Y', $year, $format);
 	$date = str_replace('%e', $day, $date);
 	$date = str_replace('%B', $monthsofyear_lang[$month], $date);
 	$date = str_replace('%b', $monthsofyearshort_lang[$month], $date);
 	$date = str_replace('%A', $daysofweek_lang[$dayofweek], $date);
 	$date = str_replace('%a', $daysofweekshort_lang[$dayofweek], $date);
-	
-	return $date;	
-	
+
+	return $date;
+
 }*/
 // calcOffset takes an offset (ie, -0500) and returns it in the number of seconds
 function calcOffset($offset_str) {
@@ -657,7 +663,7 @@ function calcTime($have, $want, $time) {
 function chooseOffset($time) {
 
 	return $this->timezone ;
-/* ¥µ¥Ş¡¼¥¿¥¤¥à¤Î½èÍı¤ò¤ä¤Ã¤Æ¤¤¤ë¤Î¤À¤í¤¦¤±¤É¡¢¤È¤ê¤¢¤¨¤º¥³¥á¥ó¥È¥¢¥¦¥È
+/* ã‚µãƒãƒ¼ã‚¿ã‚¤ãƒ ã®å‡¦ç†ã‚’ã‚„ã£ã¦ã„ã‚‹ã®ã ã‚ã†ã‘ã©ã€ã¨ã‚Šã‚ãˆãšã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 	if (!isset($this->timezone)) $this->timezone = '';
 	switch ($this->timezone) {
 		case '':
@@ -682,13 +688,13 @@ function chooseOffset($time) {
 
 
 
-// ¥³¥ó¥¹¥È¥é¥¯¥¿
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 public function __construct()
 {
 }
 
 
-// ¥Õ¥¡¥¤¥ë¤ò¥Ñ¡¼¥¹¤·¤Æ¡¢ÆâÉôÊÑ¿ô¤Ë¼è¤ê¹ş¤à
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ‘ãƒ¼ã‚¹ã—ã¦ã€å†…éƒ¨å¤‰æ•°ã«å–ã‚Šè¾¼ã‚€
 function parse( $filename , $calendar_name )
 {
 	$ifile = @fopen($filename, "r");
@@ -702,45 +708,49 @@ function parse( $filename , $calendar_name )
 	// Set default calendar name - can be overridden by X-WR-CALNAME
 	// $calendar_name = $filename;
 	// $master_array['calendar_name'] = $filename;
-	
+
 	// auxiliary array for determining overlaps of events
 //	$overlap_array = array ();
-	
-	// using $uid to set specific points in array, if $uid is not in the 
+
+	// using $uid to set specific points in array, if $uid is not in the
 	// .ics file, we need to have some unique place in the array
 	$uid_counter = 0;
-		
+
 // read file in line by line
 // XXX end line is skipped because of the 1-line readahead
 	while (!feof($ifile)) {
 		$line = $nextline;
 		$nextline = fgets($ifile, 1024);
-		$nextline = ereg_replace("[\r\n]", "", $nextline);
+//HACK  by domifara for php5.3+
+//		$nextline = ereg_replace("[\r\n]", "", $nextline);
+		$nextline = preg_replace("/[\r\n]/", "", $nextline);
 		while (substr($nextline, 0, 1) == " ") {
 			$line = $line . substr($nextline, 1);
 			$nextline = fgets($ifile, 1024);
-			$nextline = ereg_replace("[\r\n]", "", $nextline);
+//HACK  by domifara for php5.3+
+//			$nextline = ereg_replace("[\r\n]", "", $nextline);
+			$nextline = preg_replace("/[\r\n]/", "", $nextline);
 		}
 		$line = trim($line);
 		if ($line == 'BEGIN:VEVENT') {
 			// each of these vars were being set to an empty string
 			unset (
-				$start_time, $end_time, $start_date, $end_date, $summary, 
-				$allday_start, $allday_end, $start, $end, $the_duration, 
-				$beginning, $rrule, $start_of_vevent, $description, 
+				$start_time, $end_time, $start_date, $end_date, $summary,
+				$allday_start, $allday_end, $start, $end, $the_duration,
+				$beginning, $rrule, $start_of_vevent, $description,
 				$status, $class, $categories, $contact,
-				$location, $dtstamp, $sequence, 
-				$tz_dtstart, $tz_dtend, $event_tz, 
+				$location, $dtstamp, $sequence,
+				$tz_dtstart, $tz_dtend, $event_tz,
 				$valarm_description, $start_unixtime, $end_unixtime,
 				$recurrence_id, $uid, $uid_valid
 			);
-				
+
 			$except_dates = array();
 			$except_times = array();
 			$first_duration = TRUE;
 			$count = 1000000;
 			$valarm_set = FALSE;
-			
+
 		} elseif ($line == 'END:VEVENT') {
 			// make sure we have some value for $uid
 			if (!isset($uid)) {
@@ -750,22 +760,22 @@ function parse( $filename , $calendar_name )
 			} else {
 				$uid_valid = true;
 			}
-			
+
 			if (empty($summary)) $summary = '';
 			if (empty($description)) $description = '';
 			if (empty($location)) $location = '';
 			if (empty($contact)) $contact = '';
 			if (empty($sequence)) $sequence = 0;
 			if (empty($rrule)) $rrule = '';
-			
-			// Handling of the all day events¡ÊÁ´Æü¥¤¥Ù¥ó¥È¡Ë
+
+			// Handling of the all day eventsï¼ˆå…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼‰
 			if ((isset($allday_start) && $allday_start != '')) {
 				$start_unixtime = strtotime($allday_start);
 				if (isset($allday_end) && $allday_end != '' ) {
 					$end_unixtime = strtotime($allday_end);
 					if( $start_unixtime == $end_unixtime ) $end_unixtime = $start_unixtime + 86400 ;
 				} else {
-					// allday_end ¤Î»ØÄê¤¬¤Ê¤±¤ì¤Ğ°ìÆü¤Î¤ß¤È¸«¤Ê¤¹
+					// allday_end ã®æŒ‡å®šãŒãªã‘ã‚Œã°ä¸€æ—¥ã®ã¿ã¨è¦‹ãªã™
 					$end_unixtime = $start_unixtime + 86400 ;
 				}
 			}
@@ -776,7 +786,7 @@ function parse( $filename , $calendar_name )
 /*		} elseif ($line == 'END:VTODO') {
 			if ((!$vtodo_priority) && ($status == 'COMPLETED')) {
 				$vtodo_sort = 11;
-			} elseif (!$vtodo_priority) { 
+			} elseif (!$vtodo_priority) {
 				$vtodo_sort = 10;
 			} else {
 				$vtodo_sort = $vtodo_priority;
@@ -791,19 +801,21 @@ function parse( $filename , $calendar_name )
 		} elseif ($line == 'END:VALARM') {
 			$valarm_set = FALSE;
 */		} else {
-	
+
 			unset ($field, $data, $prop_pos, $property);
-			ereg ("([^:]+):(.*)", $line, $line);
+//HACK by domifara for php5.3+
+//			ereg ("([^:]+):(.*)", $line, $line);
+			preg_match ("/([^:]+):(.*)/", $line, $line);
 			$field = $line[1];
 			$data = $line[2];
-			
+
 			$property = $field;
 			$prop_pos = strpos($property,';');
 			if ($prop_pos !== false) $property = substr($property,0,$prop_pos);
 			$property = strtoupper($property);
-			
+
 			switch ($property) {
-				
+
 				// Start VTODO Parsing
 				//
 /*				case 'DUE':
@@ -822,12 +834,12 @@ function parse( $filename , $calendar_name )
 						} elseif ($zulu_time) {
 							$tz_due = 'GMT';
 						}
-		
+
 						ereg ('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})', $data, $regs);
 						$start_date = $regs[1] . $regs[2] . $regs[3];
 						$start_time = $regs[4] . $regs[5];
 						$start_unixtime = mktime($regs[4], $regs[5], 0, $regs[2], $regs[3], $regs[1]);
-		
+
 						$dlst = date('I', $start_unixtime);
 						$server_offset_tmp = $this->chooseOffset($start_unixtime);
 						if (isset($tz_due)) {
@@ -851,7 +863,7 @@ function parse( $filename , $calendar_name )
 						unset($server_offset_tmp);
 					}
 					break;
-*/					
+*/
 /*				case 'COMPLETED':
 					$zulu_time = false;
 					if (substr($data,-1) == 'Z') $zulu_time = true;
@@ -868,12 +880,12 @@ function parse( $filename , $calendar_name )
 						} elseif ($zulu_time) {
 							$tz_completed = 'GMT';
 						}
-		
+
 						ereg ('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})', $data, $regs);
 						$start_date = $regs[1] . $regs[2] . $regs[3];
 						$start_time = $regs[4] . $regs[5];
 						$start_unixtime = mktime($regs[4], $regs[5], 0, $regs[2], $regs[3], $regs[1]);
-		
+
 						$dlst = date('I', $start_unixtime);
 						$server_offset_tmp = $this->chooseOffset($start_unixtime);
 						if (isset($tz_completed)) {
@@ -896,36 +908,40 @@ function parse( $filename , $calendar_name )
 						$completed_time = date('Hi', $start_unixtime);
 						unset($server_offset_tmp);
 					}
-					break;	
-				
+					break;
+
 				case 'PRIORITY':
 					$vtodo_priority = "$data";
 					break;
-*/					
+*/
 				case 'STATUS':
 					// VEVENT: TENTATIVE, CONFIRMED, CANCELLED
 					// VTODO: NEEDS-ACTION, COMPLETED, IN-PROCESS, CANCELLED
 					$status = "$data";
 					break;
-					
+
 				case 'CLASS':
 					// VEVENT, VTODO: PUBLIC, PRIVATE, CONFIDENTIAL
 					$class = "$data";
 					break;
-					
+
 				case 'CATEGORIES':
 					$categories = mb_convert_encoding( $data , mb_internal_encoding() , "UTF-8" ) ;
-					break;		
+					break;
 				//
-				// End VTODO Parsing				
-					
+				// End VTODO Parsing
+
 				case 'DTSTART':
 					$zulu_time = false;
 					if (substr($data,-1) == 'Z') $zulu_time = true;
-					$data = ereg_replace('T', '', $data);
-					$data = ereg_replace('Z', '', $data);
-					$field = ereg_replace(';VALUE=DATE-TIME', '', $field); 
-					if (preg_match("/^DTSTART;VALUE=DATE/i", $field))  {
+//HACK  by domifara for php5.3+
+//					$data = ereg_replace('T', '', $data);
+//					$data = ereg_replace('Z', '', $data);
+//					$field = ereg_replace(';VALUE=DATE-TIME', '', $field);
+					$data = preg_replace('/T/', '', $data);
+					$data = preg_replace('/Z/', '', $data);
+					$field = preg_replace('/;VALUE=DATE-TIME/', '', $field);
+					if (preg_match("/^DTSTART;VALUE=DATE/", $field))  {
 						$allday_start = $data;
 						$start_date = $allday_start;
 					} else {
@@ -936,12 +952,14 @@ function parse( $filename , $calendar_name )
 						} elseif ($zulu_time) {
 							$tz_dtstart = 'GMT';
 						}
-		
-						ereg ('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})', $data, $regs);
+
+//HACK  by domifara for php5.3+
+//						ereg ('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})', $data, $regs);
+						preg_match ('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})/', $data, $regs);
 						$start_date = $regs[1] . $regs[2] . $regs[3];
 						$start_time = $regs[4] . $regs[5];
 						$start_unixtime = mktime($regs[4], $regs[5], 0, $regs[2], $regs[3], $regs[1]);
-		
+
 						$dlst = date('I', $start_unixtime);
 						$server_offset_tmp = $this->chooseOffset($start_unixtime);
 						if (isset($tz_dtstart)) {
@@ -967,13 +985,17 @@ function parse( $filename , $calendar_name )
 						unset($server_offset_tmp);
 					}
 					break;
-					
+
 				case 'DTEND':
 					$zulu_time = false;
 					if (substr($data,-1) == 'Z') $zulu_time = true;
-					$data = ereg_replace('T', '', $data);
-					$data = ereg_replace('Z', '', $data);
-					$field = ereg_replace(';VALUE=DATE-TIME', '', $field); 
+//HACK  by domifara for php5.3+
+//					$data = ereg_replace('T', '', $data);
+//					$data = ereg_replace('Z', '', $data);
+//					$field = ereg_replace(';VALUE=DATE-TIME', '', $field);
+					$data = preg_replace('/T/', '', $data);
+					$data = preg_replace('/Z/', '', $data);
+					$field = preg_replace('/;VALUE=DATE-TIME/i', '', $field);
 					if (preg_match("/^DTEND;VALUE=DATE/i", $field))  {
 						$allday_end = $data;
 					} else {
@@ -984,12 +1006,14 @@ function parse( $filename , $calendar_name )
 						} elseif ($zulu_time) {
 							$tz_dtend = 'GMT';
 						}
-						
-						ereg ('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})', $data, $regs);
+
+//HACK by domifara for php5.3+
+//						ereg ('([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})', $data, $regs);
+						preg_match ('/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{0,2})([0-9]{0,2})/', $data, $regs);
 						$end_date = $regs[1] . $regs[2] . $regs[3];
 						$end_time = $regs[4] . $regs[5];
 						$end_unixtime = mktime($regs[4], $regs[5], 0, $regs[2], $regs[3], $regs[1]);
-		
+
 						$dlst = date('I', $end_unixtime);
 						$server_offset_tmp = $this->chooseOffset($end_unixtime);
 						if (isset($tz_dtend)) {
@@ -1005,10 +1029,10 @@ function parse( $filename , $calendar_name )
 						$end_date = date('Ymd', $end_unixtime);
 						$end_time = date('Hi', $end_unixtime);
 						unset($server_offset_tmp);
-		
+
 					}
 					break;
-					
+
 /*				case 'EXDATE':
 					$data = split(",", $data);
 					foreach ($data as $exdata) {
@@ -1019,48 +1043,48 @@ function parse( $filename , $calendar_name )
 						$except_times[] = $regs[4] . $regs[5];
 					}
 					break;
-*/					
+*/
 				case 'SUMMARY':
 					$summary = mb_convert_encoding( $data , mb_internal_encoding() , "UTF-8" ) ;
 					break;
-					
+
 				case 'DESCRIPTION':
 					$description = mb_convert_encoding( $data , mb_internal_encoding() , "UTF-8" ) ;
 					break;
-					
+
 				case 'CONTACT':
 					// RFC2445 4.8.4.2  GIJ added
 					$contact = mb_convert_encoding( $data , mb_internal_encoding() , "UTF-8" ) ;
 					break;
-					
+
 				case 'LOCATION':
 					// RFC2445 4.8.1.7  GIJ added
 					$location = mb_convert_encoding( $data , mb_internal_encoding() , "UTF-8" ) ;
 					break;
-					
+
 				case 'DTSTAMP':
 					// RFC2445 4.8.7.2  GIJ added
 					$data = str_replace('T', '', $data);
 					$dtstamp = str_replace('Z', '', $data);
 					break;
-					
+
 				case 'SEQUENCE':
 					// RFC2445 4.8.7.4  GIJ added
 					$sequence = intval($data);
 					break;
-					
+
 				case 'UID':
 					$uid = $data;
 					break;
-					
+
 				case 'X-WR-CALNAME':
 					$calendar_name = mb_convert_encoding( $data , mb_internal_encoding() , "UTF-8" ) ;
 					break;
-					
+
 				case 'X-WR-TIMEZONE':
 					$calendar_tz = $data;
 					break;
-					
+
 /*				case 'DURATION':
 					if (($first_duration == TRUE) && (!stristr($field, '=DURATION'))) {
 						ereg ('^P([0-9]{1,2})?([W,D]{0,1}[T])?([0-9]{1,2}[H])?([0-9]{1,2}[M])?([0-9]{1,2}[S])?', $data, $duration);
@@ -1078,17 +1102,17 @@ function parse( $filename , $calendar_name )
 						$end_unixtime = $start_unixtime + $the_duration;
 						$end_time = date ('Hi', $end_unixtime);
 						$first_duration = FALSE;
-					}	
+					}
 					break;
-*/					
+*/
 				case 'RRULE':
 					$rrule = strtoupper( $data ) ;
 					break;
-					
+
 /*				case 'ATTENDEE':
 					$attendee = $data;
 					break;
-*/					
+*/
 			}
 		}
 	}
@@ -1104,7 +1128,7 @@ function parse( $filename , $calendar_name )
 
 
 
-// ¥Ñ¡¼¥¹¤·¤¿iCalendar¥Ç¡¼¥¿¤«¤é¡¢INSERT,UPDATEÍÑ¤ÎSETÊ¸ÇÛÎó¤òÀ¸À®¤¹¤ë´Ø¿ô
+// ãƒ‘ãƒ¼ã‚¹ã—ãŸiCalendarãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã€INSERT,UPDATEç”¨ã®SETæ–‡é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
 function output_setsqls()
 {
 	$rets = array() ;
@@ -1112,47 +1136,47 @@ function output_setsqls()
 	foreach( $this->events as $uid => $event ) {
 		$ret = "" ;
 
-		// $event[] ¤ò¥í¡¼¥«¥ëÊÑ¿ô¤ËÅ¸³«
+		// $event[] ã‚’ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã«å±•é–‹
 		unset( $start_unixtime, $end_unixtime, $summary, $description, $status, $class, $categories, $contact, $location, $dtstamp, $sequence, $allday_start, $allday_end, $tz_dtstart, $tz_dtend , $event_tz , $uid_valid ) ;
 		extract( $event ) ;
 
-		// Unique-ID (¼«Æ°ÉÕ²ÃÈÖ¹æ¤Î¾ì¹ç¤Ï¡¢¤½¤ì¤Ã¤İ¤¯À¸À®¤¹¤ë)
+		// Unique-ID (è‡ªå‹•ä»˜åŠ ç•ªå·ã®å ´åˆã¯ã€ãã‚Œã£ã½ãç”Ÿæˆã™ã‚‹)
 		if( ! $uid_valid ) {
 			$unique_id = 'pical060-' . md5( "{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}") . "-$uid" ;
 		} else $unique_id = $uid ;
 		$ret .= "unique_id='" . addslashes( $unique_id ) . "'," ;
 
-		// DTEND¤Îµ­½Ò¤¬¤Ê¤¤¥Ç¡¼¥¿¤Ø¤ÎÂĞºö
+		// DTENDã®è¨˜è¿°ãŒãªã„ãƒ‡ãƒ¼ã‚¿ã¸ã®å¯¾ç­–
 		if( ! isset( $end_unixtime ) ) $end_unixtime = $start_unixtime + 300 ;
 
-		// start¤Èend¤¬È¿Å¾¤·¤Æ¤¤¤ë¥Ç¡¼¥¿¤Ø¤ÎÂĞºö
+		// startã¨endãŒåè»¢ã—ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã¸ã®å¯¾ç­–
 		if( $start_unixtime > $end_unixtime ) list( $start_unixtime , $end_unixtime ) = array( $end_unixtime , $start_unixtime ) ;
 
-		// 5Ê¬Ã±°Ì¤ËÂ·¤¨¤ë
+		// 5åˆ†å˜ä½ã«æƒãˆã‚‹
 		$start_unixtime = intval( $start_unixtime / 300 ) * 300 ;
 		$end_unixtime = intval( $end_unixtime / 300 ) * 300 ;
 
-		// »ş´Ö¤Î¥»¥Ã¥È
+		// æ™‚é–“ã®ã‚»ãƒƒãƒˆ
 		$ret .= "start='$start_unixtime',end='$end_unixtime'," ;
 		if( isset( $allday_start ) && $allday_start != '') {
-			// Á´Æü¥¤¥Ù¥ó¥È
+			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
 			$ret .= "allday='1'," ;
 		} else {
-			// ÄÌ¾ï¥¤¥Ù¥ó¥È
+			// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆ
 			$ret .= "allday='0'," ;
 		}
 
-		// tzid ¤Îµ­Ï¿¡Ê°ì±ş¡Ë
+		// tzid ã®è¨˜éŒ²ï¼ˆä¸€å¿œï¼‰
 		if( isset( $tz_dtstart ) && $tz_dtstart != "" ) $ret .= "tzid='$tz_dtstart'," ;
 		else if( isset( $tz_dtend ) && $tz_dtend != "" ) $ret .= "tzid='$tz_dtend'," ;
 
-		// event_tz ¤Îµ­Ï¿
+		// event_tz ã®è¨˜éŒ²
 		if( isset( $event_tz ) ) $ret .= "event_tz='$event_tz'," ;
 
-		// summary¤Î¥Á¥§¥Ã¥¯¡ÊÌ¤µ­Æş¤Ê¤é¤½¤Î»İ¤òÄÉ²Ã¡Ë
-		if( empty( $summary ) || $summary == "" ) $event[ 'summary' ] = '¡Ê·ïÌ¾¤Ê¤·¡Ë' ;
+		// summaryã®ãƒã‚§ãƒƒã‚¯ï¼ˆæœªè¨˜å…¥ãªã‚‰ãã®æ—¨ã‚’è¿½åŠ ï¼‰
+		if( empty( $summary ) || $summary == "" ) $event[ 'summary' ] = 'ï¼ˆä»¶åãªã—ï¼‰' ;
 
-		// ¤½¤ÎÂ¾¤Î¥«¥é¥à (dtstamp ¤Ï¤¢¤¨¤Æ³°¤¹)
+		// ãã®ä»–ã®ã‚«ãƒ©ãƒ  (dtstamp ã¯ã‚ãˆã¦å¤–ã™)
 		$cols = array( "summary" => "255:J:1" , "location" => "255:J:0" , "contact" => "255:J:0" , "categories" => "255:J:0" , "rrule" => "255:E:0" , /* "dtstamp" => "14:E:0" ,*/ "sequence" => "I:N:0" , "description" => "A:J:0" ) ;
 		$ret .= $this->get_sql_set( $event , $cols ) ;
 
@@ -1163,7 +1187,7 @@ function output_setsqls()
 }
 
 
-// Ï¢ÁÛÇÛÎó¤ò°ú¿ô¤Ë¼è¤ê¡¢$event¤«¤éINSERT,UPDATEÍÑ¤ÎSETÊ¸¤òÀ¸À®¤¹¤ë¥¯¥é¥¹´Ø¿ô
+// é€£æƒ³é…åˆ—ã‚’å¼•æ•°ã«å–ã‚Šã€$eventã‹ã‚‰INSERT,UPDATEç”¨ã®SETæ–‡ã‚’ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹é–¢æ•°
 function get_sql_set( $event , $cols )
 {
 	$ret = "" ;
@@ -1174,20 +1198,20 @@ function get_sql_set( $event , $cols )
 
 		$data = empty( $event[ $col ] ) ? '' : $event[ $col ] ;
 
-		// ¸À¸ì¡¦¿ô»ú¤Ê¤É¤ÎÊÌ¤Ë¤è¤ë½èÍı
+		// è¨€èªãƒ»æ•°å­—ãªã©ã®åˆ¥ã«ã‚ˆã‚‹å‡¦ç†
 		switch( $lang ) {
-			case 'N' :	// ¿ôÃÍ (·å¼è¤ê¤Î , ¤ò¼è¤ë)
+			case 'N' :	// æ•°å€¤ (æ¡å–ã‚Šã® , ã‚’å–ã‚‹)
 				$data = str_replace( "," , "" , $data ) ;
 				break ;
-			case 'J' :	// ÆüËÜ¸ì¥Æ¥­¥¹¥È (È¾³Ñ¥«¥Ê¢ªÁ´³Ñ¤«¤Ê)
+			case 'J' :	// æ—¥æœ¬èªãƒ†ã‚­ã‚¹ãƒˆ (åŠè§’ã‚«ãƒŠâ†’å…¨è§’ã‹ãª)
 				$data = $this->mb_convert_kana( $data , "KV" ) ;
 				break ;
-			case 'E' :	// È¾³Ñ±Ñ¿ô»ú¤Î¤ß (Á´³Ñ±Ñ¿ô¢ªÈ¾³Ñ±Ñ¿ô)
+			case 'E' :	// åŠè§’è‹±æ•°å­—ã®ã¿ (å…¨è§’è‹±æ•°â†’åŠè§’è‹±æ•°)
 				$data = $this->mb_convert_kana( $data , "as" ) ;
 				break ;
 		}
 
-		// ¥Õ¥£¡¼¥ë¥É¤Î·¿¤Ë¤è¤ë½èÍı
+		// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å‹ã«ã‚ˆã‚‹å‡¦ç†
 		switch( $field ) {
 			case 'A' :	// textarea
 				$data = $this->textarea_sanitizer_for_sql( $data ) ;
@@ -1195,19 +1219,19 @@ function get_sql_set( $event , $cols )
 			case 'I' :	// integer
 				$data = intval( $data ) ;
 				break ;
-			default :	// varchar(¥Ç¥Õ¥©¥ë¥È)¤Ï¿ôÃÍ¤Ë¤è¤ëÊ¸»ú¿ô»ØÄê
+			default :	// varchar(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ)ã¯æ•°å€¤ã«ã‚ˆã‚‹æ–‡å­—æ•°æŒ‡å®š
 				$data = $this->text_sanitizer_for_sql( $data ) ;
 				if( $field < 1 ) $field = 255 ;
 				$data = mb_strcut( $data , 0 , $field ) ;
 		}
 
-		// ºÇ¸å¤Ëaddslashes
+		// æœ€å¾Œã«addslashes
 		$data = addslashes( $data ) ;
 
 		$ret .= "$col='$data'," ;
 	}
 
-	// ºÇ¸å¤Î , ¤òºï½ü
+	// æœ€å¾Œã® , ã‚’å‰Šé™¤
 	$ret = substr( $ret , 0 , -1 ) ;
 
 	return $ret ;
@@ -1215,10 +1239,10 @@ function get_sql_set( $event , $cols )
 
 
 
-// mb_convert_kana¤Î½èÍı
+// mb_convert_kanaã®å‡¦ç†
 function mb_convert_kana( $str , $option )
 {
-	// convert_kana ¤Î½èÍı¤Ï¡¢ÆüËÜ¸ì¤Ç¤Î¤ß¹Ô¤¦
+	// convert_kana ã®å‡¦ç†ã¯ã€æ—¥æœ¬èªã§ã®ã¿è¡Œã†
 	if( $this->language != 'japanese' || ! function_exists( 'mb_convert_kana' ) ) {
 		return $str ;
 	} else {
@@ -1228,15 +1252,15 @@ function mb_convert_kana( $str , $option )
 
 
 
-// ¥µ¥Ë¥¿¥¤¥º´ØÏ¢¤Î´Ø¿ô (¥µ¥Ö¥¯¥é¥¹¤òºîÀ®¤¹¤ë»ş¤ÎOverrideÂĞ¾İ)
+// ã‚µãƒ‹ã‚¿ã‚¤ã‚ºé–¢é€£ã®é–¢æ•° (ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹æ™‚ã®Overrideå¯¾è±¡)
 
 function textarea_sanitizer_for_sql( $data )
 {
-	// '\n' ¤ò "\n" ¤Ë¤¹¤ë
+	// '\n' ã‚’ "\n" ã«ã™ã‚‹
 	$data = str_replace( '\n' , "\n" , $data ) ;
 
 	if( class_exists( 'MyTextSanitizer' ) ) {
-		// XOOPS¤Î¥µ¥Ë¥¿¥¤¥¶¥¯¥é¥¹¤¬¤¢¤ì¤Ğ¡¢¸ÄÊÌ¤Ëbb code¥¿¥°¤Ø¤ÎÊÑ´¹¤ò¤·¤Æ¤ß¤ë
+		// XOOPSã®ã‚µãƒ‹ã‚¿ã‚¤ã‚¶ã‚¯ãƒ©ã‚¹ãŒã‚ã‚Œã°ã€å€‹åˆ¥ã«bb codeã‚¿ã‚°ã¸ã®å¤‰æ›ã‚’ã—ã¦ã¿ã‚‹
 		$search = array (
 			"/mailto:(\S+)(\s)/i" ,
 			"/http:\/\/(\S+)(\s)/i"
@@ -1248,18 +1272,18 @@ function textarea_sanitizer_for_sql( $data )
 		$data = preg_replace( $search , $replace , $data ) ;
 		return strip_tags( $data ) ;
 	} else {
-		// ¤Ê¤±¤ì¤Ğ¡¢Ã±¤ËÁ´¥¿¥°¤òÌµ¸ú¤È¤¹¤ë
+		// ãªã‘ã‚Œã°ã€å˜ã«å…¨ã‚¿ã‚°ã‚’ç„¡åŠ¹ã¨ã™ã‚‹
 		return strip_tags( $data ) ;
 	}
 }
 
 function text_sanitizer_for_sql( $data )
 {
-	// Á´¥¿¥°¤òÌµ¸ú¤È¤¹¤ësanitize
-	// ¼Âºİ¤Ë¤Ï¡¢Outlook¤Ê¤É¤Ç¤Ï¥¿¥°¤òÄ¾½ñ¤­¤¹¤ë¤Î¤Ç¡¢²èÌÌ½ĞÎÏ¤Î¥µ¥Ë¥¿¥¤¥º¤µ¤¨
-	// ¤­¤Á¤ó¤È¹Ô¤ï¤ì¤Æ¤¤¤ë¤Î¤Ç¤¢¤ì¤Ğ¡¢¤³¤³¤Ç¤Îstrip_tags ¤Ï¾Ã¤·¤Æ¤âÎÉ¤¤¤Ï¤º
+	// å…¨ã‚¿ã‚°ã‚’ç„¡åŠ¹ã¨ã™ã‚‹sanitize
+	// å®Ÿéš›ã«ã¯ã€Outlookãªã©ã§ã¯ã‚¿ã‚°ã‚’ç›´æ›¸ãã™ã‚‹ã®ã§ã€ç”»é¢å‡ºåŠ›ã®ã‚µãƒ‹ã‚¿ã‚¤ã‚ºã•ãˆ
+	// ãã¡ã‚“ã¨è¡Œã‚ã‚Œã¦ã„ã‚‹ã®ã§ã‚ã‚Œã°ã€ã“ã“ã§ã®strip_tags ã¯æ¶ˆã—ã¦ã‚‚è‰¯ã„ã¯ãš
 	return strip_tags( $data ) ;
-	
+
 }
 
 

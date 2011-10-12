@@ -462,7 +462,9 @@ function	setType( $type = "" )
 			//	========= [ OPEN TAG ] =========
 
 			//	check for any <patTemplate:...> Tag by using RegExp
-			if	( eregi( "<patTemplate:([[:alnum:]]+)[[:space:]]*(.*)>", $line, $regs ) )			
+//HACK by domifara for 5.3+
+//			if	( eregi( "<patTemplate:([[:alnum:]]+)[[:space:]]*(.*)>", $line, $regs ) )
+			if	( preg_match( "/<patTemplate:([[:alnum:]]+)[[:space:]]*(.*)>/i", $line, $regs ) )
 			{
 				//	Get Tag name and attributes
 				$tagname	=	strtolower( $regs[1] );
@@ -504,7 +506,9 @@ function	setType( $type = "" )
 			//	========= [ CLOSING TAG ] =========
 
 			//	Check if a closing <patTemplate:...> Tag has been found
-			elseif	( eregi( "</patTemplate:([[:alnum:]]+)>", $line, $regs ) )
+//HACK by domifara for 5.3+
+//			elseif	( eregi( "</patTemplate:([[:alnum:]]+)>", $line, $regs ) )
+			elseif	( preg_match( "/<\/patTemplate:([[:alnum:]]+)>/i", $line, $regs ) )
 			{
 				//	Yes => get the tagname
 				$tagname	=	strtolower( $regs[1] );

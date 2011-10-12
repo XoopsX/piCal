@@ -2,7 +2,7 @@
 require_once XOOPS_TRUST_PATH.'/modules/d3forum/class/D3commentAbstract.class.php' ;
 
 // a class for d3forum comment integration
-if( !class_exists('piCalD3commentContent') ) 
+if( !class_exists('piCalD3commentContent') )
 {
 	class piCalD3commentContent extends D3commentAbstract
 	{
@@ -22,7 +22,7 @@ if( !class_exists('piCalD3commentContent') )
 
 			$MOD_PATH = XOOPS_ROOT_PATH .'/modules/'. $mydirname;
 
-			if( ! class_exists( 'piCal_xoops' ) ) 
+			if( ! class_exists( 'piCal_xoops' ) )
 			{
 				require_once( $MOD_PATH .'/class/piCal.php' ) ;
 				require_once( $MOD_PATH .'/class/piCal_xoops.php' ) ;
@@ -40,7 +40,9 @@ if( !class_exists('piCalD3commentContent') )
 			}
 
 			$subject = $myts->makeTboxData4Show( $content_row['summary'] );
-			$uri = XOOPS_URL.'/modules/'.$mydirname.'/index.php?action=View&amp;event_id='.$eventcomment_id;
+//HACK by domifara
+//			$uri = XOOPS_URL.'/modules/'.$mydirname.'/index.php?action=View&amp;event_id='.$eventcomment_id;
+			$uri = XOOPS_URL.'/modules/'.$mydirname.'/index.php?action=View&event_id='.$eventcomment_id;
 			$str = strip_tags($myts->displayTarea(strip_tags($content_row['description'])));
 			$summary = xoops_substr( $str , 0 , 255 );
 
@@ -64,7 +66,7 @@ if( !class_exists('piCalD3commentContent') )
 
 			$MOD_PATH = XOOPS_ROOT_PATH .'/modules/'. $mydirname;
 
-			if( ! class_exists( 'piCal_xoops' ) ) 
+			if( ! class_exists( 'piCal_xoops' ) )
 			{
 				require_once( $MOD_PATH .'/class/piCal.php' ) ;
 				require_once( $MOD_PATH .'/class/piCal_xoops.php' ) ;

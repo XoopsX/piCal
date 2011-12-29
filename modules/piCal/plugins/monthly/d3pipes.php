@@ -44,6 +44,7 @@
 	$union_obj->setModConfigs( $configs ) ;
 	$entries = $union_obj->execute( array() , $max_entries ) ;
 	$pipes_entries = method_exists( $union_obj , 'getPipesEntries' ) ? $union_obj->getPipesEntries() : array() ;
+//var_dump($entries);
 	$errors = $union_obj->getErrors() ;
 
 	foreach( $entries as $entry ) {
@@ -57,7 +58,8 @@
 		}
 
 		$user_time = $entry['pubtime'] + $tzoffset_s2u ;
-		if( $range_start_s <= $user_time && $user_time < $range_end_s ) {
+		//if( $range_start_s <= $user_time && $user_time < $range_end_s && ) {
+		if( date( 'n' , $user_time ) == $this->month ) {
 			$target_date = date('j',$user_time) ;
 			$tmp_array = array(
 				'dotgif' => $plugin['dotgif'] ,

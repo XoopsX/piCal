@@ -1,4 +1,8 @@
 piCal-0.93 hacked contents
+ - 2011/12/28
+  -- added d3diary plugins
+  -- fixed d3pipes monthly plugin that displayed each monthes last date's entry to next month.
+
  - 2011/09/16
   -- added plugins for d3pipes
   -- Work on PHP5.3 and MySQL5.5 or less version of PHP5 and MySQL5.

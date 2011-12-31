@@ -513,6 +513,8 @@ $modversion['templates'][2]['file'] = "pical{$mydirnumber}_print.html";
 $modversion['templates'][2]['description'] = '';
 $modversion['templates'][3]['file'] = "pical{$mydirnumber}_event_list.html";
 $modversion['templates'][3]['description'] = '';
+$modversion['templates'][4]['file'] = "pical{$mydirnumber}_daily.html";
+$modversion['templates'][4]['description'] = '';
 
 
 // Notification

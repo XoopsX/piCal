@@ -101,6 +101,9 @@ class piCal
 	var $original_id ;	// $_GET['event_id']��������������ɎQ�Ɖ\
 
 	var $event = null ;	// event�̏o�̓f�[�^�i�[�p //naao
+	var $calenderBody = array();	// Yoshis
+	var $timeLine = array();		// Yoshis
+	var $events = array();			// Yoshis
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
@@ -833,46 +836,52 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 }
 
 
-
 // 一日カレンダー全体の表示（patTemplate使用)
 function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
-
-	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
-	require_once( "$this->base_path/include/patTemplate.php" ) ;
-	$tmpl = new PatTemplate() ;
-	$tmpl->readTemplatesFromFile( "$this->images_path/daily.tmpl.html" ) ;
-
-	// setting skin folder
-	$tmpl->addVar( "WholeBoard" , "SKINPATH" , $this->images_url ) ;
-
+	global $xoopsTpl,$xoopsOption;
+	
+	// Make Time block par 30min
+	$this->timeLine = array();
+	for($i=0;$i<86400;$i+=1800){
+		$t = strtotime($this->caldate)+$i;
+		$disp = $t%3600!=0 ? 0 : 1;
+		$this->timeLine[$t] = array(
+			'utime' => $t,
+			'start_hour'=>date("H",$t),
+			'start_min'=>date("i",$t),
+			'end_hour'=>date("H",$t)+1,
+			'end_min'=>date("i",$t),
+			'disp' => $disp,
+			'active'=> ($i>=32400 && $i<72000 ? 1 : 0)
+		);
+	}
 	// Static parameter for the request
-	$tmpl->addVar( "WholeBoard" , "GET_TARGET" , $get_target ) ;
-	$tmpl->addVar( "WholeBoard" , "QUERY_STRING" , $query_string ) ;
-	$tmpl->addVar( "WholeBoard" , "PRINT_LINK" , "$this->base_url/print.php?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$this->caldate" ) ;
-	$tmpl->addVar( "WholeBoard" , "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
-	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
+	$xoopsTpl->assign( "QUERY_STRING" , $query_string ) ;
+	$xoopsTpl->assign( "PRINT_LINK" , "$this->base_url/print.php?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$this->caldate" ) ;
+	$xoopsTpl->assign( "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
+	if( $for_print ) $xoopsTpl->assign( "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
 	// カテゴリー選択ボックス
-	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
-	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
+	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
+	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
+	$xoopsTpl->assign( "CID" , $this->now_cid ) ;
 
 	// Variables required in header part etc.
-	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'D' ) ) ;
-
-	$tmpl->addVar( "WholeBoard" , "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
+	$xoopsTpl->assign( "calInfo", $this->get_calendar_information( 'D' ) ) ;
 
 	// BODY of the calendar
-	$tmpl->addVar( "WholeBoard" , "CALENDAR_BODY" , $this->get_daily_html( $get_target , $query_string ) ) ;
-
+	$calBody = $this->get_daily_html( $get_target , $query_string ) ;
+	$xoopsTpl->assign( "CALENDAR_BODY" , $this->calenderBody ) ;
+	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
+	$xoopsTpl->assign( "events" , $this->events ) ;
+	$xoopsTpl->assign( "colspan" , count($this->events) ) ;
+	
 	// content generated from patTemplate
-	$ret = $tmpl->getParsedTemplate( "WholeBoard" ) ;
-
-	error_reporting( $original_level ) ;
-
-	return $ret ;
+	$xoopsTpl->assign( "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
+	$xoopsOption['template_main'] = "pical_daily.html" ;
 }
 
 
@@ -1521,23 +1530,7 @@ function get_daily_html( )
 
 	list( $bgcolor , $color ) =  $this->daytype_to_colors( $this->daytype ) ;
 
-	$ret = "
-	<table border='0' cellspacing='0' cellpadding='0'>
-	 <tr>
-	 <td class='calframe'>
-	 <table border='0' cellspacing='0' cellpadding='0' width='100%' style='margin:0px;'>
-	 <tr>
-	   <td colspan='8'><img src='$this->images_url/spacer.gif' alt='' height='10' /></td>
-	 </tr>
-	 <tr>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='350' /></td>
-	   <td colospan='7' valign='top' bgcolor='$bgcolor' style='$this->frame_css;background-color:$bgcolor'>
-	     <table border='0' cellpadding='0' cellspacing='0' style='margin:0px;'>
-	       <tr>
-	         <td><img src='$this->images_url/spacer.gif' alt='' width='120' height='10' /></td>
-	         <td><img src='$this->images_url/spacer.gif' alt='' width='440' height='10' /></td>
-	       </tr>
-	\n" ;
+	$ret = "" ;
 
 	// 時差を計算しつつ、WHERE節の期間に関する条件生成
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
@@ -1552,39 +1545,36 @@ function get_daily_html( )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 当日のスケジュール取得・表示
-	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
+	$sql = "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term)";
+	if ($whr_categories != "1") $sql .= " AND " . $whr_categories;
+	if ($whr_class != "1") $sql .= " AND " . $whr_class;
+	$sql .= " ORDER BY start,end";
+	$yrs = mysql_query( $sql, $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
-
-	if( $num_rows == 0 ) $ret .= "<tr><td></td><td>"._PICAL_MB_NOEVENT."</td></tr>\n" ;
-	else while( $event = mysql_fetch_object( $yrs ) ) {
-
+	if( $num_rows == 0 ) $ret .= _PICAL_MB_NOEVENT ;
+	else while( $event = mysql_fetch_object( $yrs ) ) {		
 		if( $event->allday ) {
 			// 全日イベント（時差計算なし）
-			$time_part = "             <img border='0' src='$this->images_url/dot_allday.gif' />" ;
+			$time_part = "<img border='0' src='$this->images_url/dot_allday.gif' />" ;
 		} else {
 			// 通常イベント（時差計算あり）
 			$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , true ) ;
 		}
-
 		// サニタイズ
 		$description = $this->textarea_sanitizer_for_show( $event->description ) ;
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
-
 		$summary_class = $event->allday ? "calsummary_allday" : "calsummary" ;
-
-		$ret .= "
-	       <tr>
-	         <td valign='top' align='center'>
-	           <pre style='margin:0px;'><font size='3'>$time_part</font></pre>
-	         </td>
-	         <td vlalign='top'>
-	           <font size='3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></font><br />
-	           <font size='2'>$description</font><br />
-	           &nbsp;
-	         </td>
-	       </tr>\n" ;
+		$this->calenderBody[] = array(
+			'time_part' => $time_part,
+			'cid' => $this->now_cid,
+			'smode' => 'Daily',
+			'action' => 'View',
+			'event_id' => $event->id,
+			'caldate' => $this->caldate,
+			'summary' => $summary,
+			'description' => $description,
+		);
 	}
-
 	// 未承認スケジュール取得・表示（uidが一致するゲスト以外のレコードのみ）
 	if( $this->isadmin || $this->user_id > 0 ) {
 	  $whr_uid = $this->isadmin ? "1" : "uid=$this->user_id " ;
@@ -1594,7 +1584,7 @@ function get_daily_html( )
 
 		if( $event->allday ) {
 			// 全日イベント
-			$time_part = "             <img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
+			$time_part = "<img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
 		} else {
 			// 通常イベント
 			$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , false ) ;
@@ -2024,10 +2014,10 @@ function get_schedule_edit_html( )
 		$categories = $this->now_cid > 0 ? sprintf( "%05d," , $this->now_cid ) : '' ;
 		$start_ymd = $end_ymd = $this->caldate ;
 		$start_long_ymdn = $end_long_ymdn = $this->get_long_ymdn( $this->unixtime ) ;
-		$start_hour = 9 ;
-		$start_min = 0 ;
-		$end_hour = 17 ;
-		$end_min = 0 ;
+		$start_hour = isset($_GET['start_hour']) ? intval($_GET['start_hour']) :  9 ;
+		$start_min = isset($_GET['start_min']) ? intval($_GET['start_min']) :  0 ;
+		$end_hour = isset($_GET['end_hour']) ? intval($_GET['end_hour']) : 17 ;
+		$end_min = isset($_GET['end_min']) ? intval($_GET['end_min']) :  0 ;
 		$admission_status = _PICAL_MB_EVENT_NOTREGISTER ;
 		$update_button = '' ;
 		$insert_button = "<input name='insert' type='submit' value='"._PICAL_BTN_NEWINSERTED."' />" ;
@@ -2783,7 +2773,26 @@ function get_todays_time_description( $start , $end , $ynj , $justify = true , $
 
 	return $ret ;
 }
-
+private function makeTimeLine($start,$end,$event){
+	$cnt=0;
+	foreach($this->timeLine as $key=>$val){
+		if ($key>=$start && $key<$end){
+			if ($cnt==0){
+				$this->timeLine[$key]['event'][] = array(
+					'id' => $event->id,
+					'cid' => $this->now_cid,
+					'caldate' => $this->caldate,
+					'summary' => $event->summary,
+					'description' => $event->description
+				);
+			}
+			$cnt++;
+			//echo date("H:i",$key) ."[". $event_id . "]<br />";
+		}
+	}
+	//var_dump($this->timeLine); die;
+	return $cnt;
+}
 
 // $eventクエリ結果から、ある日の予定時間の文字列を得る（通常イベントのみ）
 function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justify = true , $admission = true )
@@ -2816,6 +2825,15 @@ function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justi
 		if( $event->is_end_date ) $ret = "$dot {$stuffing}"._PICAL_MB_TIMESEPARATOR."{$end_desc}" ;
 		else $ret = "$dot "._PICAL_MB_CONTINUING ;
 	}
+	$cnt = $this->makeTimeLine($start,$end,$event);
+	$this->events[$event->id]=array(
+		'dat'=>$dot,
+		'start'=>$start,
+		'end'=>$end,
+		'cid'=>$this->now_cid,
+		'caldate'=>$this->caldate,
+		'rowspan'=>$cnt
+	);
 
 	return $ret ;
 }

@@ -25,7 +25,8 @@
 	// setting physical & virtual paths
 	$mod_path = XOOPS_ROOT_PATH."/modules/$mydirname" ;
 	$mod_url = XOOPS_URL."/modules/$mydirname" ;
-
+	$xoopsTpl->assign( "mod_url" , $mod_url ) ;
+	
 	// クラス定義の読み込み
 	if( ! class_exists( 'piCal_xoops' ) ) {
 		require_once( "$mod_path/class/piCal.php" ) ;

@@ -13,6 +13,9 @@ define('_MB_PICAL_ALT_PRINTTHISEVENT',"印刷する");
 // print.php
 define('_MB_PICAL_COMESFROM',"この予定は %s にて作成されました");
 
+// It shuld be set on languages/ja_utf8/calender.php
+define('_CAL_MONTH',"月");
+define('_CAL_DAY',"日");
 
 }
 

@@ -33,11 +33,17 @@ table#calbody tr.week_header {
 table#calbody tr {
     height: 100px;
 }
+table#calbody_weekly tr {
+    height: 40px;
+}
 table#calbody tr.active {
     height: 1em;
 }
 table#calbody tr.inactive {
     height: auto;
+}
+tablex#calbody th.weekday {
+	color: #fff;
 }
 table#calbody th.sunday {
 	color: #dc143c;
@@ -48,7 +54,6 @@ table#calbody th.saturday {
 table#calbody a {
     color: #444444;
 }
-
 table#calbody td{
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
@@ -67,7 +72,6 @@ table#calbody a {
 	position:relative;
 	float:left;
 }
-
 table#calbody p.holiday{
 	color: red;
     font-size: .75em;
@@ -112,6 +116,143 @@ table#calbody a.event {
     font-size: 1em;
     font-style: normal;
 }
+div#calbody_weekly {
+    width: 100%;
+}	
+div#weekly_clear {
+	clear: both;
+}
+div#calbody_weekly div#weekly_body_left{
+	float: left;
+    border-top: solid 1px #999;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+	border-bottom: dotted 1px #999;
+	text-align: center;
+    height: 30px;
+	width: 10%;
+	color: #333;
+}
+div#calbody_weekly div#left_title{
+	float: left;
+    border-top: solid 1px #999;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+	border-bottom: dotted 1px #999;
+	text-align: center;
+    height: 30px;
+	width: 15%;
+	color: #333;
+}
+div#calbody_weekly div#left_btn{
+	margin: -25px 0 0 0;
+    position: relative;
+}    
+div#calbody_weekly div#weekly_body_left_helf{
+	float: left;
+    border-top: none;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+	border-bottom: solid 1px #999;
+	text-align: center;
+    height: 30px;
+	width: 10%;
+	color: #333;
+}
+div#calbody_weekly div#weekly_body{
+	float: left;
+    border-top: solid 1px #999;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+	border-bottom: dotted 1px #999;
+	font-size: 0.6em;
+    text-align: center;
+    width: 12.5%;
+    height: 30px;
+	color: #333;
+	position:relative;
+}
+div#calbody_weekly div#daily{
+	float: left;
+    border-top: solid 1px #999;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+	border-bottom: dotted 1px #999;
+	font-size: 0.6em;
+    text-align: center;
+    width: 84%;
+    height: 30px;
+	color: #333;
+	position:relative;
+}
+div#calbody_weekly div#weekly_body_helf{
+	float: left;
+    border-top: none;
+    border-left: solid 1px #999;
+    border-right: solid 1px #999;
+	border-bottom: solid 1px #999;
+	font-size: 0.6em;
+    text-align: center;
+    width: 12.5%;
+    height: 30px;
+	color: #333;
+	position:relative;
+}
+div#calbody_weekly div#weekly_body div#schedule{
+	position: relative;
+    margin:0px;
+    margin-top:-29px;
+    margin-left:27px;
+}
+div#calbody_weekly div#weekly_body_helf div#schedule{
+	position: relative;
+    margin:0px;
+    margin-top:-29px;
+    margin-left:27px;
+}
+div#weekly_heder_blank {
+	float: left;
+    border: solid 1px #999999;
+	width: 10%;
+	height: 30px;
+}
+div#calbody_weekly div.weekday {
+	float: left;
+	background-color: #ccc;
+    border: solid 1px #999999;
+	font-size: 0.85em;
+    text-align: center;
+	height: 30px;
+	width: 12.5%;
+}
+div#calbody_weekly div.weekday a{
+	color: #333;
+}
+div#calbody_weekly div.sunday {
+	float: left;
+	background-color: #ccc;
+    border: solid 1px #999999;
+	font-size: 0.85em;
+	text-align: center;
+	height: 30px;
+	width: 12.5%;
+}
+div#calbody_weekly div.sunday a{
+	color: #dc143c;
+}
+div#calbody_weekly div.saturday {
+	float: left;
+	background-color: #ccc;
+    border: solid 1px #999999;
+	font-size: 0.85em;
+	text-align: center;
+	height: 30px;
+	width: 12.5%;
+}
+div#calbody_weekly div.saturday q{
+	color: #3333cd;
+}
+
 /*
 ** for mini calender
 */

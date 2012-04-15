@@ -63,14 +63,9 @@ $tpl->assign('lang_comesfrom', sprintf(_MB_PICAL_COMESFROM, $xoopsConfig['sitena
 
 
 // ページ表示関連の処理分け
-//+2012/1/09 11:04:05 ,uid=unkown ,ip=207.46.204.242 ,host=msnbot-207-46-204-242.search.msn.com ,mid=94(piCal)
-// Notice [PHP]: Undefined index: smode in file modules/piCal/print.php line 68
-
-$smode = isset($_GET['smode']) ? $myts->stripSlashesGPC($_GET['smode']) : '';
-$event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
-if( ! empty( $event_id ) ) {
+if( ! empty( $_GET['event_id'] ) ) {
 	$tpl->assign('contents', $cal->get_schedule_view_html( true ) ) ;
-} else switch( $smode ) {
+} else switch( $_GET['smode'] ) {
 	case 'Yearly' :
 		$tpl->assign('for_event_list', false ) ;
 		$tpl->assign('contents', $cal->get_yearly( '' , '' , true ) ) ;

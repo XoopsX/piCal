@@ -28,53 +28,55 @@
 			<img src='<{$mod_url}>/images/default/list_on.gif' border='0' width='30' height='24' alt='<{$calInfo.ICON_LIST}>' title='<{$calInfo.ICON_LIST}>' />
 		</a>
 	</div>
-	<ui>
-	<{foreach from=$CALENDAR_BODY item=c}>
-		<li>
-		<{$c.time_part}>
-	    <a href='?cid=<{$c.cid}>&amp;smode=Daily&amp;action=View&amp;event_id=<{$c.event_id}>&amp;caldate=<{$c.caldate}>' class='summary_class'>
-	    	<{$c.summary}>
-	    </a>
-		<{$c.description}>
-	    </li>
-    <{/foreach}>
-    </ui>
-	<table id='calbody'>
+	<div id='calbody_weekly'>
 	<{foreach from=$timeLine key=utime item=t}>
-		<{if $t.active}>
-		<tr class="active">
-		<th><{if $t.disp eq 1}><{$utime|date_format:"%H:%M"}><{/if}>
-		<a href='<{$mod_url}>?cid=<{$CID}>&amp;action=Edit&amp;caldate=<{$calInfo.CALDATE}>&amp;start_hour=<{$t.start_hour}>&amp;start_min=<{$t.start_min}>&amp;end_hour=<{$t.end_hour}>&amp;end_min=<{$t.end_min}>'>[+]</a>
-		</th>
-		<{else}>
-		<tr class="inactive">
-		<th><{if $t.disp eq 1}><{$utime|date_format:"%H:%M"}><{/if}></th>
-		<{/if}>
-		<{if $t.event}>
+	  <{if $t.active}>
+		<div id='left_title'>
+		  <{if $t.disp eq 1}><{$utime|date_format:"%H:%M"}><{else}>&nbsp;<{/if}>
+		  <div id='left_btn'>
+		  <form name="form<{$utime}>" method="POST" action="index.php">
+		    <input TYPE="image" src="<{$mod_url}>/images/weeklyentry.png" VALUE="submit" alt="submit" border="0">
+			<{$ticket}>
+			<input type="hidden" name="caldate" value="<{$calInfo.CALDATE}>">
+			<input type="hidden" name="poster_tz" value="" />
+			<input type="hidden" name="StartDate" value="<{$calInfo.CALDATE}>">
+			<input type="hidden" name="StartHour" value="<{$t.start_hour}>">
+			<input type="hidden" name="StartMin" value="<{$t.start_min}>">
+			<input type="hidden" name="EndDate" value="<{$calInfo.CALDATE}>">
+			<input type="hidden" name="EndHour" value="<{$t.end_hour}>">
+			<input type="hidden" name="EndMin" value="<{$t.end_min}>">
+			<input type="hidden" name="description_text" value="">
+			<input type="hidden" name="insert" value="1">
+			<input type="hidden" name="action" value="Edit">
+			<input type="hidden" name="cid" value="<{$CID}>">
+          </form>
+          </div>
+		</div>
+		<div id='daily'>
+		  <{if $t.event}>
+            <div id='schedule'>
+			<{math equation="floor(1 / x * 99.5)" x=$t.event|@count assign=tagw}>
 			<{foreach from=$t.event item=e}>
-			<td rowspan="<{$events[$e.id].rowspan}>" class="event">
-				<a href='<{$mod_url}>?cid=<{$e.cid}>&amp;smode=Daily&amp;action=View&amp;event_id=<{$e.id}>&amp;caldate=<{$e.caldate}>'>
+              <div style="float:left; width:<{$tagw}>%; margin: 0; height:<{$e.time_span}>px; background-color:#ffffcc; border: solid 1px #666; filter: alpha(opacity=85); opacity:0.85;">
+				<{if $e.link}>
+					<a href='<{$e.link}>'><{$e.image}>
+				<{else}>
+					<a href='<{$mod_url}>?cid=<{$e.cid}>&amp;smode=Daily&amp;action=View&amp;event_id=<{$e.id}>&amp;caldate=<{$e.caldate}>'>
+			    <{/if}>
 			    <b><{$e.summary}></b>&nbsp;<{$e.description}>
 				</a>
-			</td>
+		      </div>
 			<{/foreach}>
-			<{*
-			<{assign var="curcol" value=$t.event|@count}>
-			<{assign var="addcol" value=$colspan-$curcol}>
-			<{if $addcol==1}>
-				<td>&nbsp;</td>
-			<{elseif $addcol>1}>
-				<td colspan="<{$addcol}>">&nbsp;</td>
-			<{/if}>
-			*}>
-		<{else}>
-			<{*
-			<td colspan="<{$colspan}>">&nbsp;</td>
-			*}>
-		<{/if}>
-		</tr>
+			</div>
+		  <{/if}>
+		</div>
+		<div id='weekly_clear'></div>
+      <{/if}>
     <{/foreach}>
-    </table>
+    
+
+    
+    </div>
 	<br />
 	<div align="center">
 		<form action='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;<{$calInfo.QUERY_STRING}>' method='post'>

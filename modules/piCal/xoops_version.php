@@ -36,10 +36,10 @@ $mydirnumber = $regs[2] === '' ? '' : intval( $regs[2] ) ;
 
 
 $modversion['name'] = _MI_PICAL_NAME . $mydirnumber ;
-$modversion['version'] = 0.95;
+$modversion['version'] = 0.94;
 $modversion['description'] = _MI_PICAL_DESC;
-$modversion['credits'] = "GIJ at PEAK Corp. (www.peak.ne.jp)";
-$modversion['author'] = "GIJ, Yoshis(Bluemoon inc.)" ;
+$modversion['credits'] = "PEAK Corp.";
+$modversion['author'] = "GIJ=CHECKMATE<br />PEAK Corp.(http://www.peak.ne.jp/)" ;
 $modversion['help'] = "" ;
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 0;
@@ -517,6 +517,9 @@ $modversion['templates'][4]['file'] = "pical{$mydirnumber}_daily.html";
 $modversion['templates'][4]['description'] = '';
 $modversion['templates'][5]['file'] = "pical{$mydirnumber}_weekly.html";
 $modversion['templates'][5]['description'] = '';
+$modversion['templates'][6]['file'] = "pical{$mydirnumber}_edit.html";
+$modversion['templates'][6]['description'] = '';
+
 
 // Notification
 $modversion['hasNotification'] = 1;

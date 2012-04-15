@@ -105,6 +105,7 @@ class piCal
 	var $calenderBody = array();	// Yoshis
 	var $timeLine = array();		// Yoshis
 	var $events = array();			// Yoshis
+	var $activeStart = 32400;
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
@@ -793,7 +794,25 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	return $ret ;
 }
 
-
+private function Timetable(){
+	// Make Time block par 30min
+	$timeTable = array();
+	for($i=0;$i<86400;$i+=1800){
+		$t = $i;
+		$te = $i+1800;
+		$disp = $t % 3600 != 0 ? 0 : 1;
+		$timeTable[$t] = array(
+			'utime' => $t,
+			'start_hour'=>gmdate("H",$t),
+			'start_min'=>gmdate("i",$t),
+			'end_hour'=>gmdate("H",$te),
+			'end_min'=>gmdate("i",$te),
+			'disp' => $disp,
+			'active'=> ($i>=32400 && $i<72000 ? 1 : 0)
+		);
+	}
+	return $timeTable;
+}
 
 // 週間カレンダー全体の表示（patTemplate使用)
 function get_weekly( $get_target = '' , $query_string = '' , $for_print = false )
@@ -831,10 +850,13 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	
 	// BODY of the calendar
 	$calBody = $this->get_weekly_html( $get_target , $query_string );
-	$xoopsTpl->assign( "CALENDAR_BODY" , $calBody);//$this->calenderBody ) ;
+	//var_dump($calBody);die;
+	$xoopsTpl->assign( "calBody" , $calBody);//$this->calenderBody ) ;
 	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
+	$xoopsTpl->assign( "timeTable" , $this->timeTable() ) ;
 	$xoopsTpl->assign( "events" , $this->events ) ;
-	
+	$xoopsTpl->assign( "ticket" , $GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ ) ) ;
+		
 	// content generated from patTemplate
 	$xoopsTpl->assign( "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
 	$xoopsOption['template_main'] = "pical_weekly.html" ;
@@ -886,10 +908,11 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 
 	// BODY of the calendar
 	$calBody = $this->get_daily_html( $get_target , $query_string ) ;
-	$xoopsTpl->assign( "CALENDAR_BODY" , $calBody);//$this->calenderBody ) ;
+	$xoopsTpl->assign( "calBody" , $calBody);//$this->calenderBody ) ;
 	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
 	$xoopsTpl->assign( "events" , $this->events ) ;
 	$xoopsTpl->assign( "colspan" , count($this->events) ) ;
+	$xoopsTpl->assign( "ticket" , $GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ ) ) ;
 	
 	// content generated from patTemplate
 	$xoopsTpl->assign( "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
@@ -1239,13 +1262,12 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 // カレンダーの本体を返す（１週間分）
 function get_weekly_html( ){
-	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
-
-	$ret = "" ;
 	$wtop_date = $this->date - ( $this->day - $this->week_start + 7 ) % 7 ;
+	$wday_start = $this->week_start;
+	$wday_end = 7 + $this->week_start;
 	$wtop_unixtime = mktime(0,0,0,$this->month,$wtop_date,$this->year) ;
 	$wlast_unixtime = mktime(0,0,0,$this->month,$wtop_date+7,$this->year) ;
-
+	$ret = "" ;
 	// get the result of plugins
 	$plugin_returns = array() ;
 	if( strtolower( get_class( $this ) ) == 'pical_xoops' ) {
@@ -1313,17 +1335,16 @@ function get_weekly_html( ){
 
 	// カレンダーBODY部表示
 	$now_date = $wtop_date ;
-	$wday_end = 7 + $this->week_start ;
 	$weekList=array();
 	$this->calenderBody = array();
-	for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ , $now_date ++ ) {
+	for( $wday = $wday_start ; $wday < $wday_end ; $wday ++ , $now_date ++ ) {
 		$now_unixtime = mktime( 0 , 0 , 0 , $this->month , $now_date , $this->year ) ;
 		$toptime_of_day = $now_unixtime + $this->day_start - $tzoffset ;
 		$bottomtime_of_day = $toptime_of_day + 86400 ;
 		$link = date( "Y-n-j" , $now_unixtime ) ;
 		$day = date( "j" , $now_unixtime ) ;
-		$disp = $this->get_middle_md( $now_unixtime ) ;
-		$disp .= "<br />({$this->week_middle_names[$wday]})" ;
+		$disp = $this->get_short_d( $now_unixtime ) ;
+		$disp .= "&nbsp;({$this->week_middle_names[$wday]})" ;
 		$date_part_append = '' ;
 		// スケジュール表示部のテーブル開始
 		// 承認済みスケジュールデータの表示ループ
@@ -1355,7 +1376,7 @@ function get_weekly_html( ){
 				$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , true ) ;
 				$summary_class = "calsummary" ;
 			}
-			$this->calenderBody[] = array(
+			$this->calenderBody[$event->start][] = array(
 					'time_part' => $time_part,
 					'cid' => $this->now_cid,
 					'smode' => 'Weekly',
@@ -1363,6 +1384,7 @@ function get_weekly_html( ){
 					'event_id' => $event->id,
 					'caldate' => $this->caldate,
 					"class"		=> $summary_class,
+					'time_span' => ($event->end - $event->start) / 60,
 					'summary' => $summary
 			);
 		}
@@ -1382,7 +1404,7 @@ function get_weekly_html( ){
 					$event->is_start_date = $event->start >= $toptime_of_day ;
 					$event->is_end_date = $event->end <= $bottomtime_of_day ;
 				}
-
+				
 				// サニタイズ
 				$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 				if( $event->allday ) {
@@ -1392,15 +1414,16 @@ function get_weekly_html( ){
 					// 通常イベント
 					$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , false ) ;
 				}
-				$this->calenderBody[$day][] = array(
-						'time_part' => $time_part,
-						'cid' => $this->now_cid,
-						'smode' => 'Weekly',
-						'action' => 'View',
-						'event_id' => $event->id,
-						'caldate' => $this->caldate,
-						"class"		=> $summary_class,
-						'summary' => $summary . "("._PICAL_MB_EVENT_NEEDADMIT.")"
+				$this->calenderBody[$this->caldate][] = array(
+					'time_part' => $time_part,
+					'cid' => $this->now_cid,
+					'smode' => 'Weekly',
+					'action' => 'View',
+					'event_id' => $event->id,
+					'caldate' => $this->caldate,
+					"class"		=> $summary_class,
+					'time_span' => ($event->end - $event->start) / 60,
+					'summary' => $summary . "("._PICAL_MB_EVENT_NEEDADMIT.")"
 				);
 			}
 		}
@@ -1408,7 +1431,7 @@ function get_weekly_html( ){
 		// drawing the result of plugins
 		if( ! empty( $plugin_returns[ $day ] ) ) {
 			foreach( $plugin_returns[ $day ] as $item ) {
-				$this->calenderBody[$day][] = array(
+				$this->calenderBody[$item['server_time']][] = array(
 					'time_part' => $day,
 					'cid' => null,
 					'smode' => 'Weekly',
@@ -1417,6 +1440,7 @@ function get_weekly_html( ){
 					'link' => $item['link'],
 					'image' => "<img src='".$this->images_url ."/". $item['dotgif']."' />",
 					'caldate' => $item['server_time'],
+					'time_span' => $item['close_time'] / 60 ,
 					'summary' => $item['title'],
 					'description' => $item['description']
 				);				
@@ -1457,6 +1481,7 @@ function get_weekly_html( ){
 			'css_class'        =>$css_class,
 		);
 	}
+	//var_dump($timeLine);die;
 	$this->timeLine = $timeLine;
 	return $this->calenderBody;
 }
@@ -1522,16 +1547,6 @@ function get_daily_html( )
 		$description = $this->textarea_sanitizer_for_show( $event->description ) ;
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 		$summary_class = $event->allday ? "calsummary_allday" : "calsummary" ;
-		$this->calenderBody[] = array(
-			'time_part' => $time_part,
-			'cid' => $this->now_cid,
-			'smode' => 'Daily',
-			'action' => 'View',
-			'event_id' => $event->id,
-			'caldate' => $this->caldate,
-			'summary' => $summary,
-			'description' => $description
-		);
 	}
 	// 未承認スケジュール取得・表示（uidが一致するゲスト以外のレコードのみ）
 	if( $this->isadmin || $this->user_id > 0 ) {
@@ -1561,25 +1576,14 @@ function get_daily_html( )
 				'id' => null,
 				'link' => $item['link'],
 				'caldate' => $item['server_time'],
+				'time_span' => $item['close_time'] / 60 ,
 				'summary' => $item['title'],
 				'description' => $item['description']
 			);
 			$this->makeTimeLine4plugin($item['server_time'],$item['server_time']+$item['close_time'],$event);
-			$this->calenderBody[] = array(
-				'time_part' => date("H:i",$item['user_time']),
-				'cid' => null,
-				'smode' => 'Daily',
-				'action' => 'View',
-				'event_id' => null,
-				'link' => $item['link'],
-				'image' => "<img src='".$this->images_url ."/". $item['dotgif']."' />",
-				'caldate' => $item['server_time'],
-				'summary' => $item['title'],
-				'description' => $item['description']
-			);
 		}
 	}
-	return $ret ;
+	return $this->calenderBody;
 }
 
 
@@ -2633,6 +2637,14 @@ function get_middle_md( $time )
 	) ;
 }
 
+// unixtimestampから、現在の言語で表現された標準長表記の MD を得る
+function get_short_d( $time )
+{
+	return sprintf(
+			_PICAL_FMT_D , // format
+			$this->date_short_names[ date( 'j' , $time ) ] // D
+	) ;
+}
 
 
 // unixtimestampから、現在の言語で表現された DHI を得る
@@ -2754,6 +2766,7 @@ private function makeTimeLine($start,$end,$event){
 					'cid' => $this->now_cid,
 					'link' => $event->link,				
 					'caldate' => $this->caldate,
+					'time_span' => ($end-$start)/60,
 					'summary' => $event->summary,
 					'description' => $event->description
 				);
@@ -2774,6 +2787,7 @@ private function makeTimeLine4plugin($start,$end,$event){
 					'cid' => null,
 					'link' => $event['link'],
 					'caldate' => $event['caldate'],
+					'time_span' => $event['time_span'],	
 					'summary' => $event['summary'],
 					'description' => $event['description'],
 					'rowspan'=>3
@@ -2823,6 +2837,7 @@ function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justi
 		'dat'=>$dot,
 		'start'=>$start,
 		'end'=>$end,
+		'time_span' => ($end - $start) / 60,			
 		'cid'=>$this->now_cid,
 		'caldate'=>$this->caldate,
 		'rowspan'=>$cnt

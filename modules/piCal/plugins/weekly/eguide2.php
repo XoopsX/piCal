@@ -27,19 +27,18 @@
 
 	// query
         $cond = isset($_GET['eid'])?" AND e.eid=".intval($_GET['eid']):"";
-	 $sql = "SELECT title,catname,e.eid,exid,IF(exdate,exdate,edate) edate,summary, 
-		IF(x.reserved,x.reserved,o.reserved)/IF(expersons,expersons,persons)*100, closetime FROM ".
-		$db->prefix("eguide")." e LEFT JOIN ".
-		$db->prefix("eguide_category")." c ON e.topicid=c.catid LEFT JOIN ".
-		$db->prefix("eguide_opt")." o ON e.eid=o.eid LEFT JOIN ".
-		$db->prefix("eguide_extent")." x ON e.eid=eidref 
+	$sql = "SELECT title,catname,e.eid,exid,
+IF(exdate,exdate,edate) edate,summary, 
+IF(x.reserved,x.reserved,o.reserved)/IF(expersons,expersons,persons)*100, closetime FROM ".
+	$db->prefix("eguide")." e LEFT JOIN ".
+	$db->prefix("eguide_category")." c ON e.topicid=c.catid LEFT JOIN ".
+	$db->prefix("eguide_opt")." o ON e.eid=o.eid LEFT JOIN ".
+	$db->prefix("eguide_extent")." x ON e.eid=eidref 
 WHERE ((edate BETWEEN $range_start_s AND $range_end_s AND exdate IS NULL) 
   OR exdate BETWEEN $range_start_s AND $range_end_s) 
 AND IF(exdate,exdate,edate) BETWEEN $range_start_s 
 AND $range_end_s AND status=0 $cond ORDER BY edate";
-        $result = $db->query( $sql ) ;
-echo $sql;die;
-
+	$result = $db->query( $sql ) ;
 if (!function_exists("eguide_marker")) {
 function eguide_marker($full, $dirname) {
     static $marker;
@@ -59,6 +58,7 @@ function eguide_marker($full, $dirname) {
 }
 
 	while( list( $title , $catname, $id , $sub, $edate , $description , $full, $close) = $db->fetchRow( $result ) ) {
+
 		if (($edate-$close)<$now) $full = -1;
 		$mark = eguide_marker($full, $plugin['dirname']);
 		$server_time = $edate;
@@ -67,6 +67,7 @@ function eguide_marker($full, $dirname) {
 		$target_date = date('j',$user_time) ;
 		$mark .= ' '.date('H:i',$user_time) ; // show time
 		$param ="eid=$id".(empty($sub)?'':"&amp;sub=$sub");
+		$timeList = date("H:i", $user_time) . " - " . date("H:i", $user_time+$close);
 		$tmp_array = array(
 			'dotgif' => $plugin['dotgif'] ,
 			'dirname' => $plugin['dirname'] ,
@@ -74,8 +75,9 @@ function eguide_marker($full, $dirname) {
 			'id' => $id ,
 			'server_time' => $server_time ,
 			'user_time' => $user_time ,
+			'close_time' => $close ,
 			'name' => 'eid' ,
-			'title' => $myts->makeTboxData4Show( $title )."&nbsp;".$catname,	//"$mark"
+			'title' => $timeList . $myts->makeTboxData4Show( $title ),	// ."&nbsp;". $myts->makeTboxData4Show( $catname ),	//
 			'description' => $myts->displayTarea( $description )
 		) ;
 

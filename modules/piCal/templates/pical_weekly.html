@@ -38,46 +38,76 @@
 	    </li>
     <{/foreach}>
     </ui>
-	<table id='calbody'>
-	<{foreach from=$timeLine key=day item=t}>
-		<{if $t.active}>
-			<tr class="active">
-			<th class="<{$t.css_class}>">
-			<{if $t.disp eq 1}>
-				<{$day}><{$smarty.const._CAL_DAY}>
-				<{$t.now_unixtime|date_format:"(%a)"}>
-			<{/if}>
+	<div id='calbody_weekly'>
+	  <div id='weekly_heder_blank'>&nbsp;</div>
+	  <{foreach from=$timeLine key=day item=t}>
+		<div class="<{$t.css_class}>">
+		  <a href='<{$mod_url}>/index.php?cid=<{$e.cid}>&amp;smode=Daily&amp;caldate=<{$t.date}>'>
+		    <{$t.disp}>
+		  </a>
+		  <{if $t.active}>
 			<a href='<{$mod_url}>?cid=<{$CID}>&amp;action=Edit&amp;caldate=<{$calInfo.CALDATE}>&amp;start_hour=<{$t.start_hour}>&amp;start_min=<{$t.start_min}>&amp;end_hour=<{$t.end_hour}>&amp;end_min=<{$t.end_min}>'>[+]</a>
-			</th>
-		<{else}>
-			<tr class="inactive">
-			<th class="<{$t.css_class}>">
-			<{if $t.disp eq 1}>
-				<{$day}><{$smarty.const._CAL_DAY}>
-				<{$t.now_unixtime|date_format:"(%a)"}>
-			<{/if}>
-			</th>
-		<{/if}>
-		<td>
-		<{if $CALENDAR_BODY[$day]}>
-			<{foreach from=$CALENDAR_BODY[$day] item=e}>
-				<{if $e.link}>
-					<a href='<{$e.link}>'><{$e.image}>
-				<{else}>
-					<a href='<{$mod_url}>/index.php?cid=<{$e.cid}>&amp;smode=Daily&amp;action=View&amp;event_id=<{$e.id}>&amp;caldate=<{$e.caldate}>'>
-			    <{/if}>
-			    <b><{$e.summary}></b>&nbsp;
-				</a>
-			<{/foreach}>
-			<br />
-		<{/if}>
-		<a href='<{$mod_url}>/index.php?cid=<{$e.cid}>&amp;smode=Daily&amp;caldate=<{$t.date}>'>
-		<img src='<{$mod_url}>/images/default/addevent.gif' border='0' width='14' height='12' />
-		</a>
-		</td>
-		</tr>
-    <{/foreach}>
-    </table>
+		  <{/if}>
+		</div>		
+      <{/foreach}>
+      <div id='weekly_clear'></div>
+	  <{foreach from=$timeTable key=min item=m}>
+	    <{if $m.active==1}>
+		  <{if $m.disp==1}>
+          <div id='weekly_body_left'>
+            <{$m.start_hour}>:<{$m.start_min}>
+          </div>
+          <{else}>
+          <div id='weekly_body_left_helf'>&nbsp;
+          </div>
+          <{/if}>
+          <{foreach from=$timeLine key=day item=t}>
+		    <{if $m.disp==1}>
+              <div id='weekly_body'>
+            <{else}>
+              <div id='weekly_body_helf'>
+            <{/if}>
+		    <form name="form<{$m.utime}>" method="POST" action="index.php">
+              <input TYPE="image" src="<{$mod_url}>/images/weeklyentry.png" VALUE="submit" alt="submit" border="0">
+              <{$ticket}>
+		      <input type="hidden" name="caldate" value="<{$t.link}>">
+		      <input type="hidden" name="poster_tz" value="" />
+		      <input type="hidden" name="StartDate" value="<{$t.link}>">
+		      <input type="hidden" name="StartHour" value="<{$m.start_hour}>">
+		      <input type="hidden" name="StartMin" value="<{$m.start_min}>">
+		      <input type="hidden" name="EndDate" value="<{$t.link}>">
+		      <input type="hidden" name="EndHour" value="<{$m.end_hour}>">
+		      <input type="hidden" name="EndMin" value="<{$m.end_min}>">
+		      <input type="hidden" name="description_text" value="">
+		      <input type="hidden" name="insert" value="1">
+		      <input type="hidden" name="action" value="Edit">
+		      <input type="hidden" name="smode" value="Weekly">
+		      <input type="hidden" name="cid" value="<{$CID}>">
+		    </form>
+            <div id='schedule'>
+		    <{assign var=i value=`$t.toptime_of_day+$m.utime`}> 
+		    <{if $calBody[$i]}>
+		      <{math equation="1 / x * 92" x=$calBody[$i]|@count assign=tagw}>
+              <{foreach from=$calBody[$i] key=cb item=cBody}>
+			      <{math equation="12 / x * y / 30 " x=$calBody[$i]|@count y=$cBody.time_span assign=mbtruncate_words}>
+                <div style="float:left; width:<{$tagw}>%; margin: 0; height:<{$cBody.time_span}>px; background-color:#ffffcc; border: solid 1px #666;">
+                <{if $cBody.link}>
+                  <a href='<{$cBody.link}>'>
+                <{else}>
+                  <a href='<{$mod_url}>/index.php?action=View&amp;event_id=<{$cBody.event_id}> >'>
+		        <{/if}>
+		        <b><{$cBody.summary|mbtruncate:$mbtruncate_words:""}></b>
+		        </a>
+		        </div>
+              <{/foreach}>
+		    <{/if}>
+            </div>
+	      </div>
+        <{/foreach}>
+	    <div id='weekly_clear'></div>
+      <{/if}>
+      <{/foreach}>
+    </div>	
 	<br />
 	<div align="center">
 		<form action='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;<{$calInfo.QUERY_STRING}>' method='post'>

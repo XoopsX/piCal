@@ -1,0 +1,91 @@
+    <!-- header -->
+	<div align="center">
+		<{$CATEGORIES_SELFORM}>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;caldate=<{$calInfo.PREV_MONTH}>'>
+			<img src='<{$mod_url}>/images/default/arrowleftleft.gif' width='18' height='14' border='0' alt='<{$smarty.const.MB_PREV_MONTH}>' title='<{$smarty.const.MB_PREV_MONTH}>' />
+		</a>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;caldate=<{$calInfo.PREV_DATE}>'>
+			<img src='<{$mod_url}>/images/default/arrowleft.gif' width='18' height='14' border='0' alt='<{$smarty.const.MB_PREV_DATE}>' title='<{$smarty.const.MB_PREV_DATE}>' />
+		</a>
+		<span class='calhead'><{$calInfo.YMD_TITLE}><{$calInfo.DISP_DAY}></span>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;caldate=<{$calInfo.NEXT_DATE}>'>
+			<img src='<{$mod_url}>/images/default/arrowright.gif' width='18' height='14' border='0' alt='<{$smarty.const.MB_NEXT_DATE}>' title='<{$smarty.const.MB_NEXT_DATE}>' />
+		</a>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;caldate=<{$calInfo.NEXT_MONTH}>'>
+			<img src='<{$mod_url}>/images/default/arrowrightright.gif' width='18' height='14' border='0' alt='<{$smarty.const.MB_NEXT_MONTH}>' title='<{$smarty.const.MB_NEXT_MONTH}>' />
+		</a>
+		<br />
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Yearly&amp;caldate=<{$calInfo.CALDATE}>'>
+			<img src='<{$mod_url}>/images/default/year_on.gif' border='0' width='30' height='24' alt='<{$calInfo.ICON_YEARLY}>' title='<{$calInfo.ICON_YEARLY}>' />
+		</a>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Monthly&amp;caldate=<{$calInfo.CALDATE}>'>
+			<img src='<{$mod_url}>/images/default/month_on.gif' border='0' width='30' height='24' alt='<{$calInfo.ICON_MONTHLY}>' title='<{$calInfo.ICON_MONTHLY}>' />
+		</a>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Weekly&amp;caldate=<{$calInfo.CALDATE}>'>
+			<img src='<{$mod_url}>/images/default/week_on.gif' border='0' width='30' height='24' alt='<{$calInfo.ICON_WEEKLY}>' title='<{$calInfo.ICON_WEEKLY}>' />
+		</a>
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=List&amp;caldate=<{$calInfo.CALDATE}>'>
+			<img src='<{$mod_url}>/images/default/list_on.gif' border='0' width='30' height='24' alt='<{$calInfo.ICON_LIST}>' title='<{$calInfo.ICON_LIST}>' />
+		</a>
+	</div>
+	<div id='calbody_weekly'>
+	<{foreach from=$timeLine key=utime item=t}>
+	  <{if $t.active}>
+		<div id='left_title'>
+		  <{if $t.disp eq 1}><{$utime|date_format:"%H:%M"}><{else}>&nbsp;<{/if}>
+		  <div id='left_btn'>
+		  <form name="form<{$utime}>" method="POST" action="index.php">
+		    <input TYPE="image" src="<{$mod_url}>/images/weeklyentry.png" VALUE="submit" alt="submit" border="0">
+			<{$ticket}>
+			<input type="hidden" name="caldate" value="<{$calInfo.CALDATE}>">
+			<input type="hidden" name="poster_tz" value="" />
+			<input type="hidden" name="StartDate" value="<{$calInfo.CALDATE}>">
+			<input type="hidden" name="StartHour" value="<{$t.start_hour}>">
+			<input type="hidden" name="StartMin" value="<{$t.start_min}>">
+			<input type="hidden" name="EndDate" value="<{$calInfo.CALDATE}>">
+			<input type="hidden" name="EndHour" value="<{$t.end_hour}>">
+			<input type="hidden" name="EndMin" value="<{$t.end_min}>">
+			<input type="hidden" name="description_text" value="">
+			<input type="hidden" name="insert" value="1">
+			<input type="hidden" name="action" value="Edit">
+			<input type="hidden" name="cid" value="<{$CID}>">
+          </form>
+          </div>
+		</div>
+		<div id='daily'>
+		  <{if $t.event}>
+            <div id='schedule'>
+			<{math equation="floor(1 / x * 99.5)" x=$t.event|@count assign=tagw}>
+			<{foreach from=$t.event item=e}>
+              <div style="float:left; width:<{$tagw}>%; margin: 0; height:<{$e.time_span}>px; background-color:#ffffcc; border: solid 1px #666; filter: alpha(opacity=85); opacity:0.85;">
+				<{if $e.link}>
+					<a href='<{$e.link}>'><{$e.image}>
+				<{else}>
+					<a href='<{$mod_url}>?cid=<{$e.cid}>&amp;smode=Daily&amp;action=View&amp;event_id=<{$e.id}>&amp;caldate=<{$e.caldate}>'>
+			    <{/if}>
+			    <b><{$e.summary}></b>&nbsp;<{$e.description}>
+				</a>
+		      </div>
+			<{/foreach}>
+			</div>
+		  <{/if}>
+		</div>
+		<div id='weekly_clear'></div>
+      <{/if}>
+    <{/foreach}>
+    
+
+    
+    </div>
+	<br />
+	<div align="center">
+		<form action='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily&amp;<{$calInfo.QUERY_STRING}>' method='post'>
+		<{$calInfo.YMD_SELECTS}>
+		<input type='submit' name='pical_jumpcaldate' value='<{$smarty.const._PICAL_BTN_JUMP}>'>
+		&nbsp; 
+		<a href='<{$mod_url}>?cid=<{$calInfo.CID}>&amp;smode=Daily'><{$smarty.const._PICAL_MB_LINKTODAY}></a>
+        </form>
+    	<{$calInfo.COPYRIGHT}>
+    	<a href="<{$calInfo.PRINT_LINK}>" target="_blank"><img src="<{$mod_url}>/images/default/print.gif" alt="<{$calInfo.LANG_PRINT}>" title="<{$calInfo.LANG_PRINT}>" border="0" <{$calInfo.PRINT_ATTRIB}> />
+    	</a>
+	</div>

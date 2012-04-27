@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-// piCal xoops用モジュール記述ファイル
+// piCal xoops逕ｨ繝｢繧ｸ繝･繝ｼ繝ｫ險倩ｿｰ繝輔ぃ繧､繝ｫ
 // xoops_version.php
 // by GIJ=CHECKMATE (PEAK Corp. http://www.peak.ne.jp/)
 
@@ -36,7 +36,7 @@ $mydirnumber = $regs[2] === '' ? '' : intval( $regs[2] ) ;
 
 
 $modversion['name'] = _MI_PICAL_NAME . $mydirnumber ;
-$modversion['version'] = 0.95;
+$modversion['version'] = 0.96;
 $modversion['description'] = _MI_PICAL_DESC;
 $modversion['credits'] = "Origin by PEAK Corp.[GIJ]";
 $modversion['author'] = "Yoshi Sakai at Bluemoon inc." ;
@@ -171,8 +171,7 @@ if( isset( $cal ) && strtolower( get_class( $cal ) ) == 'pical_xoops' ) {
 // Config Settings
 $modversion['hasconfig'] = 1;
 
-// 'name' が 'pical_' から始まらないものは、xoops側の設定
-$modversion['config'][1] = array( 
+// 'name' 縺�'pical_' 縺九ｉ蟋九∪繧峨↑縺�ｂ縺ｮ縺ｯ縲』oops蛛ｴ縺ｮ險ｭ螳�$modversion['config'][1] = array( 
 	'name'			=> 'users_authority' ,
 	'title'			=> '_MI_USERS_AUTHORITY' ,
 	'description'	=> '' ,
@@ -223,7 +222,7 @@ $modversion['config'][5] = array(
 ) ;
 
 
-// 'name' が 'pical_' から始まるものは、piCalオブジェクトのプロパティ
+// 'name' 縺�'pical_' 縺九ｉ蟋九∪繧九ｂ縺ｮ縺ｯ縲｝iCal繧ｪ繝悶ず繧ｧ繧ｯ繝医�繝励Ο繝代ユ繧｣
 $modversion['config'][6] = array( 
 	'name'			=> 'pical_locale' ,
 	'title'			=> '_MI_PICAL_LOCALE' ,

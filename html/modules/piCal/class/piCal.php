@@ -5,7 +5,6 @@
 // by GIJ=CHECKMATE (PEAK Corp. http://www.peak.ne.jp/)
 // refactoring by yoshis at bluemoon inc. http://www.bluemooninc.jp
 
-
 if( ! class_exists( 'piCal' ) ) {
 
 define( 'PICAL_COPYRIGHT' , "<a href='http://xoops.peak.ne.jp/' target='_blank'>piCal-0.8</a>" ) ;
@@ -106,6 +105,7 @@ class piCal
 	var $timeLine = array();		// Yoshis
 	var $events = array();			// Yoshis
 	var $activeStart = 32400;
+	var $weekstr=array('sunday','monday','tuesday','wednesday','thursday','friday','saturday');
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
@@ -794,7 +794,11 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	return $ret ;
 }
 
-private function Timetable(){
+private function mkTimeTable($openTime,$closeTime){
+	list($openHour, $openMin) = sscanf($openTime, "%d:%d");
+	list($closeHour, $closeMin) = sscanf($closeTime, "%d:%d");
+	$openT = $openHour * 3600 + $openMin * 60;
+	$closeT = $closeHour * 3600 + $closeMin * 60;
 	// Make Time block par 30min
 	$timeTable = array();
 	for($i=0;$i<86400;$i+=1800){
@@ -808,16 +812,77 @@ private function Timetable(){
 			'end_hour'=>gmdate("H",$te),
 			'end_min'=>gmdate("i",$te),
 			'disp' => $disp,
-			'active'=> ($i>=32400 && $i<72000 ? 1 : 0)
+			'active'=> ($i>=$openT && $i<72000 ? 1 : 0)
 		);
 	}
 	return $timeTable;
+}
+private function mkOpenClose($openTime,$closeTime){
+	list($openHour, $openMin) = sscanf($openTime, "%d:%d");
+	list($closeHour, $closeMin) = sscanf($closeTime, "%d:%d");
+	$openT = $openHour * 3600 + $openMin * 60;
+	$closeT = $closeHour * 3600 + $closeMin * 60;
+	return array($openT,$closeT);
+}
+private function loadCategoryWeeklyTable($cid){
+	global $xoopsDB;
+	$sql ="SELECT cat_style FROM ". $xoopsDB->prefix("pical_cat") . " WHERE cid=".$cid;
+	$ret = $xoopsDB->query($sql);
+	list($cat_style)=$xoopsDB->fetchRow($ret);
+	$weekstr = explode(",",$cat_style);
+	$ret = array();
+	foreach($weekstr as $w){
+		list($ws,$os,$cs)=sscanf($w,'%3s[%5s-%5s]');
+		$ret[$ws] = array($os,$cs);
+	}
+	return $ret;
+}
+private function snoop_multiMenuFlow(){
+	global $xoopsDB;
+	if(empty($_SESSION['multiMenuFlow'])) return;
+	foreach($_SESSION['multiMenuFlow'] as $flowArray){
+		foreach($flowArray as $k=>$v){
+			if (isset($v['stylist'])){
+				$sql="SELECT cid FROM ".$xoopsDB->prefix("pical_cat")." WHERE cat_title='".mysql_real_escape_string($v['stylist'])."'";
+				$ret=$xoopsDB->query($sql);
+				if($ret){
+					$cid=$xoopsDB->fetchRow($ret);
+					$this->now_cid=intval($cid);
+				}
+			}
+		}
+	}
+}
+private function mkWeeklyTable(){
+	global $xoopsModuleConfig;
+	//var_dump($_POST); die;
+	$weeklyTable = array();
+	$this->snoop_multiMenuFlow();
+	if ($this->now_cid>0){
+		$wt = $this->loadCategoryWeeklyTable($this->now_cid);
+		if (isset($wt['sun'])) $weeklyTable['sunday']    = $this->mkOpenClose($wt['sun'][0],	$wt['sun'][1]);
+		if (isset($wt['mon'])) $weeklyTable['monday'] 	 = $this->mkOpenClose($wt['mon'][0],	$wt['mon'][1]);
+		if (isset($wt['tue'])) $weeklyTable['tuesday']   = $this->mkOpenClose($wt['tue'][0],	$wt['tue'][1]);
+		if (isset($wt['wed'])) $weeklyTable['wednesday'] = $this->mkOpenClose($wt['wed'][0],	$wt['wed'][1]);
+		if (isset($wt['thu'])) $weeklyTable['thursday']  = $this->mkOpenClose($wt['thu'][0],	$wt['thu'][1]);
+		if (isset($wt['fri'])) $weeklyTable['friday'] 	 = $this->mkOpenClose($wt['fri'][0],	$wt['fri'][1]);
+		if (isset($wt['sat'])) $weeklyTable['saturday']  = $this->mkOpenClose($wt['sat'][0],	$wt['sat'][1]);
+	}else{
+		$weeklyTable['sunday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_sunday_open'],	$xoopsModuleConfig['pical_sunday_close']);
+		$weeklyTable['monday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_monday_open'],	$xoopsModuleConfig['pical_monday_close']);
+		$weeklyTable['tuesday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_tuesday_open'],	$xoopsModuleConfig['pical_tuesday_close']);
+		$weeklyTable['wednesday'] = $this->mkOpenClose($xoopsModuleConfig['pical_wednesday_open'],$xoopsModuleConfig['pical_wednesday_close']);
+		$weeklyTable['thursday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_thursday_open'],	$xoopsModuleConfig['pical_thursday_close']);
+		$weeklyTable['friday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_friday_open'],	$xoopsModuleConfig['pical_friday_close']);
+		$weeklyTable['saturday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_saturday_open'],$xoopsModuleConfig['pical_saturday_close']);
+	}
+	return $weeklyTable; 
 }
 
 // 週間カレンダー全体の表示（patTemplate使用)
 function get_weekly( $get_target = '' , $query_string = '' , $for_print = false )
 {
-	global $xoopsTpl,$xoopsOption;
+	global $xoopsTpl,$xoopsOption,$xoopsModuleConfig;
 	
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
@@ -838,6 +903,7 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
 	// カテゴリー選択ボックス
+	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
@@ -852,10 +918,13 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	$calBody = $this->get_weekly_html( $get_target , $query_string );
 	//var_dump($calBody);die;
 	$xoopsTpl->assign( "calBody" , $calBody);//$this->calenderBody ) ;
+	//var_dump($this->timeLine);die;
+	$xoopsTpl->assign( "weeklyTable" , $this->mkWeeklyTable());
 	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
-	$xoopsTpl->assign( "timeTable" , $this->timeTable() ) ;
+	$xoopsTpl->assign( "timeTable" , $this->mkTimeTable($xoopsModuleConfig['pical_day_open'],$xoopsModuleConfig['pical_day_close']) ) ;
 	$xoopsTpl->assign( "events" , $this->events ) ;
 	$xoopsTpl->assign( "ticket" , $GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ ) ) ;
+	$xoopsTpl->assign( "regularClosingDay", $xoopsModuleConfig['regular_closing_day']);
 		
 	// content generated from patTemplate
 	$xoopsTpl->assign( "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
@@ -900,7 +969,6 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 
 	// カテゴリー選択ボックス
 	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
-	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$xoopsTpl->assign( "CID" , $this->now_cid ) ;
 
 	// Variables required in header part etc.
@@ -908,7 +976,7 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 
 	// BODY of the calendar
 	$calBody = $this->get_daily_html( $get_target , $query_string ) ;
-	$xoopsTpl->assign( "calBody" , $calBody);//$this->calenderBody ) ;
+	$xoopsTpl->assign( "CALENDAR_BODY" , $calBody);//$this->calenderBody ) ;
 	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
 	$xoopsTpl->assign( "events" , $this->events ) ;
 	$xoopsTpl->assign( "colspan" , count($this->events) ) ;
@@ -1262,12 +1330,13 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 // カレンダーの本体を返す（１週間分）
 function get_weekly_html( ){
+	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
+
+	$ret = "" ;
 	$wtop_date = $this->date - ( $this->day - $this->week_start + 7 ) % 7 ;
-	$wday_start = $this->week_start;
-	$wday_end = 7 + $this->week_start;
 	$wtop_unixtime = mktime(0,0,0,$this->month,$wtop_date,$this->year) ;
 	$wlast_unixtime = mktime(0,0,0,$this->month,$wtop_date+7,$this->year) ;
-	$ret = "" ;
+
 	// get the result of plugins
 	$plugin_returns = array() ;
 	if( strtolower( get_class( $this ) ) == 'pical_xoops' ) {
@@ -1335,16 +1404,17 @@ function get_weekly_html( ){
 
 	// カレンダーBODY部表示
 	$now_date = $wtop_date ;
+	$wday_end = 7 + $this->week_start ;
 	$weekList=array();
 	$this->calenderBody = array();
-	for( $wday = $wday_start ; $wday < $wday_end ; $wday ++ , $now_date ++ ) {
+	for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ , $now_date ++ ) {
 		$now_unixtime = mktime( 0 , 0 , 0 , $this->month , $now_date , $this->year ) ;
 		$toptime_of_day = $now_unixtime + $this->day_start - $tzoffset ;
 		$bottomtime_of_day = $toptime_of_day + 86400 ;
 		$link = date( "Y-n-j" , $now_unixtime ) ;
 		$day = date( "j" , $now_unixtime ) ;
-		$disp = $this->get_short_d( $now_unixtime ) ;
-		$disp .= "&nbsp;({$this->week_middle_names[$wday]})" ;
+		$title = $this->get_short_d( $now_unixtime ) ;
+		$title .= "&nbsp;({$this->week_middle_names[$wday]})" ;
 		$date_part_append = '' ;
 		// スケジュール表示部のテーブル開始
 		// 承認済みスケジュールデータの表示ループ
@@ -1383,12 +1453,11 @@ function get_weekly_html( ){
 					'action' => 'View',
 					'event_id' => $event->id,
 					'caldate' => $this->caldate,
-					"class"		=> $summary_class,
+					'class'		=> $summary_class,
 					'time_span' => ($event->end - $event->start) / 60,
 					'summary' => $summary
 			);
 		}
-
 		// 未承認スケジュールの表示ループ（uidが一致するゲスト以外のレコードのみ）
 		if( $this->isadmin || $this->user_id > 0 ) {
 
@@ -1421,13 +1490,12 @@ function get_weekly_html( ){
 					'action' => 'View',
 					'event_id' => $event->id,
 					'caldate' => $this->caldate,
-					"class"		=> $summary_class,
+					'class'		=> $summary_class,
 					'time_span' => ($event->end - $event->start) / 60,
 					'summary' => $summary . "("._PICAL_MB_EVENT_NEEDADMIT.")"
 				);
 			}
 		}
-
 		// drawing the result of plugins
 		if( ! empty( $plugin_returns[ $day ] ) ) {
 			foreach( $plugin_returns[ $day ] as $item ) {
@@ -1471,14 +1539,16 @@ function get_weekly_html( ){
 		// 選択日の背景色ハイライト処理
 		if( $link == $this->caldate ) $body_bgcolor = $this->targetday_bgcolor ;
 		else $body_bgcolor = $bgcolor ;
+		//echo $this->weekstr[$wday]; die;
 		$timeLine[ $day ]=array(
-			'now_unixtime'     =>$now_unixtime,
-			'toptime_of_day'   =>$toptime_of_day,
-			'bottomtime_of_day'=>$bottomtime_of_day,
-			'link'             =>$link,
-			'date'             =>date("Y-m-d",$now_unixtime),
-			'disp'             =>$disp,
-			'css_class'        =>$css_class,
+			'now_unixtime' => $now_unixtime,
+			'toptime_of_day' => $toptime_of_day,
+			'bottomtime_of_day' => $bottomtime_of_day,
+			'link' => $link,
+			'date' => date("Y-m-d",$now_unixtime),
+			'title' => $title,
+			'css_class' => $css_class,
+			'weekstr' => $this->weekstr[$wday]
 		);
 	}
 	//var_dump($timeLine);die;
@@ -1576,14 +1646,14 @@ function get_daily_html( )
 				'id' => null,
 				'link' => $item['link'],
 				'caldate' => $item['server_time'],
-				'time_span' => $item['close_time'] / 60 ,
+                'close_time' => $item['close_time'],
 				'summary' => $item['title'],
 				'description' => $item['description']
 			);
 			$this->makeTimeLine4plugin($item['server_time'],$item['server_time']+$item['close_time'],$event);
 		}
 	}
-	return $this->calenderBody;
+	return $ret ;
 }
 
 
@@ -2766,7 +2836,7 @@ private function makeTimeLine($start,$end,$event){
 					'cid' => $this->now_cid,
 					'link' => $event->link,				
 					'caldate' => $this->caldate,
-					'time_span' => ($end-$start)/60,
+					'time_span' => ($event->end - $event->start) / 60 ,
 					'summary' => $event->summary,
 					'description' => $event->description
 				);
@@ -2787,7 +2857,7 @@ private function makeTimeLine4plugin($start,$end,$event){
 					'cid' => null,
 					'link' => $event['link'],
 					'caldate' => $event['caldate'],
-					'time_span' => $event['time_span'],	
+					'time_span' => $event['close_time'] /60,					
 					'summary' => $event['summary'],
 					'description' => $event['description'],
 					'rowspan'=>3
@@ -2837,7 +2907,6 @@ function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justi
 		'dat'=>$dot,
 		'start'=>$start,
 		'end'=>$end,
-		'time_span' => ($end - $start) / 60,			
 		'cid'=>$this->now_cid,
 		'caldate'=>$this->caldate,
 		'rowspan'=>$cnt

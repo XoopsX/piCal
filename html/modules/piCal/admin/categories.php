@@ -19,6 +19,9 @@ function display_edit_form( $cat , $form_title , $action )
 	$tarea_tray->addElement( new XoopsFormDhtmlTextArea( '' , 'cat_desc' , htmlspecialchars( $cat->cat_desc , ENT_QUOTES ) , 15 , 60 ) ) ;
 	$form->addElement( $tarea_tray ) ;
 
+	// Style
+	$form->addElement( new XoopsFormText( _AM_CAT_TH_STYLE , 'cat_style' , 60 , 128 , htmlspecialchars( $cat->cat_style , ENT_QUOTES ) ) , true ) ;
+	
 	// Parent Category
 	ob_start() ;
 	$cattree->makeMySelBox( "cat_title" , "weight" , $cat->pid , 1 , 'pid' ) ;
@@ -53,7 +56,7 @@ function display_edit_form( $cat , $form_title , $action )
 }
 
 
-// ¥Ä¥ê¡¼½ç¤Ë¤Ê¤ë¤è¤¦¤Ë¡¢weight¤òºÆ·×»»¤·¡¢¥Ä¥ê¡¼¤Î¿¼¤µ¤âÂ¬¤Ã¤Æ¤ª¤¯
+// ï¿½Ä¥ê¡¼ï¿½ï¿½Ë¤Ê¤ï¿½è¤¦ï¿½Ë¡ï¿½weightï¿½ï¿½Æ·×»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¥ê¡¼ï¿½Î¿ï¿½ï¿½ï¿½ï¿½ï¿½Â¬ï¿½Ã¤Æ¤ï¿½ï¿½ï¿½
 function rebuild_cat_tree( $cat_table )
 {
 	global $conn ;
@@ -120,14 +123,14 @@ $mydirnumber = $regs[2] === '' ? '' : intval( $regs[2] ) ;
 
 require_once( XOOPS_ROOT_PATH."/modules/$mydirname/include/gtickets.php" ) ;
 
-// SERVER, GET ÊÑ¿ô¤Î¼èÆÀ
+// SERVER, GET ï¿½Ñ¿ï¿½ï¿½Î¼ï¿½ï¿½ï¿½
 $action = isset( $_POST[ 'action' ] ) ? preg_replace( '/[^a-zA-Z0-9_-]/' , '' , $_POST[ 'action' ] ) : '' ;
 $done = isset( $_GET[ 'done' ] ) ? preg_replace( '/[^a-zA-Z0-9_-]/' , '' , $_GET[ 'done' ] ) : '' ;
 $disp = isset( $_GET[ 'disp' ] ) ? preg_replace( '/[^a-zA-Z0-9_-]/' , '' , $_GET[ 'disp' ] ) : '' ;
 $cid = isset( $_GET[ 'cid' ] ) ? intval( $_GET[ 'cid' ] ) : 0 ;
 
 
-// MySQL¤Ø¤ÎÀÜÂ³
+// MySQLï¿½Ø¤ï¿½ï¿½ï¿½Â³
 $conn = $xoopsDB->conn ;
 
 // setting physical & virtual paths
@@ -146,13 +149,13 @@ $cal->images_url = "$mod_url/images/$skin_folder" ;
 $cal->images_path = "$mod_path/images/$skin_folder" ;
 
 
-// XOOPS´ØÏ¢¤Î½é´ü²½
+// XOOPSï¿½ï¿½Ï¢ï¿½Î½ï¿½ï¿½
 $myts =& MyTextSanitizer::getInstance();
 $cattree = new XoopsTree( $cal->cat_table , "cid" , "pid" ) ;
 $gperm_handler =& xoops_gethandler('groupperm');
 
 
-// ¥Ç¡¼¥¿¥Ù¡¼¥¹¹¹¿·¤Ê¤É¤¬¤«¤é¤à½èÍý
+// ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½Ù¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¤É¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 if( $action == "insert" ) {
 
 	// Ticket Check
@@ -160,7 +163,7 @@ if( $action == "insert" ) {
 		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
-	// ¿·µ¬ÅÐÏ¿
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿
 	$sql = "INSERT INTO $cal->cat_table SET " ;
 	$cols = array( "weight" => "I:N:0" ,"ismenuitem" => "I:N:0" ,"cat_title" => "255:J:1" , "cat_desc" => "A:J:0" , "pid" => "I:N:0" ) ;
 	$sql .= $cal->get_sql_set( $cols ) ;
@@ -177,10 +180,10 @@ if( $action == "insert" ) {
 		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
-	// ¹¹¿·
+	// ï¿½ï¿½ï¿½ï¿½
 	$cid = intval( $_POST['cid'] ) ;
 	$sql = "UPDATE $cal->cat_table SET " ;
-	$cols = array( "weight" => "I:N:0" ,"ismenuitem" => "I:N:0" ,"cat_title" => "255:J:1" , "cat_desc" => "A:J:0" , "pid" => "I:N:0" ) ;
+	$cols = array( "weight" => "I:N:0" ,"ismenuitem" => "I:N:0" ,"cat_title" => "255:J:1" , "cat_desc" => "A:J:0" ,"cat_style" => "255:J:1"  , "pid" => "I:N:0" ) ;
 	$sql .= $cal->get_sql_set( $cols ) . "WHERE cid='$cid'" ;
 	if( ! mysql_query( $sql , $conn ) ) die( mysql_error() ) ;
 	rebuild_cat_tree( $cal->cat_table ) ;
@@ -198,23 +201,23 @@ if( $action == "insert" ) {
 	// Delete
 	$cid = intval( $_POST['delcat'] ) ;
 
-	// Category2Group permission ¤Îºï½ü (2.0.3 °ÊÁ°¤Ç¤â¤¦¤Þ¤¯Æ°¤¯¤è¤¦¤Ë)
+	// Category2Group permission ï¿½Îºï¿½ï¿½ (2.0.3 ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤â¤¦ï¿½Þ¤ï¿½Æ°ï¿½ï¿½ï¿½è¤¦ï¿½ï¿½)
 	// xoops_groupperm_deletebymoditem( $xoopsModule->mid() , 'pical_cat' , $cid ) ;
 	$criteria = new CriteriaCompo( new Criteria( 'gperm_modid' , $xoopsModule->mid() ) ) ;
 	$criteria->add( new Criteria( 'gperm_name' , 'pical_cat' ) ) ;
 	$criteria->add( new Criteria( 'gperm_itemid' , intval( $cid ) ) ) ;
 	$gperm_handler->deleteAll( $criteria ) ;
 
-	// Category Notify ¤Îºï½ü
-	// (É¬Í×¤Ç¤¢¤ì¤Ð³ºÅö¥¤¥Ù¥ó¥Èºï½ü¤Îµ¡Ç½¤â)
+	// Category Notify ï¿½Îºï¿½ï¿½
+	// (É¬ï¿½×¤Ç¤ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¥ï¿½Èºï¿½ï¿½Îµï¿½Ç½ï¿½ï¿½)
 
-	// ÂÐ¾Ý¥«¥Æ¥´¥ê¡¼¤Î»Ò¶¡¤òWHEREÀá¤ËÄÉ²Ã¤·¡¢Cat2Group Permission¤òºï½ü
+	// ï¿½Ð¾Ý¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½Î»Ò¶ï¿½ï¿½ï¿½WHEREï¿½ï¿½ï¿½ï¿½É²Ã¤ï¿½ï¿½ï¿½Cat2Group Permissionï¿½ï¿½ï¿½ï¿½
 	$children = $cattree->getAllChildId( $cid ) ;
 	$whr = "cid IN (" ;
 	foreach( $children as $child ) {
-		// WHEREÀá¤Ø¤ÎÄÉ²Ã
+		// WHEREï¿½ï¿½Ø¤ï¿½ï¿½É²ï¿½
 		$whr .= "$child," ;
-		// Category2Group permission ¤Îºï½ü (2.0.3 °ÊÁ°¤Ç¤â¤¦¤Þ¤¯Æ°¤¯¤è¤¦¤Ë)
+		// Category2Group permission ï¿½Îºï¿½ï¿½ (2.0.3 ï¿½ï¿½ï¿½ï¿½ï¿½Ç¤â¤¦ï¿½Þ¤ï¿½Æ°ï¿½ï¿½ï¿½è¤¦ï¿½ï¿½)
 		// xoops_groupperm_deletebymoditem( $xoopsModule->mid() , 'pical_cat' , $child ) ;
 		$criteria = new CriteriaCompo( new Criteria( 'gperm_modid' , $xoopsModule->mid() ) ) ;
 		$criteria->add( new Criteria( 'gperm_name' , 'pical_cat' ) ) ;
@@ -223,7 +226,7 @@ if( $action == "insert" ) {
 	}
 	$whr .= "$cid)" ;
 
-	// cat¥Æ¡¼¥Ö¥ë¤«¤é¤Îºï½ü
+	// catï¿½Æ¡ï¿½ï¿½Ö¥ë¤«ï¿½ï¿½Îºï¿½ï¿½
 	if( ! mysql_query( "DELETE FROM $cal->cat_table WHERE $whr" , $conn ) ) die( mysql_error() ) ;
 	rebuild_cat_tree( $cal->cat_table ) ;
 	$mes = urlencode( sprintf( _AM_FMT_CAT_DELETED , mysql_affected_rows() ) ) ;
@@ -237,7 +240,7 @@ if( $action == "insert" ) {
 		redirect_header(XOOPS_URL.'/',3,$xoopsGTicket->getErrors());
 	}
 
-	// ¥Ð¥Ã¥Á¥¢¥Ã¥×¥Ç¡¼¥È
+	// ï¿½Ð¥Ã¥ï¿½ï¿½ï¿½ï¿½Ã¥×¥Ç¡ï¿½ï¿½ï¿½
 	$affected = 0 ;
 	foreach( $_POST['weights'] as $cid => $weight ) {
 		$weight = intval( $weight ) ;
@@ -255,14 +258,14 @@ if( $action == "insert" ) {
 
 
 
-// ¥á¥¤¥ó½ÐÎÏÉô
+// ï¿½á¥¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 xoops_cp_header();
 include( './mymenu.php' ) ;
 
-// É½¼¨½èÍý¤Î¿¶¤êÊ¬¤±
+// É½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¿ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½
 if( $disp == "edit" && $cid > 0 ) {
 
-	// ÁàºîÂÐ¾Ý¥«¥Æ¥´¥ê¡¼¥Ç¡¼¥¿¤Î¼èÆÀ
+	// ï¿½ï¿½ï¿½ï¿½Ð¾Ý¥ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½Î¼ï¿½ï¿½ï¿½
 	$sql = "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstamp FROM $cal->cat_table WHERE cid='$cid'" ;
 	$crs = mysql_query( $sql , $conn ) ;
 	$cat = mysql_fetch_object( $crs ) ;
@@ -270,7 +273,7 @@ if( $disp == "edit" && $cid > 0 ) {
 
 } else if( $disp == "new" ) {
 
-	// ¹¹¿·»þ¤ÈÆ±¤¸·Á¤Î¥ª¥Ö¥¸¥§¥¯¥È¤òÍÑ°Õ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½Î¥ï¿½ï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¤ï¿½ï¿½Ñ°ï¿½
 	class Dummy { var $cid = 0 ; var $pid = 0 ; var $cat_title = '' ; var $cat_desc = '' ; var $weight = 0 ; var $ismenuitem = 0 ; var $udtstamp = 0 ; }
 	$cat = new Dummy() ;
 	$cat->pid = $cid ;
@@ -285,7 +288,7 @@ if( $disp == "edit" && $cid > 0 ) {
 
 	echo "<p><a href='?disp=new&cid=0'>"._AM_MB_MAKETOPCAT."<img src='../images/cat_add.gif' width='18' height='15' alt='' /></a></p>\n" ;
 
-	// ¥«¥Æ¥´¥ê¡¼¥Ç¡¼¥¿¼èÆÀ
+	// ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½ê¡¼ï¿½Ç¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	$cat_tree_array = $cattree->getChildTreeArray( 0 , 'weight ASC,cat_title' ) ;
 
 	// TH Part
@@ -302,7 +305,7 @@ if( $disp == "edit" && $cid > 0 ) {
 	  </tr>
 	" ;
 
-	// ¥ê¥¹¥È½ÐÎÏÉô
+	// ï¿½ê¥¹ï¿½È½ï¿½ï¿½ï¿½ï¿½ï¿½
 	$oddeven = 'odd' ;
 	foreach( $cat_tree_array as $cat_node ) {
 		$oddeven = ( $oddeven == 'odd' ? 'even' : 'odd' ) ;
@@ -330,7 +333,7 @@ if( $disp == "edit" && $cid > 0 ) {
 	  </tr>\n" ;
 	}
 
-	// ¥Æ¡¼¥Ö¥ë¥Õ¥Ã¥¿Éô
+	// ï¿½Æ¡ï¿½ï¿½Ö¥ï¿½Õ¥Ã¥ï¿½ï¿½ï¿½
 	echo "
 	  <tr>
 	    <td colspan='4' align='right' class='head'><input type='submit' name='batch_update' value='"._AM_BTN_UPDATE."' /></td>

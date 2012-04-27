@@ -36,10 +36,10 @@ $mydirnumber = $regs[2] === '' ? '' : intval( $regs[2] ) ;
 
 
 $modversion['name'] = _MI_PICAL_NAME . $mydirnumber ;
-$modversion['version'] = 0.94;
+$modversion['version'] = 0.95;
 $modversion['description'] = _MI_PICAL_DESC;
-$modversion['credits'] = "PEAK Corp.";
-$modversion['author'] = "GIJ=CHECKMATE<br />PEAK Corp.(http://www.peak.ne.jp/)" ;
+$modversion['credits'] = "Origin by PEAK Corp.[GIJ]";
+$modversion['author'] = "Yoshi Sakai at Bluemoon inc." ;
 $modversion['help'] = "" ;
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 0;
@@ -234,65 +234,7 @@ $modversion['config'][6] = array(
 	'options'		=> array()
 ) ;
 
-$modversion['config'][7] = array( 
-	'name'			=> 'pical_sunday_color' ,
-	'title'			=> '_MI_SUNDAYCOLOR' ,
-	'description'	=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> '#CC0000' ,
-	'options'		=> array()
-) ;
 
-$modversion['config'][8] = array( 
-	'name'			=> 'pical_sunday_bgcolor' ,
-	'title'			=> '_MI_SUNDAYBGCOLOR' ,
-	'description'	=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> '#FFEEEE' ,
-	'options'		=> array()
-) ;
-
-$modversion['config'][9] = array( 
-	'name'			=> 'pical_weekday_color' ,
-	'title'			=> '_MI_WEEKDAYCOLOR' ,
-	'description'	=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> '#000066' ,
-	'options'		=> array()
-) ;
-
-$modversion['config'][10] = array( 
-	'name'			=> 'pical_weekday_bgcolor' ,
-	'title'			=> '_MI_WEEKDAYBGCOLOR' ,
-	'description'	=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> '#FFFFFF' ,
-	'options'		=> array()
-) ;
-
-$modversion['config'][11] = array( 
-	'name'			=> 'pical_saturday_color' ,
-	'title'			=> '_MI_SATURDAYCOLOR' ,
-	'description'	=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> '#0000FF' ,
-	'options'		=> array()
-) ;
-
-$modversion['config'][12] = array( 
-	'name'			=> 'pical_saturday_bgcolor' ,
-	'title'			=> '_MI_SATURDAYBGCOLOR' ,
-	'description'	=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> '#EEF7FF' ,
-	'options'		=> array()
-) ;
 
 $modversion['config'][13] = array( 
 	'name'			=> 'pical_holiday_color' ,
@@ -444,54 +386,79 @@ $modversion['config'][27] = array(
 	'options'		=> array() ,
 ) ;
 
+
 $modversion['config'][28] = array(
-    	'name'            	=> 'comment_dirname' ,
-    	'title'            	=> '_MI_COM_DIRNAME' ,
-    	'description'        	=> '_MI_COM_DIRNAMEDSC' ,
-    	'formtype'        	=> 'textbox',
-    	'valuetype'        	=> 'text',
-    	'default'        	=> ''
+		'name'			=> 'regular_closing_day' ,
+		'title'			=> '_MI_REGULAR_CDAY' ,
+		'description'	=> '_MI_REGULAR_CDAY_DESC' ,
+		'formtype'		=> 'textbox' ,
+		'valuetype'		=> 'text' ,
+		'default'		=> 'Wed' ,
+		'options'		=> array()
+) ;
+$modversion['config'][] = array('name'=>'pical_day_open'		,'title'=>'_MI_DAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() ) ;
+$modversion['config'][] = array('name'=>'pical_day_close'		,'title'=>'_MI_DAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() ) ;
+$modversion['config'][] = array('name'=>'pical_sunday_open'		,'title'=>'_MI_SUNDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() ) ;
+$modversion['config'][] = array('name'=>'pical_sunday_close'	,'title'=>'_MI_SUNDAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() ) ;
+$modversion['config'][] = array('name'=>'pical_monday_open'		,'title'=>'_MI_MONDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_monday_close'	,'title'=>'_MI_MONDAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_tuesday_open'	,'title'=>'_MI_TUESDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_tuesday_close'	,'title'=>'_MI_TUESDAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_wednesday_open'	,'title'=>'_MI_WEDNESDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_wednesday_close'	,'title'=>'_MI_WEDNESDAY_CLOSE','description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_thursday_open'	,'title'=>'_MI_THURSDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_thursday_close'	,'title'=>'_MI_THURSDAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_friday_open'		,'title'=>'_MI_FRIDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:00','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_friday_close'	,'title'=>'_MI_FRIDAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array() );
+$modversion['config'][] = array('name'=>'pical_saturday_open'	,'title'=>'_MI_SATURDAY_OPEN',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'09:30','options'=>array()) ;
+$modversion['config'][] = array('name'=>'pical_saturday_close'	,'title'=>'_MI_SATURDAY_CLOSE',	'description'=>'','formtype'=>'textbox','valuetype'=>'text','default'=>'19:30','options'=>array()) ;
+$modversion['config'][] = array(
+		'name'            	=> 'comment_dirname' ,
+		'title'            	=> '_MI_COM_DIRNAME' ,
+		'description'        	=> '_MI_COM_DIRNAMEDSC' ,
+		'formtype'        	=> 'textbox',
+		'valuetype'        	=> 'text',
+		'default'        	=> ''
 );
- 
-$modversion['config'][29]= array(
-    	'name'             	=> 'comment_forum_id',
-    	'title'         	=> '_MI_COM_FORUM_ID',
-    	'description'        	=> '_MI_COM_FORUM_IDDSC',
-    	'formtype'        	=> 'textbox',
-    	'valuetype'        	=> 'int',
-    	'default'        	=> '0'
+
+$modversion['config'][]= array(
+		'name'             	=> 'comment_forum_id',
+		'title'         	=> '_MI_COM_FORUM_ID',
+		'description'        	=> '_MI_COM_FORUM_IDDSC',
+		'formtype'        	=> 'textbox',
+		'valuetype'        	=> 'int',
+		'default'        	=> '0'
 );
 
-$modversion['config'][30] = array(
-	'name'			=> 'comment_order' ,
-	'title'			=> '_MI_COM_ORDER' ,
-	'description'		=> '_MI_COM_ORDERDSC' ,
-	'formtype'		=> 'select' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> 'desc' ,
-	'options'		=> array( '_OLDESTFIRST' => 'asc' , '_NEWESTFIRST' => 'desc' )
+$modversion['config'][] = array(
+		'name'			=> 'comment_order' ,
+		'title'			=> '_MI_COM_ORDER' ,
+		'description'		=> '_MI_COM_ORDERDSC' ,
+		'formtype'		=> 'select' ,
+		'valuetype'		=> 'text' ,
+		'default'		=> 'desc' ,
+		'options'		=> array( '_OLDESTFIRST' => 'asc' , '_NEWESTFIRST' => 'desc' )
 ) ;
 
-$modversion['config'][31] = array(
-	'name'			=> 'comment_view' ,
-	'title'			=> '_MI_COM_VIEW' ,
-	'description'		=> '_MI_COM_VIEWDSC' ,
-	'formtype'		=> 'select' ,
-	'valuetype'		=> 'text' ,
-	'default'		=> 'listposts_flat' ,
-	'options'		=> array( '_FLAT' => 'listposts_flat' , '_THREADED' => 'listtopics' )
+$modversion['config'][] = array(
+		'name'			=> 'comment_view' ,
+		'title'			=> '_MI_COM_VIEW' ,
+		'description'		=> '_MI_COM_VIEWDSC' ,
+		'formtype'		=> 'select' ,
+		'valuetype'		=> 'text' ,
+		'default'		=> 'listposts_flat' ,
+		'options'		=> array( '_FLAT' => 'listposts_flat' , '_THREADED' => 'listtopics' )
 ) ;
 
-$modversion['config'][32] = array(
-	'name'			=> 'comment_posts_num' ,
-	'title'			=> '_MI_COM_POSTSNUM' ,
-	'description'		=> '' ,
-	'formtype'		=> 'textbox' ,
-	'valuetype'		=> 'int' ,
-	'default'		=> '10' ,
-	'options'		=> array()
+$modversion['config'][] = array(
+		'name'			=> 'comment_posts_num' ,
+		'title'			=> '_MI_COM_POSTSNUM' ,
+		'description'		=> '' ,
+		'formtype'		=> 'textbox' ,
+		'valuetype'		=> 'int' ,
+		'default'		=> '10' ,
+		'options'		=> array()
 ) ;
-
 // Search
 $modversion['hasSearch'] = 1;
 $modversion['search']['file'] = "include/search.inc.php";

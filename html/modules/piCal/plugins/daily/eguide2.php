@@ -24,8 +24,21 @@ if( ! defined( 'XOOPS_ROOT_PATH' ) ) exit ;
 $range_start_s = mktime(0,0,0,$this->month,$this->date-1,$this->year) ;
 $range_end_s = mktime(0,0,0,$this->month,$this->date+2,$this->year) ;
 
+// Set Condition
+$cond = NULL;
+$cid = isset($_GET['cid']) ? intval($_GET['cid']) : NULL;
+if($cid){
+	$sql = "SELECT e.catid FROM " . $db->prefix("eguide_category") . " e LEFT JOIN "
+	. $db->prefix("pical_cat") . " p ON e.catname=p.cat_title WHERE p.cid=".$cid;
+	$result = $db->query( $sql ) ;
+	list($catid) = $db->fetchRow($result);
+	$cond .= " AND c.catid=".$catid ." ";
+}
+if(isset($_GET['eid'])){
+	$cond .= " AND e.eid=".intval($_GET['eid']) ." ";
+}
 // query
-$cond = isset($_GET['eid'])?" AND e.eid=".intval($_GET['eid']):"";
+
 $sql = "SELECT title,catname,e.eid,exid,IF(exdate,exdate,edate) edate,summary,"
 	. "IF(x.reserved,x.reserved,o.reserved)/IF(expersons,expersons,persons)*100, closetime, style FROM ".
 	$db->prefix("eguide")." e LEFT JOIN ".

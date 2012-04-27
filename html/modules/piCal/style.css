@@ -117,6 +117,7 @@ table#calbody a.event {
     font-style: normal;
 }
 div#calbody_weekly {
+	padding:0 0 0 10px;
     width: 100%;
 }	
 div#weekly_clear {
@@ -141,13 +142,9 @@ div#calbody_weekly div#left_title{
 	border-bottom: dotted 1px #999;
 	text-align: center;
     height: 30px;
-	width: 15%;
+	width: 14%;
 	color: #333;
 }
-div#calbody_weekly div#left_btn{
-	margin: -25px 0 0 0;
-    position: relative;
-}    
 div#calbody_weekly div#weekly_body_left_helf{
 	float: left;
     border-top: none;
@@ -158,6 +155,14 @@ div#calbody_weekly div#weekly_body_left_helf{
     height: 30px;
 	width: 10%;
 	color: #333;
+}
+div#calbody_weekly div#weekly_body div#weekly_body_close{
+	background-color: #ccc;
+    height: 30px;
+}
+div#calbody_weekly div#weekly_body_helf div#weekly_body_close{
+	background-color: #ccc;
+    height: 30px;
 }
 div#calbody_weekly div#weekly_body{
 	float: left;
@@ -180,7 +185,7 @@ div#calbody_weekly div#daily{
 	border-bottom: dotted 1px #999;
 	font-size: 0.6em;
     text-align: center;
-    width: 84%;
+    width: 82%;
     height: 30px;
 	color: #333;
 	position:relative;
@@ -210,6 +215,12 @@ div#calbody_weekly div#weekly_body_helf div#schedule{
     margin-top:-29px;
     margin-left:27px;
 }
+div#calbody_weekly div#left_btn{
+	position: relative;
+    margin:0px;
+    margin-top:-25px;
+    margin-left:0px;
+}
 div#weekly_heder_blank {
 	float: left;
     border: solid 1px #999999;
@@ -225,6 +236,7 @@ div#calbody_weekly div.weekday {
 	height: 30px;
 	width: 12.5%;
 }
+
 div#calbody_weekly div.weekday a{
 	color: #333;
 }
@@ -252,6 +264,7 @@ div#calbody_weekly div.saturday {
 div#calbody_weekly div.saturday q{
 	color: #3333cd;
 }
+
 
 /*
 ** for mini calender

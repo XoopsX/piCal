@@ -25,8 +25,20 @@
 	$range_start_s = mktime(0,0,0,$this->month,$wtop_date-1,$this->year) ;
 	$range_end_s = mktime(0,0,0,$this->month,$wtop_date+8,$this->year) ;
 
+	// Set Condition
+	$cond = NULL;
+	$cid = isset($_GET['cid']) ? intval($_GET['cid']) : NULL;
+	if($cid){
+		$sql = "SELECT e.catid FROM " . $db->prefix("eguide_category") . " e LEFT JOIN "
+		. $db->prefix("pical_cat") . " p ON e.catname=p.cat_title WHERE p.cid=".$cid;
+		$result = $db->query( $sql ) ;
+		list($catid) = $db->fetchRow($result);
+		$cond .= " AND c.catid=".$catid ." ";
+	}
+	if(isset($_GET['eid'])){
+		$cond .= " AND e.eid=".intval($_GET['eid']) ." ";
+	}
 	// query
-        $cond = isset($_GET['eid'])?" AND e.eid=".intval($_GET['eid']):"";
 	$sql = "SELECT title,catname,e.eid,exid,
 IF(exdate,exdate,edate) edate,summary, 
 IF(x.reserved,x.reserved,o.reserved)/IF(expersons,expersons,persons)*100, closetime FROM ".
@@ -67,7 +79,7 @@ function eguide_marker($full, $dirname) {
 		$target_date = date('j',$user_time) ;
 		$mark .= ' '.date('H:i',$user_time) ; // show time
 		$param ="eid=$id".(empty($sub)?'':"&amp;sub=$sub");
-		$timeList = date("H:i", $user_time) . " - " . date("H:i", $user_time+$close);
+		$timeList = "<br />".date("H:i", $user_time) . " - " . date("H:i", $user_time+$close);
 		$tmp_array = array(
 			'dotgif' => $plugin['dotgif'] ,
 			'dirname' => $plugin['dirname'] ,
@@ -77,7 +89,7 @@ function eguide_marker($full, $dirname) {
 			'user_time' => $user_time ,
 			'close_time' => $close ,
 			'name' => 'eid' ,
-			'title' => $timeList . $myts->makeTboxData4Show( $title ),	// ."&nbsp;". $myts->makeTboxData4Show( $catname ),	//
+			'title' => $myts->makeTboxData4Show( $title ) . $timeList,	// ."&nbsp;". $myts->makeTboxData4Show( $catname ),	//
 			'description' => $myts->displayTarea( $description )
 		) ;
 

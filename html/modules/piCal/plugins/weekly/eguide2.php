@@ -25,32 +25,21 @@
 	$range_start_s = mktime(0,0,0,$this->month,$wtop_date-1,$this->year) ;
 	$range_end_s = mktime(0,0,0,$this->month,$wtop_date+8,$this->year) ;
 
-	// Set Condition
-	$cond = NULL;
-	$cid = isset($_GET['cid']) ? intval($_GET['cid']) : NULL;
-	if($cid){
-		$sql = "SELECT e.catid FROM " . $db->prefix("eguide_category") . " e LEFT JOIN "
-		. $db->prefix("pical_cat") . " p ON e.catname=p.cat_title WHERE p.cid=".$cid;
-		$result = $db->query( $sql ) ;
-		list($catid) = $db->fetchRow($result);
-		$cond .= " AND c.catid=".$catid ." ";
-	}
-	if(isset($_GET['eid'])){
-		$cond .= " AND e.eid=".intval($_GET['eid']) ." ";
-	}
 	// query
-	$sql = "SELECT title,catname,e.eid,exid,
-IF(exdate,exdate,edate) edate,summary, 
-IF(x.reserved,x.reserved,o.reserved)/IF(expersons,expersons,persons)*100, closetime FROM ".
-	$db->prefix("eguide")." e LEFT JOIN ".
-	$db->prefix("eguide_category")." c ON e.topicid=c.catid LEFT JOIN ".
-	$db->prefix("eguide_opt")." o ON e.eid=o.eid LEFT JOIN ".
-	$db->prefix("eguide_extent")." x ON e.eid=eidref 
+        $cond = isset($_GET['eid'])?" AND e.eid=".intval($_GET['eid']):"";
+	 $sql = "SELECT title,catname,e.eid,exid,IF(exdate,exdate,edate) edate,summary, 
+		IF(x.reserved,x.reserved,o.reserved)/IF(expersons,expersons,persons)*100, closetime FROM ".
+		$db->prefix("eguide")." e LEFT JOIN ".
+		$db->prefix("eguide_category")." c ON e.topicid=c.catid LEFT JOIN ".
+		$db->prefix("eguide_opt")." o ON e.eid=o.eid LEFT JOIN ".
+		$db->prefix("eguide_extent")." x ON e.eid=eidref 
 WHERE ((edate BETWEEN $range_start_s AND $range_end_s AND exdate IS NULL) 
   OR exdate BETWEEN $range_start_s AND $range_end_s) 
 AND IF(exdate,exdate,edate) BETWEEN $range_start_s 
 AND $range_end_s AND status=0 $cond ORDER BY edate";
-	$result = $db->query( $sql ) ;
+        $result = $db->query( $sql ) ;
+echo $sql;die;
+
 if (!function_exists("eguide_marker")) {
 function eguide_marker($full, $dirname) {
     static $marker;
@@ -70,7 +59,6 @@ function eguide_marker($full, $dirname) {
 }
 
 	while( list( $title , $catname, $id , $sub, $edate , $description , $full, $close) = $db->fetchRow( $result ) ) {
-
 		if (($edate-$close)<$now) $full = -1;
 		$mark = eguide_marker($full, $plugin['dirname']);
 		$server_time = $edate;
@@ -79,7 +67,6 @@ function eguide_marker($full, $dirname) {
 		$target_date = date('j',$user_time) ;
 		$mark .= ' '.date('H:i',$user_time) ; // show time
 		$param ="eid=$id".(empty($sub)?'':"&amp;sub=$sub");
-		$timeList = "<br />".date("H:i", $user_time) . " - " . date("H:i", $user_time+$close);
 		$tmp_array = array(
 			'dotgif' => $plugin['dotgif'] ,
 			'dirname' => $plugin['dirname'] ,
@@ -87,9 +74,8 @@ function eguide_marker($full, $dirname) {
 			'id' => $id ,
 			'server_time' => $server_time ,
 			'user_time' => $user_time ,
-			'close_time' => $close ,
 			'name' => 'eid' ,
-			'title' => $myts->makeTboxData4Show( $title ) . $timeList,	// ."&nbsp;". $myts->makeTboxData4Show( $catname ),	//
+			'title' => $myts->makeTboxData4Show( $title )."&nbsp;".$catname,	//"$mark"
 			'description' => $myts->displayTarea( $description )
 		) ;
 

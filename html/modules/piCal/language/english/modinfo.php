@@ -136,8 +136,7 @@ define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYCAP', 'Notify me when a new event is c
 define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYDSC', 'Notify me with the description included when a new event is created in the Category.');
 define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New event in {CATEGORY_TITLE}');
 
-define("_MI_REGULAR_CDAY","Regular closing day");
-define("_MI_REGULAR_CDAY_DESC","Mon,Sun");
+
 
 }
 

@@ -23,29 +23,17 @@
 	// set range (added 86400 second margin "begin" & "end")
 	$range_start_s = mktime(0,0,0,$this->month,0,$this->year) ;
 	$range_end_s = mktime(0,0,0,$this->month+1,1,$this->year) ;
-	// Set Condition 
-	$cond = NULL;
-	$cid = isset($_GET['cid']) ? intval($_GET['cid']) : NULL;
-	if($cid){
-		$sql = "SELECT e.catid FROM " . $db->prefix("eguide_category") . " e LEFT JOIN "
-		. $db->prefix("pical_cat") . " p ON e.catname=p.cat_title WHERE p.cid=".$cid;
-		$result = $db->query( $sql ) ;
-		list($catid) = $db->fetchRow($result);
-		$cond .= " AND c.catid=".$catid ." ";
-	}
-	if(isset($_GET['eid'])){
-		$cond .= " AND e.eid=".intval($_GET['eid']) ." ";
-	}
+
 	// query
+    $cond = isset($_GET['eid'])?" AND e.eid=".intval($_GET['eid']):"";
 	$sql = 'SELECT c.catid,c.catname,e.title,IF(exdate,from_unixtime(exdate,"%Y-%m-%d"),
 		from_unixtime(edate,"%Y-%m-%d")) eday, IF(exdate,exdate,edate) eday2 FROM '
 		. $db->prefix("eguide_category")." c RIGHT JOIN "
 		. $db->prefix("eguide")." e ON c.catid=e.topicid LEFT JOIN "
 		. $db->prefix("eguide_extent")." x ON e.eid=eidref "
 		. "GROUP BY catid,eid,exid "
-		. "HAVING (eday2 BETWEEN $range_start_s AND $range_end_s) " . $cond
+		. "HAVING (eday2 BETWEEN $range_start_s AND $range_end_s) "
 		. "ORDER BY eday,c.weight,c.catid";
-	//die($sql);
     $result = $db->query( $sql ) ;
 	if (!function_exists("eguide_marker")) {
 		function eguide_marker($full, $dirname) {

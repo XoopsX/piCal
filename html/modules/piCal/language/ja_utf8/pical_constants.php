@@ -14,7 +14,6 @@ define('_PICAL_JSFMT_YMDN','%Y年 %B %d日 (%A)') ;
 define('_PICAL_DTFMT_MINUTE','i分') ;
 
 // orders of formatted elements   Y:year  M:month  W:week  D:day  O:operand
-define('_PICAL_FMT_D','%1$s') ;
 define('_PICAL_FMT_MD','%1$s%2$s') ;
 define('_PICAL_FMT_YMD','%1$s年 %2$s %3$s') ;
 define('_PICAL_FMT_YMDN','%1$s年 %2$s %3$s (%4$s)') ;

@@ -92,7 +92,6 @@ define( '_AM_MB_SUCCESSTZUPDATE' , "各イベントについて、このサー�
 // Categories
 define( '_AM_CAT_TH_TITLE' , 'カテゴリ名' ) ;
 define( '_AM_CAT_TH_DESC' , 'カテゴリの説明' ) ;
-define( '_AM_CAT_TH_STYLE' , '登録可能時間<br />sat[9:00-17:00],sun[10:00-22:00]' ) ;
 define( '_AM_CAT_TH_PARENT' , '親カテゴリ' ) ;
 define( '_AM_CAT_TH_OPTIONS' , 'オプション' ) ;
 define( '_AM_CAT_TH_LASTMODIFY' , '最終更新日' ) ;

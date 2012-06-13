@@ -1,8 +1,10 @@
 <?php
+
 // piCal xoops用メインモジュール
 // index.php
 // カレンダーの表示・編集・更新処理
 // by GIJ=CHECKMATE (PEAK Corp. http://www.peak.ne.jp/)
+
 	require( '../../mainfile.php' ) ;
 
 	// for "Duplicatable"
@@ -48,6 +50,7 @@
 	$cal->images_url = "$mod_url/images/$skin_folder" ;
 	$cal->images_path = "$mod_path/images/$skin_folder" ;
 
+
 	// データベース更新関係の処理（いずれも、Locationで飛ばす）
 	if( isset( $_POST[ 'update' ] ) ) {
 		// 更新
@@ -90,14 +93,10 @@
 	// smodeの処理
 	if( ! empty( $_GET[ 'smode' ] ) ) $smode = $_GET[ 'smode' ] ;
 	else $smode = $default_view ;
-	// smodeの処理
-	$smode =  isset($_POST['smode']) ? $_POST['smode'] : $smode ;
-	
+
 	// XOOPヘッダ出力前の処理
 	if( $action == 'View' ) {
 		$xoopsOption['template_main'] = "pical{$mydirnumber}_event_detail.html" ;
-	}elseif( $action == 'Edit' ) {
-		$xoopsOption['template_main'] = "pical{$mydirnumber}_edit.html" ;
 	} else {
 		// View以外ではコメント禁止
 		$xoopsModuleConfig['com_rule'] = 0 ;
@@ -105,6 +104,7 @@
 			$xoopsOption['template_main'] = "pical{$mydirnumber}_event_list.html" ;
 		}
 	}
+
 	// XOOPSヘッダ出力
 	include( XOOPS_ROOT_PATH.'/header.php' ) ;
 
@@ -159,7 +159,7 @@
 			include XOOPS_ROOT_PATH.'/include/calendarjs.php' ;
 			$cal->jscalendar = 'xoops' ;
 		}
-		$xoopsTpl->assign( 'form' , $cal->get_schedule_edit_smarty() ) ;
+		echo $cal->get_schedule_edit_html( ) ;
 	} else if( $action == 'View' ) {
 		// echo $cal->get_schedule_view_html( ) ;
 		$xoopsTpl->assign( 'detail_body' , $cal->get_schedule_view_html( ) ) ;

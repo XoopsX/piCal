@@ -46,23 +46,15 @@ define("_MI_MINICAL_TARGET", "ミニカレンダーで日付をクリックし�
 define("_MI_COMING_NUMROWS", "今後の予定ブロックでの表示予定件数");
 define("_MI_SKINFOLDER", "スキンフォルダ名");
 define("_MI_PICAL_LOCALE", "地域設定ファイル (locales/*.php)");
-define('_MI_DAY_OPEN',			'表示開始時間');
-define('_MI_DAY_CLOSE',			'表示終了時間');
-define('_MI_SUNDAY_OPEN',		'日曜開店時間');
-define('_MI_SUNDAY_CLOSE',		'日曜閉店時間');
-define('_MI_MONDAY_OPEN',		'月曜開店時間');
-define('_MI_MONDAY_CLOSE',		'月曜閉店時間');
-define('_MI_TUESDAY_OPEN',		'火曜開店時間');
-define('_MI_TUESDAY_CLOSE',		'火曜閉店時間');
-define('_MI_WEDNESDAY_OPEN',	'水曜開店時間');
-define('_MI_WEDNESDAY_CLOSE',	'水曜閉店時間');
-define('_MI_THURSDAY_OPEN',		'木曜開店時間');	
-define('_MI_THURSDAY_CLOSE',	'木曜閉店時間');
-define('_MI_FRIDAY_OPEN',		'金曜開店時間');
-define('_MI_FRIDAY_CLOSE',		'金曜閉店時間');
-define('_MI_SATURDAY_OPEN',		'土曜開店時間');
-define('_MI_SATURDAY_CLOSE',	'土曜閉店時間');
-
+define("_MI_SUNDAYCOLOR", "日曜日の文字色");
+define("_MI_WEEKDAYCOLOR", "平日の文字色");
+define("_MI_SATURDAYCOLOR", "土曜日の文字色");
+define("_MI_HOLIDAYCOLOR", "祝日の文字色");
+define("_MI_TARGETDAYCOLOR", "対象日の文字色");
+define("_MI_SUNDAYBGCOLOR", "日曜日の背景色");
+define("_MI_WEEKDAYBGCOLOR", "平日の背景色");
+define("_MI_SATURDAYBGCOLOR", "土曜日の背景色");
+define("_MI_HOLIDAYBGCOLOR", "祝日の背景色");
 define("_MI_TARGETDAYBGCOLOR", "対象日の背景色");
 define("_MI_CALHEADCOLOR", "ヘッダ部文字色");
 define("_MI_CALHEADBGCOLOR", "ヘッダ部背景色");
@@ -144,9 +136,6 @@ define("_MI_COM_ORDERDSC","コメント統合を選択した場合の、コメ�
 define("_MI_COM_VIEW","コメント統合の表示方法");
 define("_MI_COM_VIEWDSC","フラット表示かスレッド表示かを選択します。");
 define("_MI_COM_POSTSNUM","コメント統合のフラット表示における最大表示件数");
-
-define("_MI_REGULAR_CDAY","定休日");
-define("_MI_REGULAR_CDAY_DESC","Mon,Sun");
 
 }
 

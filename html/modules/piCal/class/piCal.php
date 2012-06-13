@@ -3,7 +3,7 @@
 // The RFC2445 class   === piCal ===
 // piCal.php
 // by GIJ=CHECKMATE (PEAK Corp. http://www.peak.ne.jp/)
-// refactoring by yoshis at bluemoon inc. http://www.bluemooninc.jp
+
 
 if( ! class_exists( 'piCal' ) ) {
 
@@ -101,11 +101,6 @@ class piCal
 	var $original_id ;	// $_GET['event_id']��������������ɎQ�Ɖ\
 
 	var $event = null ;	// event�̏o�̓f�[�^�i�[�p //naao
-	var $calenderBody = array();	// Yoshis
-	var $timeLine = array();		// Yoshis
-	var $events = array();			// Yoshis
-	var $activeStart = 32400;
-	var $weekstr=array('sunday','monday','tuesday','wednesday','thursday','friday','saturday');
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
@@ -794,96 +789,11 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	return $ret ;
 }
 
-private function mkTimeTable($openTime,$closeTime){
-	list($openHour, $openMin) = sscanf($openTime, "%d:%d");
-	list($closeHour, $closeMin) = sscanf($closeTime, "%d:%d");
-	$openT = $openHour * 3600 + $openMin * 60;
-	$closeT = $closeHour * 3600 + $closeMin * 60;
-	// Make Time block par 30min
-	$timeTable = array();
-	for($i=0;$i<86400;$i+=1800){
-		$t = $i;
-		$te = $i+1800;
-		$disp = $t % 3600 != 0 ? 0 : 1;
-		$timeTable[$t] = array(
-			'utime' => $t,
-			'start_hour'=>gmdate("H",$t),
-			'start_min'=>gmdate("i",$t),
-			'end_hour'=>gmdate("H",$te),
-			'end_min'=>gmdate("i",$te),
-			'disp' => $disp,
-			'active'=> ($i>=$openT && $i<72000 ? 1 : 0)
-		);
-	}
-	return $timeTable;
-}
-private function mkOpenClose($openTime,$closeTime){
-	list($openHour, $openMin) = sscanf($openTime, "%d:%d");
-	list($closeHour, $closeMin) = sscanf($closeTime, "%d:%d");
-	$openT = $openHour * 3600 + $openMin * 60;
-	$closeT = $closeHour * 3600 + $closeMin * 60;
-	return array($openT,$closeT);
-}
-private function loadCategoryWeeklyTable($cid){
-	global $xoopsDB;
-	$sql ="SELECT cat_style FROM ". $xoopsDB->prefix("pical_cat") . " WHERE cid=".$cid;
-	$ret = $xoopsDB->query($sql);
-	list($cat_style)=$xoopsDB->fetchRow($ret);
-	$weekstr = explode(",",$cat_style);
-	$ret = array();
-	foreach($weekstr as $w){
-		list($ws,$os,$cs)=sscanf($w,'%3s[%5s-%5s]');
-		$ret[$ws] = array($os,$cs);
-	}
-	return $ret;
-}
-private function snoop_multiMenuFlow(){
-	global $xoopsDB;
-	if(empty($_SESSION['multiMenuFlow'])) return;
-	foreach($_SESSION['multiMenuFlow'] as $flowArray){
-		foreach($flowArray as $k=>$v){
-			if (isset($v['stylist'])){
-				$sql="SELECT cid FROM ".$xoopsDB->prefix("pical_cat")." WHERE cat_title='".mysql_real_escape_string($v['stylist'])."'";
-				$ret=$xoopsDB->query($sql);
-				if($ret){
-					$cid=$xoopsDB->fetchRow($ret);
-					$this->now_cid=intval($cid);
-				}
-			}
-		}
-	}
-}
-private function mkWeeklyTable(){
-	global $xoopsModuleConfig;
-	//var_dump($_POST); die;
-	$weeklyTable = array();
-	$this->snoop_multiMenuFlow();
-	if ($this->now_cid>0){
-		$wt = $this->loadCategoryWeeklyTable($this->now_cid);
-		if (isset($wt['sun'])) $weeklyTable['sunday']    = $this->mkOpenClose($wt['sun'][0],	$wt['sun'][1]);
-		if (isset($wt['mon'])) $weeklyTable['monday'] 	 = $this->mkOpenClose($wt['mon'][0],	$wt['mon'][1]);
-		if (isset($wt['tue'])) $weeklyTable['tuesday']   = $this->mkOpenClose($wt['tue'][0],	$wt['tue'][1]);
-		if (isset($wt['wed'])) $weeklyTable['wednesday'] = $this->mkOpenClose($wt['wed'][0],	$wt['wed'][1]);
-		if (isset($wt['thu'])) $weeklyTable['thursday']  = $this->mkOpenClose($wt['thu'][0],	$wt['thu'][1]);
-		if (isset($wt['fri'])) $weeklyTable['friday'] 	 = $this->mkOpenClose($wt['fri'][0],	$wt['fri'][1]);
-		if (isset($wt['sat'])) $weeklyTable['saturday']  = $this->mkOpenClose($wt['sat'][0],	$wt['sat'][1]);
-	}else{
-		$weeklyTable['sunday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_sunday_open'],	$xoopsModuleConfig['pical_sunday_close']);
-		$weeklyTable['monday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_monday_open'],	$xoopsModuleConfig['pical_monday_close']);
-		$weeklyTable['tuesday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_tuesday_open'],	$xoopsModuleConfig['pical_tuesday_close']);
-		$weeklyTable['wednesday'] = $this->mkOpenClose($xoopsModuleConfig['pical_wednesday_open'],$xoopsModuleConfig['pical_wednesday_close']);
-		$weeklyTable['thursday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_thursday_open'],	$xoopsModuleConfig['pical_thursday_close']);
-		$weeklyTable['friday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_friday_open'],	$xoopsModuleConfig['pical_friday_close']);
-		$weeklyTable['saturday'] 	= $this->mkOpenClose($xoopsModuleConfig['pical_saturday_open'],$xoopsModuleConfig['pical_saturday_close']);
-	}
-	return $weeklyTable; 
-}
+
 
 // 週間カレンダー全体の表示（patTemplate使用)
 function get_weekly( $get_target = '' , $query_string = '' , $for_print = false )
 {
-	global $xoopsTpl,$xoopsOption,$xoopsModuleConfig;
-	
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
 
@@ -903,32 +813,16 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
 	// カテゴリー選択ボックス
-	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'W' ) ) ;
+
 	$tmpl->addVar( "WholeBoard" , "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
 
-	// Variables required in header part etc.
-	$xoopsTpl->assign( "calInfo", $this->get_calendar_information( 'W' ) ) ;
-	
 	// BODY of the calendar
-	$calBody = $this->get_weekly_html( $get_target , $query_string );
-	//var_dump($calBody);die;
-	$xoopsTpl->assign( "calBody" , $calBody);//$this->calenderBody ) ;
-	//var_dump($this->timeLine);die;
-	$xoopsTpl->assign( "weeklyTable" , $this->mkWeeklyTable());
-	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
-	$xoopsTpl->assign( "timeTable" , $this->mkTimeTable($xoopsModuleConfig['pical_day_open'],$xoopsModuleConfig['pical_day_close']) ) ;
-	$xoopsTpl->assign( "events" , $this->events ) ;
-	$xoopsTpl->assign( "ticket" , $GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ ) ) ;
-	$xoopsTpl->assign( "regularClosingDay", $xoopsModuleConfig['regular_closing_day']);
-		
-	// content generated from patTemplate
-	$xoopsTpl->assign( "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
-	$xoopsOption['template_main'] = "pical_weekly.html" ;
+	$tmpl->addVar( "WholeBoard" , "CALENDAR_BODY" , $this->get_weekly_html( $get_target , $query_string ) ) ;
 
 	// content generated from patTemplate
 	$ret = $tmpl->getParsedTemplate( "WholeBoard" ) ;
@@ -939,52 +833,46 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 }
 
 
+
 // 一日カレンダー全体の表示（patTemplate使用)
 function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
-	global $xoopsTpl,$xoopsOption;
-	
-	// Make Time block par 30min
-	$this->timeLine = array();
-	for($i=0;$i<86400;$i+=1800){
-		$t = strtotime($this->caldate)+$i;
-		$disp = $t%3600!=0 ? 0 : 1;
-		$this->timeLine[$t] = array(
-			'utime' => $t,
-			'start_hour'=>date("H",$t),
-			'start_min'=>date("i",$t),
-			'end_hour'=>date("H",$t)+1,
-			'end_min'=>date("i",$t),
-			'disp' => $disp,
-			'active'=> ($i>=32400 && $i<72000 ? 1 : 0)
-		);
-	}
+
+	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
+	require_once( "$this->base_path/include/patTemplate.php" ) ;
+	$tmpl = new PatTemplate() ;
+	$tmpl->readTemplatesFromFile( "$this->images_path/daily.tmpl.html" ) ;
+
+	// setting skin folder
+	$tmpl->addVar( "WholeBoard" , "SKINPATH" , $this->images_url ) ;
+
 	// Static parameter for the request
-	$xoopsTpl->assign( "QUERY_STRING" , $query_string ) ;
-	$xoopsTpl->assign( "PRINT_LINK" , "$this->base_url/print.php?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$this->caldate" ) ;
-	$xoopsTpl->assign( "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
-	if( $for_print ) $xoopsTpl->assign( "PRINT_ATTRIB" , "width='0' height='0'" ) ;
+	$tmpl->addVar( "WholeBoard" , "GET_TARGET" , $get_target ) ;
+	$tmpl->addVar( "WholeBoard" , "QUERY_STRING" , $query_string ) ;
+	$tmpl->addVar( "WholeBoard" , "PRINT_LINK" , "$this->base_url/print.php?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$this->caldate" ) ;
+	$tmpl->addVar( "WholeBoard" , "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
+	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
 	// カテゴリー選択ボックス
-	$xoopsTpl->assign( "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
-	$xoopsTpl->assign( "CID" , $this->now_cid ) ;
+	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
+	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
 	// Variables required in header part etc.
-	$xoopsTpl->assign( "calInfo", $this->get_calendar_information( 'D' ) ) ;
+	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'D' ) ) ;
+
+	$tmpl->addVar( "WholeBoard" , "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
 
 	// BODY of the calendar
-	$calBody = $this->get_daily_html( $get_target , $query_string ) ;
-	$xoopsTpl->assign( "CALENDAR_BODY" , $calBody);//$this->calenderBody ) ;
-	$xoopsTpl->assign( "timeLine" , $this->timeLine ) ;
-	$xoopsTpl->assign( "events" , $this->events ) ;
-	$xoopsTpl->assign( "colspan" , count($this->events) ) ;
-	$xoopsTpl->assign( "ticket" , $GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ ) ) ;
-	
+	$tmpl->addVar( "WholeBoard" , "CALENDAR_BODY" , $this->get_daily_html( $get_target , $query_string ) ) ;
+
 	// content generated from patTemplate
-	$xoopsTpl->assign( "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
-	$xoopsOption['template_main'] = "pical_daily.html" ;
+	$ret = $tmpl->getParsedTemplate( "WholeBoard" ) ;
+
+	error_reporting( $original_level ) ;
+
+	return $ret ;
 }
 
 
@@ -1056,6 +944,7 @@ function get_calendar_information( $mode = 'M' )
 		}
 	}
 	$ret[ 'YEAR_OPTIONS' ] = $year_options ;
+
 	// 月の選択肢
 	$month_options = "" ;
 	for( $m = 1 ; $m <= 12 ; $m ++ ) {
@@ -1066,6 +955,7 @@ function get_calendar_information( $mode = 'M' )
 		}
 	}
 	$ret[ 'MONTH_OPTIONS' ] = $month_options ;
+
 	// 日の選択肢
 	if( $mode == 'W' || $mode == 'D' ) {
 		$date_options = "" ;
@@ -1076,6 +966,7 @@ function get_calendar_information( $mode = 'M' )
 				$date_options .= "\t\t\t<option value='$d'>{$this->date_short_names[$d]}</option>\n" ;
 			}
 		}
+
 		$ret[ 'YMD_SELECTS' ] = sprintf( _PICAL_FMT_YMD , "<select name='pical_year'>{$ret['YEAR_OPTIONS']}</select> &nbsp; " , "<select name='pical_month'>{$ret['MONTH_OPTIONS']}</select> &nbsp; " , "<select name='pical_date'>$date_options</select> &nbsp; " ) ;
 		if( $this->week_numbering ) {
 			if( $this->day == 0 && ! $this->week_start ) $weekno = date( 'W' , $this->unixtime + 86400 ) ;
@@ -1087,8 +978,11 @@ function get_calendar_information( $mode = 'M' )
 		}
 		$ret[ 'YMD_TITLE' ] = sprintf( _PICAL_FMT_YMD , $this->year , $this->month_middle_names[ $this->month ] , $this->date_long_names[$date] ) ;
 	}
+
 	return $ret ;
 }
+
+
 
 // カレンダーの本体を返す（１ヶ月分）
 function get_monthly_html( $get_target = '' , $query_string = '' )
@@ -1329,10 +1223,23 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 
 // カレンダーの本体を返す（１週間分）
-function get_weekly_html( ){
+function get_weekly_html( )
+{
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 
-	$ret = "" ;
+	$ret = "
+	 <table border='0' cellspacing='0' cellpadding='0' width='100%' style='border-collapse:collapse;margin:0px;'>
+	 <tr>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
+	 </tr>\n" ;
+
 	$wtop_date = $this->date - ( $this->day - $this->week_start + 7 ) % 7 ;
 	$wtop_unixtime = mktime(0,0,0,$this->month,$wtop_date,$this->year) ;
 	$wlast_unixtime = mktime(0,0,0,$this->month,$wtop_date+7,$this->year) ;
@@ -1378,6 +1285,7 @@ function get_weekly_html( ){
 			}
 		}
 	}
+
 	// 時差を計算しつつ、WHERE節の期間に関する条件生成
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 	if( $tzoffset == 0 ) {
@@ -1395,31 +1303,44 @@ function get_weekly_html( ){
 	$whr_class = $this->get_where_about_class() ;
 
 	// 一週間分のスケジュールをまとめて取得しておく
-	$sql="SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start";
-	$ars = mysql_query( $sql , $this->conn ) ;
+	$ars = mysql_query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$numrows_ars = mysql_num_rows( $ars ) ;
-	$sql="SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission=0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start";
-	$wrs = mysql_query( $sql , $this->conn ) ;
+	$wrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission=0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$numrows_wrs = mysql_num_rows( $wrs ) ;
 
 	// カレンダーBODY部表示
 	$now_date = $wtop_date ;
 	$wday_end = 7 + $this->week_start ;
-	$weekList=array();
-	$this->calenderBody = array();
 	for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ , $now_date ++ ) {
+
 		$now_unixtime = mktime( 0 , 0 , 0 , $this->month , $now_date , $this->year ) ;
 		$toptime_of_day = $now_unixtime + $this->day_start - $tzoffset ;
 		$bottomtime_of_day = $toptime_of_day + 86400 ;
 		$link = date( "Y-n-j" , $now_unixtime ) ;
-		$day = date( "j" , $now_unixtime ) ;
-		$title = $this->get_short_d( $now_unixtime ) ;
-		$title .= "&nbsp;({$this->week_middle_names[$wday]})" ;
+		$date = date( "j" , $now_unixtime ) ;
+		$disp = $this->get_middle_md( $now_unixtime ) ;
+		$disp .= "<br />({$this->week_middle_names[$wday]})" ;
 		$date_part_append = '' ;
 		// スケジュール表示部のテーブル開始
+		$event_str = "
+				<table cellpadding='0' cellspacing='2' style='margin:0px;'>
+				  <tr>
+				    <td><img src='$this->images_url/spacer.gif' alt='' border='0' width='120' height='4' /></td>
+				    <td><img src='$this->images_url/spacer.gif' alt='' border='0' width='360' height='4' /></td>
+				  </tr>
+		\n" ;
+/*
+					} else if( $event->allday & 4 ) {
+						// 記念日フラグが立っていたら、$holiday_colorにして、一番上に持ってくる
+						$event_str_tmp = str_replace( " style='" , " style='color:$this->holiday_color;" , $event_str_tmp ) ;
+						$event_str = "$event_str_tmp<br />\n$event_str" ;
+*/
+
+
 		// 承認済みスケジュールデータの表示ループ
 		if( $numrows_ars > 0 ) mysql_data_seek( $ars , 0 ) ;
 		while( $event = mysql_fetch_object( $ars ) ) {
+
 			// 対象イベントがこの日にかかっているかどうかのチェック
 			if( $event->allday ) {
 				if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
@@ -1429,8 +1350,10 @@ function get_weekly_html( ){
 				$event->is_start_date = $event->start >= $toptime_of_day ;
 				$event->is_end_date = $event->end <= $bottomtime_of_day ;
 			}
+
 			// サニタイズ
 			$summary = $this->text_sanitizer_for_show( $event->summary ) ;
+
 			if( $event->allday ) {
 				if( $event->allday & 4 ) {
 					// 記念日フラグの立っているもの
@@ -1438,7 +1361,7 @@ function get_weekly_html( ){
 					continue ;
 				} else {
 					// 通常の全日イベント
-					$time_part = "<img border='0' src='$this->images_url/dot_allday.gif' />" ;
+					$time_part = "             <img border='0' src='$this->images_url/dot_allday.gif' />" ;
 					$summary_class = "calsummary_allday" ;
 				}
 			} else {
@@ -1446,18 +1369,19 @@ function get_weekly_html( ){
 				$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , true ) ;
 				$summary_class = "calsummary" ;
 			}
-			$this->calenderBody[$event->start][] = array(
-					'time_part' => $time_part,
-					'cid' => $this->now_cid,
-					'smode' => 'Weekly',
-					'action' => 'View',
-					'event_id' => $event->id,
-					'caldate' => $this->caldate,
-					'class'		=> $summary_class,
-					'time_span' => ($event->end - $event->start) / 60,
-					'summary' => $summary
-			);
+
+			$event_str .= "
+				  <tr>
+				    <td valign='top' align='center'>
+				      <pre style='margin:0px;'><font size='2'>$time_part</font></pre>
+				    </td>
+				    <td valign='top'>
+				      <font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></font>
+				    </td>
+				  </tr>
+			\n" ;
 		}
+
 		// 未承認スケジュールの表示ループ（uidが一致するゲスト以外のレコードのみ）
 		if( $this->isadmin || $this->user_id > 0 ) {
 
@@ -1473,49 +1397,57 @@ function get_weekly_html( ){
 					$event->is_start_date = $event->start >= $toptime_of_day ;
 					$event->is_end_date = $event->end <= $bottomtime_of_day ;
 				}
-				
+
 				// サニタイズ
 				$summary = $this->text_sanitizer_for_show( $event->summary ) ;
+
 				if( $event->allday ) {
-					// 全日イベント
-					$time_part = "<img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
+					// 全日イベント（全日フラグがついていても、通常扱い）
+					$time_part = "             <img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
+					$summary_class = "calsummary_allday" ;
 				} else {
 					// 通常イベント
 					$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , false ) ;
+					$summary_class = "calsummary" ;
 				}
-				$this->calenderBody[$this->caldate][] = array(
-					'time_part' => $time_part,
-					'cid' => $this->now_cid,
-					'smode' => 'Weekly',
-					'action' => 'View',
-					'event_id' => $event->id,
-					'caldate' => $this->caldate,
-					'class'		=> $summary_class,
-					'time_span' => ($event->end - $event->start) / 60,
-					'summary' => $summary . "("._PICAL_MB_EVENT_NEEDADMIT.")"
-				);
+
+				$event_str .= "
+					  <tr>
+					    <td valign='top' align='center'>
+					      <pre style='margin:0px;'><font size='2'>$time_part</font></pre>
+					    </td>
+					    <td valign='top'>
+					      <font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'><font color='#00FF00'>$summary ("._PICAL_MB_EVENT_NEEDADMIT.")</font></a></font>
+					    </td>
+					  </tr>
+				\n" ;
 			}
 		}
+
 		// drawing the result of plugins
-		if( ! empty( $plugin_returns[ $day ] ) ) {
-			foreach( $plugin_returns[ $day ] as $item ) {
-				$this->calenderBody[$item['server_time']][] = array(
-					'time_part' => $day,
-					'cid' => null,
-					'smode' => 'Weekly',
-					'action' => 'View',
-					'event_id' => null,
-					'link' => $item['link'],
-					'image' => "<img src='".$this->images_url ."/". $item['dotgif']."' />",
-					'caldate' => $item['server_time'],
-					'time_span' => $item['close_time'] / 60 ,
-					'summary' => $item['title'],
-					'description' => $item['description']
-				);				
+		if( ! empty( $plugin_returns[ $date ] ) ) {
+			foreach( $plugin_returns[ $date ] as $item ) {
+				$event_str .= "
+				  <tr>
+				    <td></td>
+				    <td valign='top'>
+			          <font size='2'><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></font>
+				    </td>
+				  </tr>\n" ;
 			}
 		}
+
 		// 予定の追加（鉛筆アイコン）
-		// if( $this->insertable ) 
+		if( $this->insertable ) $event_str .= "
+				  <tr>
+				    <td valign='bottom' colspan='2'>
+				      &nbsp; <font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=Edit&amp;caldate=$link'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></font>
+				    </td>
+				  </tr>
+		\n" ;
+
+		// スケジュール表示部のテーブル終了
+		$event_str .= "\t\t\t\t</table>\n" ;
 
 		// 曜日タイプによる描画色振り分け
 		if( isset( $this->holidays[ $link ] ) ) {
@@ -1525,36 +1457,42 @@ function get_weekly_html( ){
 			if( $this->holidays[ $link ] != 1 ) {
 				$date_part_append .= "<font color='$this->holiday_color'>{$this->holidays[ $link ]}</font>\n" ;
 			}
-			$css_class = "sunday" ;
 		} elseif( $wday % 7 == 0 ) {
 			//	Sunday
-			$css_class = "sunday" ;
+			$bgcolor = $this->sunday_bgcolor ;
+			$color = $this->sunday_color ;
 		} elseif( $wday == 6 ) {
 			//	Saturday
-			$css_class = "saturday" ;
+			$bgcolor = $this->saturday_bgcolor ;
+			$color = $this->saturday_color ;
 		} else {
 			// Weekday
-			$css_class = "weekday" ;
+			$bgcolor = $this->weekday_bgcolor ;
+			$color = $this->weekday_color ;
 		}
+
 		// 選択日の背景色ハイライト処理
 		if( $link == $this->caldate ) $body_bgcolor = $this->targetday_bgcolor ;
 		else $body_bgcolor = $bgcolor ;
-		//echo $this->weekstr[$wday]; die;
-		$timeLine[ $day ]=array(
-			'now_unixtime' => $now_unixtime,
-			'toptime_of_day' => $toptime_of_day,
-			'bottomtime_of_day' => $bottomtime_of_day,
-			'link' => $link,
-			'date' => date("Y-m-d",$now_unixtime),
-			'title' => $title,
-			'css_class' => $css_class,
-			'weekstr' => $this->weekstr[$wday]
-		);
+
+		$ret .= "
+	 <tr>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='80' /></td>
+	   <td bgcolor='$bgcolor' align='center' valign='middle' style='vertical-align:middle;text-align:center;$this->frame_css;background-color:$bgcolor'>
+	     <a href='?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$link' class='calbody'><font size='3' color='$color'><b><span class='calbody'>$disp</span></b></font></a><br />
+	     $date_part_append
+	   </td>
+	   <td valign='top' colspan='6' bgcolor='$body_bgcolor' style='$this->frame_css;background-color:$body_bgcolor'>
+	     $event_str
+	   </td>
+	 </tr>\n" ;
 	}
-	//var_dump($timeLine);die;
-	$this->timeLine = $timeLine;
-	return $this->calenderBody;
+
+	$ret .= "\t </table>\n";
+
+	return $ret ;
 }
+
 
 
 // カレンダーの本体を返す（１日分）
@@ -1583,7 +1521,23 @@ function get_daily_html( )
 
 	list( $bgcolor , $color ) =  $this->daytype_to_colors( $this->daytype ) ;
 
-	$ret = "" ;
+	$ret = "
+	<table border='0' cellspacing='0' cellpadding='0'>
+	 <tr>
+	 <td class='calframe'>
+	 <table border='0' cellspacing='0' cellpadding='0' width='100%' style='margin:0px;'>
+	 <tr>
+	   <td colspan='8'><img src='$this->images_url/spacer.gif' alt='' height='10' /></td>
+	 </tr>
+	 <tr>
+	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='350' /></td>
+	   <td colospan='7' valign='top' bgcolor='$bgcolor' style='$this->frame_css;background-color:$bgcolor'>
+	     <table border='0' cellpadding='0' cellspacing='0' style='margin:0px;'>
+	       <tr>
+	         <td><img src='$this->images_url/spacer.gif' alt='' width='120' height='10' /></td>
+	         <td><img src='$this->images_url/spacer.gif' alt='' width='440' height='10' /></td>
+	       </tr>
+	\n" ;
 
 	// 時差を計算しつつ、WHERE節の期間に関する条件生成
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
@@ -1598,61 +1552,103 @@ function get_daily_html( )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 当日のスケジュール取得・表示
-	$sql = "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term)";
-	if ($whr_categories != "1") $sql .= " AND " . $whr_categories;
-	if ($whr_class != "1") $sql .= " AND " . $whr_class;
-	$sql .= " ORDER BY start,end";
-	$yrs = mysql_query( $sql, $this->conn ) ;
+	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
-	if( $num_rows == 0 ) $ret .= _PICAL_MB_NOEVENT ;
-	else while( $event = mysql_fetch_object( $yrs ) ) {		
+
+	if( $num_rows == 0 ) $ret .= "<tr><td></td><td>"._PICAL_MB_NOEVENT."</td></tr>\n" ;
+	else while( $event = mysql_fetch_object( $yrs ) ) {
+
 		if( $event->allday ) {
 			// 全日イベント（時差計算なし）
-			$time_part = "<img border='0' src='$this->images_url/dot_allday.gif' />" ;
+			$time_part = "             <img border='0' src='$this->images_url/dot_allday.gif' />" ;
 		} else {
 			// 通常イベント（時差計算あり）
 			$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , true ) ;
 		}
+
 		// サニタイズ
 		$description = $this->textarea_sanitizer_for_show( $event->description ) ;
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
+
 		$summary_class = $event->allday ? "calsummary_allday" : "calsummary" ;
+
+		$ret .= "
+	       <tr>
+	         <td valign='top' align='center'>
+	           <pre style='margin:0px;'><font size='3'>$time_part</font></pre>
+	         </td>
+	         <td vlalign='top'>
+	           <font size='3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></font><br />
+	           <font size='2'>$description</font><br />
+	           &nbsp;
+	         </td>
+	       </tr>\n" ;
 	}
+
 	// 未承認スケジュール取得・表示（uidが一致するゲスト以外のレコードのみ）
 	if( $this->isadmin || $this->user_id > 0 ) {
 	  $whr_uid = $this->isadmin ? "1" : "uid=$this->user_id " ;
 	  $yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission=0 AND $whr_uid AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
+
 	  while( $event = mysql_fetch_object( $yrs ) ) {
+
 		if( $event->allday ) {
 			// 全日イベント
-			$time_part = "<img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
+			$time_part = "             <img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
 		} else {
 			// 通常イベント
 			$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , false ) ;
 		}
+
 		// サニタイズ
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
+
 		$summary_class = $event->allday ? "calsummary_allday" : "calsummary" ;
-		$ret .= "<p>$time_part</p>
-	    	<a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>
-	    	$summary ("._PICAL_MB_EVENT_NEEDADMIT.")
-			</a>" ;
+
+		$ret .= "
+	       <tr>
+	         <td valign='top' align='center'>
+	           <pre style='margin:0px;'><font size='3'>$time_part</font></pre>
+	         </td>
+	         <td vlalign='top'>
+	           <font size='3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'><font color='#00FF00'>$summary ("._PICAL_MB_EVENT_NEEDADMIT.")</font></a></font>
+	         </td>
+	       </tr>\n" ;
 	  }
 	}
+
 	// drawing the result of plugins
 	if( ! empty( $plugin_returns[ $this->date ] ) ) {
 		foreach( $plugin_returns[ $this->date ] as $item ) {
-			$event = array(
-				'id' => null,
-				'link' => $item['link'],
-				'caldate' => $item['server_time'],
-                'close_time' => $item['close_time'],
-				'summary' => $item['title'],
-				'description' => $item['description']
-			);
-			$this->makeTimeLine4plugin($item['server_time'],$item['server_time']+$item['close_time'],$event);
+			$ret .= "
+	       <tr>
+	         <td></td>
+	         <td valign='top'>
+	           <font size='3'><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></font><br />
+	           <font size='2'>{$item['description']}</font><br />
+	           &nbsp;
+	         </td>
+	       </tr>\n" ;
 		}
 	}
+
+	// 予定の追加（鉛筆アイコン）
+	if( $this->insertable ) $ret .= "
+	       <tr>
+	         <td valign='bottom' colspan='2'>
+	           &nbsp; <font size='2'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></font>
+	         </td>
+	       </tr>\n" ;
+
+	$ret .= "
+	     </table>
+	   </td>
+	 </tr>
+	 </table>
+	 </td>
+	 </tr>
+	</table>\n" ;
+
 	return $ret ;
 }
 
@@ -1913,38 +1909,7 @@ function get_schedule_view_html( $for_print = false )
 }
 
 
-// スケジュール編集用画面表示用文字列を返す
-function get_schedule_edit_smarty( ){
-	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
-	$editable = $this->editable ;
-	$deletable = $this->deletable ;
-	$smode = empty( $_GET['smode'] ) ? 'Monthly' : preg_replace('/[^a-zA-Z0-9_-]/','',$_GET['smode']) ;
-	$form = array();
-	// 新規登録の場合
-	$editable = true ;
-	$summary = isset($_POST['summary']) ? htmlspecialchars($_POST['summary'],ENT_QUOTES) :  "" ;
-	$description = isset($_POST['description_text']) ? htmlspecialchars($_POST['description_text'],ENT_QUOTES) :  "" ;
-	$start_ymd = $end_ymd = $this->caldate ;
-	$start_long_ymdn = $end_long_ymdn = $this->get_long_ymdn( $this->unixtime ) ;
-	$start_hour = isset($_GET['start_hour']) ? intval($_GET['start_hour']) :  9 ;
-	$start_min = isset($_GET['start_min']) ? intval($_GET['start_min']) :  0 ;
-	$end_hour = isset($_GET['end_hour']) ? intval($_GET['end_hour']) : 17 ;
-	$end_min = isset($_GET['end_min']) ? intval($_GET['end_min']) :  0 ;
-	$poster_tz = $this->user_TZ ;
-	// Start Date
-	$form['StartDate'] = $start_ymd;
-	$form['StartHour'] = $start_hour;
-	$form['StartMin'] = $start_min;
-	$form['EndDate'] = $end_ymd;
-	$form['EndHour'] = $end_hour;
-	$form['EndMin'] = $end_min;
-	$form['StartDate'] = $start_ymd;
-	$form['StartHour'] = $start_hour;
-	$form['StartMin'] = $start_min;
-	$form['description_text'] = $description;
-	$form['ticket'] = $GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ );
-	return $form ;
-}
+
 // スケジュール編集用画面表示用文字列を返す
 function get_schedule_edit_html( )
 {
@@ -2046,7 +2011,7 @@ function get_schedule_edit_html( )
 		$event_id = 0 ;
 
 		$editable = true ;
-		$summary = isset($_POST['summary']) ? htmlspecialchars($_POST['summary'],ENT_QUOTES) :  "" ;
+		$summary = '' ;
 		$select_timezone_disabled = "" ;
 		$location = '' ;
 		$contact = '' ;
@@ -2055,14 +2020,14 @@ function get_schedule_edit_html( )
 		$select_private_disabled = "disabled='disabled'" ;
 		$groupid = 0 ;
 		$rrule = '' ;
-		$description = isset($_POST['description_text']) ? htmlspecialchars($_POST['description_text'],ENT_QUOTES) :  "" ;
+		$description = '' ;
 		$categories = $this->now_cid > 0 ? sprintf( "%05d," , $this->now_cid ) : '' ;
 		$start_ymd = $end_ymd = $this->caldate ;
 		$start_long_ymdn = $end_long_ymdn = $this->get_long_ymdn( $this->unixtime ) ;
-		$start_hour = isset($_GET['start_hour']) ? intval($_GET['start_hour']) :  9 ;
-		$start_min = isset($_GET['start_min']) ? intval($_GET['start_min']) :  0 ;
-		$end_hour = isset($_GET['end_hour']) ? intval($_GET['end_hour']) : 17 ;
-		$end_min = isset($_GET['end_min']) ? intval($_GET['end_min']) :  0 ;
+		$start_hour = 9 ;
+		$start_min = 0 ;
+		$end_hour = 17 ;
+		$end_min = 0 ;
 		$admission_status = _PICAL_MB_EVENT_NOTREGISTER ;
 		$update_button = '' ;
 		$insert_button = "<input name='insert' type='submit' value='"._PICAL_BTN_NEWINSERTED."' />" ;
@@ -2707,14 +2672,6 @@ function get_middle_md( $time )
 	) ;
 }
 
-// unixtimestampから、現在の言語で表現された標準長表記の MD を得る
-function get_short_d( $time )
-{
-	return sprintf(
-			_PICAL_FMT_D , // format
-			$this->date_short_names[ date( 'j' , $time ) ] // D
-	) ;
-}
 
 
 // unixtimestampから、現在の言語で表現された DHI を得る
@@ -2826,49 +2783,6 @@ function get_todays_time_description( $start , $end , $ynj , $justify = true , $
 
 	return $ret ;
 }
-private function makeTimeLine($start,$end,$event){
-	$cnt=0;
-	foreach($this->timeLine as $key=>$val){
-		if ($key>=$start && $key<$end){
-			if ($cnt==0){
-				$this->timeLine[$key]['event'][] = array(
-					'id' => $event->id,
-					'cid' => $this->now_cid,
-					'link' => $event->link,				
-					'caldate' => $this->caldate,
-					'time_span' => ($event->end - $event->start) / 60 ,
-					'summary' => $event->summary,
-					'description' => $event->description
-				);
-			}
-			$cnt++;
-			//echo date("H:i",$key) ."[". $event_id . "]<br />";
-		}
-	}
-	return $cnt;
-}
-private function makeTimeLine4plugin($start,$end,$event){
-	$cnt=0;
-	foreach($this->timeLine as $key=>$val){
-		if ($key>=$start && $key<$end){
-			if ($cnt==0){
-				$this->timeLine[$key]['event'][] = array(
-					'id' => null,
-					'cid' => null,
-					'link' => $event['link'],
-					'caldate' => $event['caldate'],
-					'time_span' => $event['close_time'] /60,					
-					'summary' => $event['summary'],
-					'description' => $event['description'],
-					'rowspan'=>3
-				);
-			}
-			$cnt++;
-			//echo date("H:i",$key) ."[". $event['summary'] . "]<br />";
-		}
-	}
-	return $cnt;
-}
 
 
 // $eventクエリ結果から、ある日の予定時間の文字列を得る（通常イベントのみ）
@@ -2902,15 +2816,6 @@ function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justi
 		if( $event->is_end_date ) $ret = "$dot {$stuffing}"._PICAL_MB_TIMESEPARATOR."{$end_desc}" ;
 		else $ret = "$dot "._PICAL_MB_CONTINUING ;
 	}
-	$cnt = $this->makeTimeLine($start,$end,$event);
-	$this->events[$event->id]=array(
-		'dat'=>$dot,
-		'start'=>$start,
-		'end'=>$end,
-		'cid'=>$this->now_cid,
-		'caldate'=>$this->caldate,
-		'rowspan'=>$cnt
-	);
 
 	return $ret ;
 }

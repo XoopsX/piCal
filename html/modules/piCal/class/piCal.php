@@ -2059,12 +2059,24 @@ function get_schedule_edit_html( )
 	if( defined( 'XOOPS_ROOT_PATH' ) ) {
 
 		// DHTMLテキストエリアの処理
-		include_once( XOOPS_ROOT_PATH . "/include/xoopscodes.php" ) ;
-		ob_start();
-		$GLOBALS["description_text"] = $description;
-		xoopsCodeTarea("description_text",50,6);
-		$description_textarea = ob_get_contents();
-		ob_end_clean();
+		if ( defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.0.0', '>=') ) {
+			$params = array();
+			$params['name'] = 'description_text';
+			$params['class'] = 'bbcode';
+			$params['cols'] = 50;
+			$params['rows'] = 6;
+			$params['value'] = $description;
+			$params['id'] = 'legacy_xoopsform_' . $params['name'];
+			$description_textarea = '';
+			XCube_DelegateUtils::call("Site.TextareaEditor.BBCode.Show", new XCube_Ref($description_textarea), $params);
+		} else {
+			include_once( XOOPS_ROOT_PATH . "/include/xoopscodes.php" ) ;
+			ob_start();
+			$GLOBALS["description_text"] = $description;
+			xoopsCodeTarea("description_text",50,6);
+			$description_textarea = ob_get_contents();
+			ob_end_clean();
+		}
 
 	} else {
 		// XOOPS以外では、単なるプレーンtextare

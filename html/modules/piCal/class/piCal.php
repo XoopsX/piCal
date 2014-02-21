@@ -10,6 +10,7 @@ if( ! class_exists( 'piCal' ) ) {
 define( 'PICAL_COPYRIGHT' , "<a href='http://xoops.peak.ne.jp/' target='_blank'>piCal-0.8</a>" ) ;
 define( 'PICAL_EVENT_TABLE' , 'pical_event' ) ;
 define( 'PICAL_CAT_TABLE' , 'pical_cat' ) ;
+define( 'PICAL_ERR_REPORTING_LEVEL' , defined('E_STRICT')? ( E_ALL ^ E_NOTICE ^ E_STRICT ) : ( E_ALL ^ E_NOTICE ) );
 
 
 class piCal
@@ -509,7 +510,7 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
 
-	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
+	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
 	$tmpl->setBasedir( "$this->images_path" ) ;
@@ -679,7 +680,7 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
 
-	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
+	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
 	$tmpl->readTemplatesFromFile( "$this->images_path/yearly.tmpl.html" ) ;
@@ -732,7 +733,7 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
 
-	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
+	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
 	$tmpl->readTemplatesFromFile( "$this->images_path/monthly.tmpl.html" ) ;
@@ -797,7 +798,7 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
 
-	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
+	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
 	$tmpl->readTemplatesFromFile( "$this->images_path/weekly.tmpl.html" ) ;
@@ -840,7 +841,7 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
 
-	$original_level = error_reporting( E_ALL ^ E_NOTICE ) ;
+	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
 	$tmpl->readTemplatesFromFile( "$this->images_path/daily.tmpl.html" ) ;

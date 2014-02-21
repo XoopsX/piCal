@@ -60,29 +60,29 @@ class piCal
 	var $isadmin = false ;			// Is admin or not
 
 	// ANOTHER public properties
-	var $conn ;					// MySQLã¨ã®æ¥ç¶šãƒãƒ³ãƒ‰ãƒ« (äºˆå®šå–å¾—ã‚’ã™ã‚‹æ™‚ã‚»ãƒƒãƒˆ)
+	var $conn ;					// MySQL¤È¤ÎÀÜÂ³¥Ï¥ó¥É¥ë (Í½Äê¼èÆÀ¤ò¤¹¤ë»ş¥»¥Ã¥È)
 	var $table = 'pical_event' ;		// table name for events
 	var $cat_table = 'pical_cat' ;		// table name for categories
 	var $plugin_table = 'pical_plugin' ;	// table name for plugins
 	var $base_url = '' ;
 	var $base_path = '' ;
-	var $images_url = '/include/piCal/images' ;	// ã“ã®ãƒ•ã‚©ãƒ«ãƒ€ã« spacer.gif, arrow*.gif ç­‰ã‚’ç½®ã„ã¦ãŠã
+	var $images_url = '/include/piCal/images' ;	// ¤³¤Î¥Õ¥©¥ë¥À¤Ë spacer.gif, arrow*.gif Åù¤òÃÖ¤¤¤Æ¤ª¤¯
 	var $images_path = 'include/piCal/images' ;
 	var $jscalendar = 'jscalendar' ; // DHTML Date/Time Selector
 	var $jscalendar_lang_file = 'calendar-jp.js' ; // language file of the jscalh
-	var $can_output_ics = true ;	// icsãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›ã‚’è¨±å¯ã™ã‚‹ã‹ã©ã†ã‹
-	var $connection = 'http' ;		// http ã‹ https ã‹
-	var $max_rrule_extract = 100 ;	// rrule ã®å±•é–‹ã®ä¸Šé™æ•°(COUNT)
-	var $week_start = 0 ;			// é€±ã®é–‹å§‹æ›œæ—¥ 0ãŒæ—¥æ›œ 1ãŒæœˆæ›œ
-	var $week_numbering = 0 ;		// é€±ã®æ•°ãˆæ–¹ 0ãªã‚‰æœˆã”ã¨ 1ãªã‚‰å¹´é–“é€šç®—
-	var $day_start = 0 ;			// æ—¥ä»˜ã®å¢ƒç•Œç·šï¼ˆç§’å˜ä½ï¼‰
-	var $use24 = true ;				// 24æ™‚é–“åˆ¶ãªã‚‰trueã€12æ™‚é–“åˆ¶ãªã‚‰false
-	var $now_cid = 0 ;				// ã‚«ãƒ†ã‚´ãƒªæŒ‡å®š
-	var $categories = array() ;		// ã‚¢ã‚¯ã‚»ã‚¹å¯èƒ½ãªã‚«ãƒ†ã‚´ãƒªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé€£æƒ³é…åˆ—
-	var $groups = array() ;			// PRIVATEæ™‚ã«é¸æŠå¯èƒ½ãªã‚°ãƒ«ãƒ¼ãƒ—ã®é€£æƒ³é…åˆ—
-	var $nameoruname = 'name' ;		// æŠ•ç¨¿è€…ã®è¡¨ç¤ºï¼ˆãƒ­ã‚°ã‚¤ãƒ³åã‹ãƒãƒ³ãƒ‰ãƒ«åã‹ï¼‰
+	var $can_output_ics = true ;	// ics¥Õ¥¡¥¤¥ë½ĞÎÏ¤òµö²Ä¤¹¤ë¤«¤É¤¦¤«
+	var $connection = 'http' ;		// http ¤« https ¤«
+	var $max_rrule_extract = 100 ;	// rrule ¤ÎÅ¸³«¤Î¾å¸Â¿ô(COUNT)
+	var $week_start = 0 ;			// ½µ¤Î³«»ÏÍËÆü 0¤¬ÆüÍË 1¤¬·îÍË
+	var $week_numbering = 0 ;		// ½µ¤Î¿ô¤¨Êı 0¤Ê¤é·î¤´¤È 1¤Ê¤éÇ¯´ÖÄÌ»»
+	var $day_start = 0 ;			// ÆüÉÕ¤Î¶­³¦Àş¡ÊÉÃÃ±°Ì¡Ë
+	var $use24 = true ;				// 24»ş´ÖÀ©¤Ê¤étrue¡¢12»ş´ÖÀ©¤Ê¤éfalse
+	var $now_cid = 0 ;				// ¥«¥Æ¥´¥ê»ØÄê
+	var $categories = array() ;		// ¥¢¥¯¥»¥¹²ÄÇ½¤Ê¥«¥Æ¥´¥ê¥ª¥Ö¥¸¥§¥¯¥ÈÏ¢ÁÛÇÛÎó
+	var $groups = array() ;			// PRIVATE»ş¤ËÁªÂò²ÄÇ½¤Ê¥°¥ë¡¼¥×¤ÎÏ¢ÁÛÇÛÎó
+	var $nameoruname = 'name' ;		// Åê¹Æ¼Ô¤ÎÉ½¼¨¡Ê¥í¥°¥¤¥óÌ¾¤«¥Ï¥ó¥É¥ëÌ¾¤«¡Ë
 	var $proxysettings = '' ;		// Proxy setting
-	var $last_summary = '' ;		// å¤–éƒ¨ã‹ã‚‰ä»¶åã‚’å‚ç…§ã™ã‚‹ãŸã‚ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
+	var $last_summary = '' ;		// ³°Éô¤«¤é·ïÌ¾¤ò»²¾È¤¹¤ë¤¿¤á¤Î¥×¥í¥Ñ¥Æ¥£
 	var $plugins_path_monthly = 'plugins/monthly' ;
 	var $plugins_path_weekly = 'plugins/weekly' ;
 	var $plugins_path_daily = 'plugins/daily' ;
@@ -98,8 +98,8 @@ class piCal
 	var $long_event_legends = array() ;
 	var $language = "japanese" ;
 
-	// æ¡ä»¶ä»˜ãå‚ç…§ç”¨ãƒ¡ãƒ³ãƒ
-	var $original_id ;	// $_GET['event_id']ã‚’å‡¦ç†ã—ãŸç›´å¾Œã«å‚ç…§å¯èƒ½
+	// ¾ò·ïÉÕ¤­»²¾ÈÍÑ¥á¥ó¥Ğ
+	var $original_id ;	// $_GET['event_id']¤ò½èÍı¤·¤¿Ä¾¸å¤Ë»²¾È²ÄÇ½
 
 	var $event = null ;	// event for meta discription //naao
 
@@ -110,22 +110,22 @@ class piCal
 // Constructor
 public function __construct( $target_date = "" , $language = "japanese" , $reload = false )
 {
-	// æ—¥ä»˜ã®ã‚»ãƒƒãƒˆ
+	// ÆüÉÕ¤Î¥»¥Ã¥È
 	if( $target_date ) {
 		$this->set_date( $target_date ) ;
 	} else if( isset( $_GET[ 'caldate' ] ) ) {
 		$this->set_date( $_GET[ 'caldate' ] ) ;
 	} else if( isset( $_POST[ 'pical_jumpcaldate' ] ) && isset( $_POST[ 'pical_year' ] ) ) {
 		if( empty( $_POST[ 'pical_month' ] ) ) {
-			// å¹´ã®ã¿ãŒPOSTã•ã‚ŒãŸå ´åˆ
+			// Ç¯¤Î¤ß¤¬POST¤µ¤ì¤¿¾ì¹ç
 			$month = 1 ;
 			$date = 1 ;
 		} else if( empty( $_POST[ 'pical_date' ] ) ) {
-			// å¹´ãƒ»æœˆãŒPOSTã•ã‚ŒãŸå ´åˆ
+			// Ç¯¡¦·î¤¬POST¤µ¤ì¤¿¾ì¹ç
 			$month = intval( $_POST[ 'pical_month' ] ) ;
 			$date = 1 ;
 		} else {
-			// å¹´ãƒ»æœˆãƒ»æ—¥ãŒPOSTã•ã‚ŒãŸå ´åˆ
+			// Ç¯¡¦·î¡¦Æü¤¬POST¤µ¤ì¤¿¾ì¹ç
 			$month = intval( $_POST[ 'pical_month' ] ) ;
 			$date = intval( $_POST[ 'pical_date' ] ) ;
 		}
@@ -137,7 +137,7 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 		$this->use_server_TZ = true ;
 	}
 
-	// SSLã®æœ‰ç„¡ã‚’ã€$_SERVER['HTTPS'] ã«ã¦åˆ¤æ–­
+	// SSL¤ÎÍ­Ìµ¤ò¡¢$_SERVER['HTTPS'] ¤Ë¤ÆÈ½ÃÇ
 	if( defined( 'XOOPS_URL' ) ) {
 		$this->connection = substr( XOOPS_URL , 0 , 8 ) == 'https://' ? 'https' : 'http' ;
 	} else if( ! empty( $_SERVER['HTTPS'] ) ) {
@@ -146,10 +146,10 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 		$this->connection = 'http' ;
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼æŒ‡å®šã®å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼»ØÄê¤Î¼èÆÀ
 	$this->now_cid = ! empty( $_GET['cid'] ) ? intval( $_GET['cid'] ) : 0 ;
 
-	// POSTã§ãƒãƒ©ãƒãƒ©ã«æ—¥ä»˜ã‚’é€ä¿¡ã•ã‚ŒãŸå ´åˆã€æŒ‡å®šãŒã‚ã‚Œã°ãƒªãƒ­ãƒ¼ãƒ‰ã‚’è¡Œã†
+	// POST¤Ç¥Ğ¥é¥Ğ¥é¤ËÆüÉÕ¤òÁ÷¿®¤µ¤ì¤¿¾ì¹ç¡¢»ØÄê¤¬¤¢¤ì¤Ğ¥ê¥í¡¼¥É¤ò¹Ô¤¦
 	if( ! empty( $caldate_posted ) && $reload && ! headers_sent() ) {
 		$reload_str = "Location: $this->connection://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}?caldate=$this->caldate&{$_SERVER['QUERY_STRING']}" ;
 		$needed_post_vars = array( 'op' , 'order' , 'cid' , 'num' , 'txt' ) ;
@@ -161,10 +161,10 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 		exit ;
 	}
 
-	// piCal.php ãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨ã™ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ä¸€ã¤ä¸Šã‚’ãƒ™ãƒ¼ã‚¹ã¨ã™ã‚‹
+	// piCal.php ¥Õ¥¡¥¤¥ë¤ÎÂ¸ºß¤¹¤ë¥Ç¥£¥ì¥¯¥È¥ê¤Î°ì¤Ä¾å¤ò¥Ù¡¼¥¹¤È¤¹¤ë
 	$this->base_path = dirname( dirname( __FILE__ ) ) ;
 
-	// è¨€èªãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
+	// ¸À¸ì¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
 	if ( file_exists( "$this->base_path/language/$language/pical_vars.phtml" ) ) {
 		include "$this->base_path/language/$language/pical_vars.phtml" ;
 		include_once "$this->base_path/language/$language/pical_constants.php" ;
@@ -177,12 +177,12 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 		$this->jscalendar_lang_file = 'calendar-en.js' ;
 	}
 
-	// ãƒ­ã‚±ãƒ¼ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­è¾¼
+	// ¥í¥±¡¼¥ë¥Õ¥¡¥¤¥ë¤ÎÆÉ¹ş
 	if( ! empty( $this->locale ) ) $this->read_locale() ;
 }
 
 
-// piCalå°‚ç”¨ãƒ­ã‚±ãƒ¼ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
+// piCalÀìÍÑ¥í¥±¡¼¥ë¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à
 function read_locale()
 {
 	if( file_exists( "$this->base_path/locales/{$this->locale}.php" ) ) {
@@ -191,7 +191,7 @@ function read_locale()
 }
 
 
-// year,month,day,caldate,unixtime ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+// year,month,day,caldate,unixtime ¤ò¥»¥Ã¥È¤¹¤ë
 function set_date( $setdate )
 {
 //HACK by domifara for php5.3+
@@ -207,8 +207,8 @@ function set_date( $setdate )
 	$this->caldate = "$year-$month-$date" ;
 	$this->unixtime = mktime(0,0,0,$month,$date,$year) ;
 
-	// æ›œæ—¥ã¨æ—¥ä»˜ã‚¿ã‚¤ãƒ—ã®ã‚»ãƒƒãƒˆ
-	// ãƒ„ã‚§ãƒ©ãƒ¼ã®å…¬å¼
+	// ÍËÆü¤ÈÆüÉÕ¥¿¥¤¥×¤Î¥»¥Ã¥È
+	// ¥Ä¥§¥é¡¼¤Î¸ø¼°
 	if( $month <= 2 ) {
 		$year -- ;
 		$month += 12 ;
@@ -225,7 +225,7 @@ function set_date( $setdate )
 
 
 
-// æ›œæ—¥ãƒ»ç¥æ—¥ã®ç¨®é¡ã‹ã‚‰èƒŒæ™¯è‰²ãƒ»æ–‡å­—è‰²ã‚’å¾—ã‚‹
+// ÍËÆü¡¦½ËÆü¤Î¼ïÎà¤«¤éÇØ·Ê¿§¡¦Ê¸»ú¿§¤òÆÀ¤ë
 function daytype_to_colors( $daytype )
 {
 	switch( $daytype ) {
@@ -247,7 +247,7 @@ function daytype_to_colors( $daytype )
 
 
 
-// SQLå½¢å¼ã®æ—¥ä»˜ã‹ã‚‰ã€æ›œæ—¥ãƒ»ç¥æ—¥ã®ç¨®é¡ã‚’æ±‚ã‚ã‚‹ã‚¯ãƒ©ã‚¹é–¢æ•°
+// SQL·Á¼°¤ÎÆüÉÕ¤«¤é¡¢ÍËÆü¡¦½ËÆü¤Î¼ïÎà¤òµá¤á¤ë¥¯¥é¥¹´Ø¿ô
 function get_daytype( $date )
 {
 //HACK by domifara for php5.3+
@@ -257,10 +257,10 @@ function get_daytype( $date )
 	$month = intval( $regs[2] ) ;
 	$date = intval( $regs[3] ) ;
 
-	// ç¥æ—¥ã¯3
+	// ½ËÆü¤Ï3
 	if( isset( $this->holidays[ "$year-$month-$date" ] ) ) return 3 ;
 
-	// ãƒ„ã‚§ãƒ©ãƒ¼ã®å…¬å¼
+	// ¥Ä¥§¥é¡¼¤Î¸ø¼°
 	if ($month <= 2) {
 		$year -- ;
 		$month += 12;
@@ -275,33 +275,33 @@ function get_daytype( $date )
 
 
 /*******************************************************************/
-/*        ãƒ–ãƒ­ãƒƒã‚¯ç”¨è¡¨ç¤ºé–¢æ•°                                       */
+/*        ¥Ö¥í¥Ã¥¯ÍÑÉ½¼¨´Ø¿ô                                       */
 /*******************************************************************/
 
-// $this->caldateæ—¥ã®äºˆå®š ã‚’è¿”ã™
+// $this->caldateÆü¤ÎÍ½Äê ¤òÊÖ¤¹
 function get_date_schedule( $get_target = '' )
 {
 	// if( $get_target == '' ) $get_target = $_SERVER['SCRIPT_NAME'] ;
 
 	$ret = '' ;
 
-	// æ™‚å·®ã‚’è¨ˆç®—ã—ã¤ã¤ã€WHEREç¯€ã®æœŸé–“ã«é–¢ã™ã‚‹æ¡ä»¶ç”Ÿæˆ
+	// »şº¹¤ò·×»»¤·¤Ä¤Ä¡¢WHEREÀá¤Î´ü´Ö¤Ë´Ø¤¹¤ë¾ò·ïÀ¸À®
 	$tzoffset = ( $this->user_TZ - $this->server_TZ ) * 3600 ;
 	if( $tzoffset == 0 ) {
-		// æ™‚å·®ãŒãªã„å ´åˆ ï¼ˆMySQLã«è² è·ã‚’ã‹ã‘ã•ã›ãªã„ãŸã‚ã€ã“ã“ã§æ¡ä»¶åˆ†ã‘ã—ã¨ã)
+		// »şº¹¤¬¤Ê¤¤¾ì¹ç ¡ÊMySQL¤ËÉé²Ù¤ò¤«¤±¤µ¤»¤Ê¤¤¤¿¤á¡¢¤³¤³¤Ç¾ò·ïÊ¬¤±¤·¤È¤¯)
 		$whr_term = "start<'".($this->unixtime + 86400)."' AND end>'$this->unixtime'" ;
 	} else {
-		// æ™‚å·®ãŒã‚ã‚‹å ´åˆã¯ã€alldayã«ã‚ˆã£ã¦å ´åˆåˆ†ã‘
+		// »şº¹¤¬¤¢¤ë¾ì¹ç¤Ï¡¢allday¤Ë¤è¤Ã¤Æ¾ì¹çÊ¬¤±
 		$whr_term = "( allday AND start<='$this->unixtime' AND end>'$this->unixtime') OR ( ! allday AND start<'".($this->unixtime + 86400 - $tzoffset )."' AND end>'".($this->unixtime - $tzoffset )."')" ;
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// å½“æ—¥ã®ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«å–å¾—
+	// ÅöÆü¤Î¥¹¥±¥¸¥å¡¼¥ë¼èÆÀ
 	$yrs = mysql_query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
 
@@ -311,7 +311,7 @@ function get_date_schedule( $get_target = '' )
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
 		if( $event->allday ) {
-			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
+			// Á´Æü¥¤¥Ù¥ó¥È
 			$ret .= "
 	       <table border='0' cellpadding='0' cellspacing='0' width='100%'>
 	         <tr>
@@ -320,7 +320,7 @@ function get_date_schedule( $get_target = '' )
 	         </tr>
 	       </table>\n" ;
 		} else {
-			// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆ
+			// ÄÌ¾ï¥¤¥Ù¥ó¥È
 			$event->start += $tzoffset ;
 			$event->end += $tzoffset ;
 			$ret .= "
@@ -335,7 +335,7 @@ function get_date_schedule( $get_target = '' )
 		}
 	}
 
-	// äºˆå®šã®è¿½åŠ ï¼ˆé‰›ç­†ã‚¢ã‚¤ã‚³ãƒ³ï¼‰
+	// Í½Äê¤ÎÄÉ²Ã¡Ê±ôÉ®¥¢¥¤¥³¥ó¡Ë
 	if( $this->insertable ) $ret .= "
 	       <dl>
 	         <dt>
@@ -348,30 +348,30 @@ function get_date_schedule( $get_target = '' )
 
 
 
-// $this->caldateä»¥é™ã®äºˆå®š ã‚’æœ€å¤§ $num ä»¶è¿”ã™
+// $this->caldate°Ê¹ß¤ÎÍ½Äê ¤òºÇÂç $num ·ïÊÖ¤¹
 function get_coming_schedule( $get_target = '' , $num = 5 )
 {
 	// if( $get_target == '' ) $get_target = $_SERVER['SCRIPT_NAME'] ;
 
 	$ret = '' ;
 
-	// æ™‚å·®ã‚’è¨ˆç®—ã—ã¤ã¤ã€WHEREç¯€ã®æœŸé–“ã«é–¢ã™ã‚‹æ¡ä»¶ç”Ÿæˆ
+	// »şº¹¤ò·×»»¤·¤Ä¤Ä¡¢WHEREÀá¤Î´ü´Ö¤Ë´Ø¤¹¤ë¾ò·ïÀ¸À®
 	$tzoffset = ( $this->user_TZ - $this->server_TZ ) * 3600 ;
 	if( $tzoffset == 0 ) {
-		// æ™‚å·®ãŒãªã„å ´åˆ ï¼ˆMySQLã«è² è·ã‚’ã‹ã‘ã•ã›ãªã„ãŸã‚ã€ã“ã“ã§æ¡ä»¶åˆ†ã‘ã—ã¨ã)
+		// »şº¹¤¬¤Ê¤¤¾ì¹ç ¡ÊMySQL¤ËÉé²Ù¤ò¤«¤±¤µ¤»¤Ê¤¤¤¿¤á¡¢¤³¤³¤Ç¾ò·ïÊ¬¤±¤·¤È¤¯)
 		$whr_term = "end>'$this->unixtime'" ;
 	} else {
-		// æ™‚å·®ãŒã‚ã‚‹å ´åˆã¯ã€alldayã«ã‚ˆã£ã¦å ´åˆåˆ†ã‘
+		// »şº¹¤¬¤¢¤ë¾ì¹ç¤Ï¡¢allday¤Ë¤è¤Ã¤Æ¾ì¹çÊ¬¤±
 		$whr_term = "(allday AND end>'$this->unixtime') OR ( ! allday AND end>'".($this->unixtime - $tzoffset )."')" ;
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// å½“æ—¥ä»¥é™ã®ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«å–å¾—
+	// ÅöÆü°Ê¹ß¤Î¥¹¥±¥¸¥å¡¼¥ë¼èÆÀ
 	$yrs = mysql_query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
 
@@ -382,7 +382,7 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
 		if( $event->allday ) {
-			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
+			// Á´Æü¥¤¥Ù¥ó¥È
 			$ret .= "
 	       <dl>
 	         <dt>
@@ -393,7 +393,7 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 	         </dd>
 	       </dl>\n" ;
 		} else {
-			// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆ
+			// ÄÌ¾ï¥¤¥Ù¥ó¥È
 			$event->start += $tzoffset ;
 			$event->end += $tzoffset ;
 			$ret .= "
@@ -408,7 +408,7 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 		}
 	}
 
-	// æ®‹ã‚Šä»¶æ•°ã®è¡¨ç¤º
+	// »Ä¤ê·ï¿ô¤ÎÉ½¼¨
 	if( $num_rows > $num ) $ret .= "
            <table border='0' cellspacing='0' cellpadding='0' width='100%'>
             <tr>
@@ -416,7 +416,7 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
             </tr>
            </table>\n" ;
 
-	// äºˆå®šã®è¿½åŠ ï¼ˆé‰›ç­†ã‚¢ã‚¤ã‚³ãƒ³ï¼‰
+	// Í½Äê¤ÎÄÉ²Ã¡Ê±ôÉ®¥¢¥¤¥³¥ó¡Ë
 	if( $this->insertable ) $ret .= "
 	       <dl>
 	         <dt>
@@ -429,10 +429,10 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 
 
 
-// ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ç”¨ã‚¤ãƒ™ãƒ³ãƒˆå–å¾—é–¢æ•°
+// ¥ß¥Ë¥«¥ì¥ó¥À¡¼ÍÑ¥¤¥Ù¥ó¥È¼èÆÀ´Ø¿ô
 function get_flags_date_has_events( $range_start_s , $range_end_s )
 {
-	// ã‚ã‚‰ã‹ã˜ã‚é…åˆ—ã‚’ç”Ÿæˆã—ã¦ãŠã
+	// ¤¢¤é¤«¤¸¤áÇÛÎó¤òÀ¸À®¤·¤Æ¤ª¤¯
 	/* for( $time = $start ; $time < $end ; $time += 86400 ) {
 		$ret[ date( 'j' , $time ) ] = 0 ;
 	} */
@@ -444,14 +444,14 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 	$range_start_s -= 86400 ;
 	$range_end_s += 86400 ;
 
-	// æ™‚å·®è¨ˆç®—
+	// »şº¹·×»»
 	$tzoffset_s2u = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 	//$gmtoffset = intval( $this->server_TZ * 3600 ) ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
 /*	$yrs = mysql_query( "SELECT start,end,allday FROM $this->table WHERE admission > 0 AND start < ".($end + 86400)." AND end > ".($start - 86400)." AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
@@ -470,7 +470,7 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 
 
 
-	// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆä»¥å¤–ã®å‡¦ç†
+	// Á´Æü¥¤¥Ù¥ó¥È°Ê³°¤Î½èÍı
 	$result = mysql_query( "SELECT summary,id,start FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday <= 0" , $this->conn ) ;
 
 	while( list( $title , $id , $server_time ) = mysql_fetch_row( $result ) ) {
@@ -479,7 +479,7 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 		$ret[ date('j',$user_time) ] = 1 ;
 	}
 
-	// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆå°‚ç”¨ã®å‡¦ç†
+	// Á´Æü¥¤¥Ù¥ó¥ÈÀìÍÑ¤Î½èÍı
 	$result = mysql_query( "SELECT summary,id,start,end FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday > 0" , $this->conn ) ;
 
 	while( list( $title , $id , $start_s , $end_s ) = mysql_fetch_row( $result ) ) {
@@ -500,10 +500,10 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 
 
 
-// ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼è¡¨ç¤ºç”¨æ–‡å­—åˆ—ã‚’è¿”ã™
+// ¥ß¥Ë¥«¥ì¥ó¥À¡¼É½¼¨ÍÑÊ¸»úÎó¤òÊÖ¤¹
 function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode = '' )
 {
-	// å®Ÿè¡Œæ™‚é–“è¨ˆæ¸¬ã‚¹ã‚¿ãƒ¼ãƒˆ
+	// ¼Â¹Ô»ş´Ö·×Â¬¥¹¥¿¡¼¥È
 	// list( $usec , $sec ) = explode( " " , microtime() ) ;
 	// $picalstarttime = $sec + $usec ;
 
@@ -515,29 +515,29 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 	$tmpl = new PatTemplate() ;
 	$tmpl->setBasedir( "$this->images_path" ) ;
 
-	// è¡¨ç¤ºãƒ¢ãƒ¼ãƒ‰ã«å¿œã˜ã¦ã€ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ¯ã‚Šåˆ†ã‘
+	// É½¼¨¥â¡¼¥É¤Ë±ş¤¸¤Æ¡¢¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¤ò¿¶¤êÊ¬¤±
 	switch( $mode ) {
 		case 'NO_YEAR' :
-			// å¹´é–“è¡¨ç¤ºç”¨
+			// Ç¯´ÖÉ½¼¨ÍÑ
 			$tmpl->readTemplatesFromFile( "minical_for_yearly.tmpl.html" ) ;
 			$target_highlight_flag = false ;
 			break ;
 		case 'NO_NAVIGATE' :
-			// æœˆé–“ã®ä¸‹éƒ¨å‚ç…§ç”¨
+			// ·î´Ö¤Î²¼Éô»²¾ÈÍÑ
 			$tmpl->readTemplatesFromFile( "minical_for_monthly.tmpl.html" ) ;
 			$target_highlight_flag = false ;
 			break ;
 		default :
-			// é€šå¸¸ã®ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ–ãƒ­ãƒƒã‚¯ç”¨
+			// ÄÌ¾ï¤Î¥ß¥Ë¥«¥ì¥ó¥À¡¼¥Ö¥í¥Ã¥¯ÍÑ
 			$tmpl->readTemplatesFromFile( "minical.tmpl.html" ) ;
 			$target_highlight_flag = true ;
 			break ;
 	}
 
-	// å½“æœˆã®å„æ—¥ãŒã‚¤ãƒ™ãƒ³ãƒˆã‚’æŒã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã‚’å–å¾—
+	// Åö·î¤Î³ÆÆü¤¬¥¤¥Ù¥ó¥È¤ò»ı¤Ã¤Æ¤¤¤ë¤«¤É¤¦¤«¤ò¼èÆÀ
 	$event_dates = $this->get_flags_date_has_events( mktime(0,0,0,$this->month,1,$this->year) , mktime(0,0,0,$this->month+1,1,$this->year) ) ;
 
-	// å‰æœˆã¯æœˆæœ«ã€ç¿Œæœˆã¯æœˆåˆã¨ã™ã‚‹
+	// Á°·î¤Ï·îËö¡¢Íâ·î¤Ï·î½é¤È¤¹¤ë
 	$prev_month = date("Y-n-j", mktime(0,0,0,$this->month,0,$this->year));
 	$next_month = date("Y-n-j", mktime(0,0,0,$this->month+1,1,$this->year));
 
@@ -566,7 +566,7 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 	$date = ( - $first_date['wday'] + $this->week_start - 7 ) % 7 ;
 	$wday_end = 7 + $this->week_start ;
 
-	// æ›œæ—¥åãƒ«ãƒ¼ãƒ—
+	// ÍËÆüÌ¾¥ë¡¼¥×
 	$rows = array() ;
 	for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ ) {
 		if( $wday % 7 == 0 ) {
@@ -583,7 +583,7 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 			$color = $this->weekday_color ;
 		}
 
-		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨é…åˆ—ã¸ã®ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
+		// ¥Æ¥ó¥×¥ì¡¼¥ÈÍÑÇÛÎó¤Ø¤Î¥Ç¡¼¥¿¥»¥Ã¥È
 		array_push( $rows , array(
 			"BGCOLOR" => $bgcolor ,
 			"COLOR" => $color ,
@@ -591,20 +591,20 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 		) ) ;
 	}
 
-	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«ãƒ‡ãƒ¼ã‚¿ã‚’åŸ‹ã‚è¾¼ã‚€
+	// ¥Æ¥ó¥×¥ì¡¼¥È¤Ë¥Ç¡¼¥¿¤òËä¤á¹ş¤à
 	$tmpl->addRows( "DayNameLoop" , $rows ) ;
 	$tmpl->parseTemplate( "DayNameLoop" , 'w' ) ;
 
-	// é€± (row) ãƒ«ãƒ¼ãƒ—
+	// ½µ (row) ¥ë¡¼¥×
 	for( $week = 0 ; $week < 6 ; $week ++ ) {
 
 		$rows = array() ;
 
-		// æ—¥ (col) ãƒ«ãƒ¼ãƒ—
+		// Æü (col) ¥ë¡¼¥×
 		for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ ) {
 			$date ++ ;
 			if( ! checkdate($this->month,$date,$this->year) ) {
-				// æœˆã®ç¯„å›²å¤–
+				// ·î¤ÎÈÏ°Ï³°
 				array_push( $rows , array(
 					"GET_TARGET" => $get_target ,
 					"QUERY_STRING" => $query_string ,
@@ -617,7 +617,7 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 
 			$link = "$this->year-$this->month-$date" ;
 
-			// æ›œæ—¥ã‚¿ã‚¤ãƒ—ã«ã‚ˆã‚‹æç”»è‰²æŒ¯ã‚Šåˆ†ã‘
+			// ÍËÆü¥¿¥¤¥×¤Ë¤è¤ëÉÁ²è¿§¿¶¤êÊ¬¤±
 			if( isset( $this->holidays[$link] ) ) {
 				//	Holiday
 				$bgcolor = $this->holiday_bgcolor ;
@@ -636,10 +636,10 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 				$color = $this->weekday_color ;
 			}
 
-			// é¸æŠæ—¥ã®èƒŒæ™¯è‰²ãƒã‚¤ãƒ©ã‚¤ãƒˆå‡¦ç†
+			// ÁªÂòÆü¤ÎÇØ·Ê¿§¥Ï¥¤¥é¥¤¥È½èÍı
 			if( $date == $this->date && $target_highlight_flag ) $bgcolor = $this->targetday_bgcolor ;
 
-			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”¨é…åˆ—ã¸ã®ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
+			// ¥Æ¥ó¥×¥ì¡¼¥ÈÍÑÇÛÎó¤Ø¤Î¥Ç¡¼¥¿¥»¥Ã¥È
 			array_push( $rows , array(
 				"GET_TARGET" => $get_target ,
 				"QUERY_STRING" => $query_string ,
@@ -651,7 +651,7 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 				"DATE_TYPE" => $event_dates[ $date ] + 1
 			) ) ;
 		}
-		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«ãƒ‡ãƒ¼ã‚¿ã‚’åŸ‹ã‚è¾¼ã‚€
+		// ¥Æ¥ó¥×¥ì¡¼¥È¤Ë¥Ç¡¼¥¿¤òËä¤á¹ş¤à
 		$tmpl->addRows( "DailyLoop" , $rows ) ;
 		$tmpl->parseTemplate( "DailyLoop" , 'w' ) ;
 		$tmpl->parseTemplate( "WeekLoop" , 'a' ) ;
@@ -661,7 +661,7 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 
 	error_reporting( $original_level ) ;
 
-	// å®Ÿè¡Œæ™‚é–“è¨˜éŒ²
+	// ¼Â¹Ô»ş´Öµ­Ï¿
 	// list( $usec , $sec ) = explode( " " , microtime() ) ;
 	// error_log( "MiniCalendar " . ( $sec + $usec - $picalstarttime ) . "sec." , 0 ) ;
 
@@ -671,10 +671,10 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 
 
 /*******************************************************************/
-/*        ãƒ¡ã‚¤ãƒ³éƒ¨è¡¨ç¤ºé–¢æ•°                                         */
+/*        ¥á¥¤¥óÉôÉ½¼¨´Ø¿ô                                         */
 /*******************************************************************/
 
-// å¹´é–“ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å…¨ä½“ã®è¡¨ç¤ºï¼ˆpatTemplateä½¿ç”¨)
+// Ç¯´Ö¥«¥ì¥ó¥À¡¼Á´ÂÎ¤ÎÉ½¼¨¡ÊpatTemplate»ÈÍÑ)
 function get_yearly( $get_target = '' , $query_string = '' , $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -695,7 +695,7 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 	$tmpl->addVar( "WholeBoard" , "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
 	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é¸æŠãƒœãƒƒã‚¯ã‚¹
+	// ¥«¥Æ¥´¥ê¡¼ÁªÂò¥Ü¥Ã¥¯¥¹
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
@@ -704,17 +704,17 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 
 	$tmpl->addVar( "WholeBoard" , "LANG_JUMP" , _PICAL_BTN_JUMP ) ;
 
-	// å„æœˆã®ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼
-	// $this->caldate ã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—
+	// ³Æ·î¤Î¥ß¥Ë¥«¥ì¥ó¥À¡¼
+	// $this->caldate ¤Î¥Ğ¥Ã¥¯¥¢¥Ã¥×
 	$backuped_caldate = $this->caldate ;
 
-	// 12ãƒ¶æœˆåˆ†ã®ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å–å¾—ãƒ«ãƒ¼ãƒ—
+	// 12¥ö·îÊ¬¤Î¥ß¥Ë¥«¥ì¥ó¥À¡¼¼èÆÀ¥ë¡¼¥×
 	for( $m = 1 ; $m <= 12 ; $m ++ ) {
 		$this->set_date( date("Y-n-j", mktime(0,0,0,$m,1,$this->year)) ) ;
 		$tmpl->addVar( "WholeBoard" , "MINICAL$m" , $this->get_mini_calendar_html( $get_target , $query_string , "NO_YEAR" ) ) ;
 	}
 
-	// $this->caldate ã®ãƒªã‚¹ãƒˆã‚¢
+	// $this->caldate ¤Î¥ê¥¹¥È¥¢
 	$this->set_date( $backuped_caldate ) ;
 
 	// content generated from patTemplate
@@ -727,7 +727,7 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 
 
 
-// æœˆé–“ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å…¨ä½“ã®è¡¨ç¤ºï¼ˆpatTemplateä½¿ç”¨)
+// ·î´Ö¥«¥ì¥ó¥À¡¼Á´ÂÎ¤ÎÉ½¼¨¡ÊpatTemplate»ÈÍÑ)
 function get_monthly( $get_target = '' , $query_string = '' , $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -749,7 +749,7 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	$tmpl->addVar( "WholeBoard" , "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
 	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é¸æŠãƒœãƒƒã‚¯ã‚¹
+	// ¥«¥Æ¥´¥ê¡¼ÁªÂò¥Ü¥Ã¥¯¥¹
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
@@ -770,16 +770,16 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 		$tmpl->parseTemplate( "LongEventLegends" , "a" ) ;
 	}
 
-	// å…ˆæœˆãƒ»ç¿Œæœˆã®ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼
-	// $this->caldate ã®ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—
+	// Àè·î¡¦Íâ·î¤Î¥ß¥Ë¥«¥ì¥ó¥À¡¼
+	// $this->caldate ¤Î¥Ğ¥Ã¥¯¥¢¥Ã¥×
 	$backuped_caldate = $this->caldate ;
-	// å‰æœˆæœ«ã®æ—¥ä»˜ã‚’ã‚»ãƒƒãƒˆã—ã€å‰æœˆã®ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
+	// Á°·îËö¤ÎÆüÉÕ¤ò¥»¥Ã¥È¤·¡¢Á°·î¤Î¥ß¥Ë¥«¥ì¥ó¥À¡¼¤ò¥»¥Ã¥È
 	$this->set_date( date("Y-n-j", mktime(0,0,0,$this->month,0,$this->year)) ) ;
 	$tmpl->addVar( "WholeBoard" , "PREV_MINICAL" , $this->get_mini_calendar_html( $get_target , $query_string , "NO_NAVIGATE" ) ) ;
-	// ç¿Œæœˆå§‹ã®æ—¥ä»˜ã‚’ã‚»ãƒƒãƒˆã—ã€ãƒŸãƒ‹ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’è¡¨ç¤º
+	// Íâ·î»Ï¤ÎÆüÉÕ¤ò¥»¥Ã¥È¤·¡¢¥ß¥Ë¥«¥ì¥ó¥À¡¼¤òÉ½¼¨
 	$this->set_date( date("Y-n-j", mktime(0,0,0,$this->month+2,1,$this->year)) ) ;
 	$tmpl->addVar( "WholeBoard" , "NEXT_MINICAL" , $this->get_mini_calendar_html( $get_target , $query_string , "NO_NAVIGATE" ) ) ;
-	// $this->caldate ã®ãƒªã‚¹ãƒˆã‚¢
+	// $this->caldate ¤Î¥ê¥¹¥È¥¢
 	$this->set_date( $backuped_caldate ) ;
 
 	// content generated from patTemplate
@@ -792,7 +792,7 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 
 
 
-// é€±é–“ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å…¨ä½“ã®è¡¨ç¤ºï¼ˆpatTemplateä½¿ç”¨)
+// ½µ´Ö¥«¥ì¥ó¥À¡¼Á´ÂÎ¤ÎÉ½¼¨¡ÊpatTemplate»ÈÍÑ)
 function get_weekly( $get_target = '' , $query_string = '' , $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -813,7 +813,7 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	$tmpl->addVar( "WholeBoard" , "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
 	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é¸æŠãƒœãƒƒã‚¯ã‚¹
+	// ¥«¥Æ¥´¥ê¡¼ÁªÂò¥Ü¥Ã¥¯¥¹
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
@@ -835,7 +835,7 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 
 
 
-// ä¸€æ—¥ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å…¨ä½“ã®è¡¨ç¤ºï¼ˆpatTemplateä½¿ç”¨)
+// °ìÆü¥«¥ì¥ó¥À¡¼Á´ÂÎ¤ÎÉ½¼¨¡ÊpatTemplate»ÈÍÑ)
 function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -856,7 +856,7 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 	$tmpl->addVar( "WholeBoard" , "LANG_PRINT" , _PICAL_BTN_PRINT ) ;
 	if( $for_print ) $tmpl->addVar( "WholeBoard" , "PRINT_ATTRIB" , "width='0' height='0'" ) ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é¸æŠãƒœãƒƒã‚¯ã‚¹
+	// ¥«¥Æ¥´¥ê¡¼ÁªÂò¥Ü¥Ã¥¯¥¹
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
@@ -878,13 +878,13 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 
 
 
-// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®ãƒ˜ãƒƒãƒ€éƒ¨ç­‰ã«å¿…è¦ãªæƒ…å ±ã‚’é€£æƒ³é…åˆ—ã§è¿”ã™ï¼ˆæœˆé–“ãƒ»é€±é–“ãƒ»ï¼‘æ—¥å…±é€šï¼‰
+// ¥«¥ì¥ó¥À¡¼¤Î¥Ø¥Ã¥ÀÉôÅù¤ËÉ¬Í×¤Ê¾ğÊó¤òÏ¢ÁÛÇÛÎó¤ÇÊÖ¤¹¡Ê·î´Ö¡¦½µ´Ö¡¦£±Æü¶¦ÄÌ¡Ë
 function get_calendar_information( $mode = 'M' )
 {
 	$ret = array() ;
 
-	// åŸºæœ¬æƒ…å ±
-	$ret[ 'TODAY' ] = date( "Y-n-j" ) ;		// GIJ TODO è¦æ‰‹ç›´ã—ï¼ˆä½¿ã‚ãªã„ï¼Ÿï¼‰
+	// ´ğËÜ¾ğÊó
+	$ret[ 'TODAY' ] = date( "Y-n-j" ) ;		// GIJ TODO Í×¼êÄ¾¤·¡Ê»È¤ï¤Ê¤¤¡©¡Ë
 	$ret[ 'CALDATE' ] = $this->caldate ;
 	$ret[ 'DISP_YEAR' ] = sprintf( _PICAL_FMT_YEAR , $this->year ) ;
 	$ret[ 'DISP_MONTH' ] = $this->month_middle_names[ $this->month ] ;
@@ -894,18 +894,18 @@ function get_calendar_information( $mode = 'M' )
 	$ret[ 'DISP_DAY_COLOR' ] = $color ;
 	$ret[ 'COPYRIGHT' ] = PICAL_COPYRIGHT ;
 
-	// ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨ã®ã‚«ãƒ©ãƒ¼
+	// ¥Ø¥Ã¥À¡¼Éô¤Î¥«¥é¡¼
 	$ret[ 'CALHEAD_BGCOLOR' ]  =  $this->calhead_bgcolor ;
 	$ret[ 'CALHEAD_COLOR' ] = $this->calhead_color ;
 
-	// ã‚¢ã‚¤ã‚³ãƒ³ã®alt(title)
+	// ¥¢¥¤¥³¥ó¤Îalt(title)
 	$ret[ 'ICON_LIST' ] = _PICAL_ICON_LIST ;
 	$ret[ 'ICON_DAILY' ] = _PICAL_ICON_DAILY ;
 	$ret[ 'ICON_WEEKLY' ] = _PICAL_ICON_WEEKLY ;
 	$ret[ 'ICON_MONTHLY' ] = _PICAL_ICON_MONTHLY ;
 	$ret[ 'ICON_YEARLY' ] = _PICAL_ICON_YEARLY ;
 
-	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒ–ãƒ­ãƒƒã‚¯
+	// ¥á¥Ã¥»¡¼¥¸¥Ö¥í¥Ã¥¯
 	$ret[ 'MB_PREV_YEAR' ] = _PICAL_MB_PREV_YEAR ;
 	$ret[ 'MB_NEXT_YEAR' ] = _PICAL_MB_NEXT_YEAR ;
 	$ret[ 'MB_PREV_MONTH' ] = _PICAL_MB_PREV_MONTH ;
@@ -916,7 +916,7 @@ function get_calendar_information( $mode = 'M' )
 	$ret[ 'MB_NEXT_DATE' ] = _PICAL_MB_NEXT_DATE ;
 	$ret[ 'MB_LINKTODAY' ] = _PICAL_MB_LINKTODAY ;
 
-	// å‰ã‚„å¾Œã¸ã®ãƒªãƒ³ã‚¯
+	// Á°¤ä¸å¤Ø¤Î¥ê¥ó¥¯
 	$ret[ 'PREV_YEAR' ] = date("Y-n-j", mktime(0,0,0,$this->month,$this->date,$this->year-1));
 	$ret[ 'NEXT_YEAR' ] = date("Y-n-j", mktime(0,0,0,$this->month,$this->date,$this->year+1));
 	$ret[ 'PREV_MONTH' ] = date("Y-n-j", mktime(0,0,0,$this->month,0,$this->year));
@@ -926,8 +926,8 @@ function get_calendar_information( $mode = 'M' )
 	$ret[ 'PREV_DATE' ] = date("Y-n-j", mktime(0,0,0,$this->month,$this->date-1,$this->year)) ;
 	$ret[ 'NEXT_DATE' ] = date("Y-n-j", mktime(0,0,0,$this->month,$this->date+1,$this->year)) ;
 
-	// æ—¥ä»˜ã‚¸ãƒ£ãƒ³ãƒ—ç”¨ãƒ•ã‚©ãƒ¼ãƒ ã®å„ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
-	// å¹´æœˆé¸æŠè‚¢ã®åˆæœŸå€¤
+	// ÆüÉÕ¥¸¥ã¥ó¥×ÍÑ¥Õ¥©¡¼¥à¤Î³Æ¥³¥ó¥È¥í¡¼¥ë
+	// Ç¯·îÁªÂò»è¤Î½é´üÃÍ
 	if( empty( $_POST[ 'pical_year' ] ) ) $year = $this->year ;
 	else  $year = intval( $_POST[ 'pical_year' ] ) ;
 	if( empty( $_POST[ 'pical_month' ] ) ) $month = $this->month ;
@@ -935,7 +935,7 @@ function get_calendar_information( $mode = 'M' )
 	if( empty( $_POST[ 'pical_date' ] ) ) $date = $this->date ;
 	else $date = intval( $_POST[ 'pical_date' ] ) ;
 
-	// å¹´ã®é¸æŠè‚¢(2001ã€œ2020 ã¨ã™ã‚‹)
+	// Ç¯¤ÎÁªÂò»è(2001¡Á2020 ¤È¤¹¤ë)
 	$year_options = "" ;
 	for( $y = 2001 ; $y <= 2020 ; $y ++ ) {
 		if( $y == $year ) {
@@ -946,7 +946,7 @@ function get_calendar_information( $mode = 'M' )
 	}
 	$ret[ 'YEAR_OPTIONS' ] = $year_options ;
 
-	// æœˆã®é¸æŠè‚¢
+	// ·î¤ÎÁªÂò»è
 	$month_options = "" ;
 	for( $m = 1 ; $m <= 12 ; $m ++ ) {
 		if( $m == $month ) {
@@ -957,7 +957,7 @@ function get_calendar_information( $mode = 'M' )
 	}
 	$ret[ 'MONTH_OPTIONS' ] = $month_options ;
 
-	// æ—¥ã®é¸æŠè‚¢
+	// Æü¤ÎÁªÂò»è
 	if( $mode == 'W' || $mode == 'D' ) {
 		$date_options = "" ;
 		for( $d = 1 ; $d <= 31 ; $d ++ ) {
@@ -985,7 +985,7 @@ function get_calendar_information( $mode = 'M' )
 
 
 
-// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®æœ¬ä½“ã‚’è¿”ã™ï¼ˆï¼‘ãƒ¶æœˆåˆ†ï¼‰
+// ¥«¥ì¥ó¥À¡¼¤ÎËÜÂÎ¤òÊÖ¤¹¡Ê£±¥ö·îÊ¬¡Ë
 function get_monthly_html( $get_target = '' , $query_string = '' )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -1009,7 +1009,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 		}
 	}
 
-	// é–‹å§‹æ›œæ—¥ãŒæœˆæ›œæ—¥ã®ãŸã‚ã®å‡¦ç†ï¼ˆãªã‚“ã¨ã‚‚å ´å½“ãŸã‚Šçš„ã ãŒï¼‰
+	// ³«»ÏÍËÆü¤¬·îÍËÆü¤Î¤¿¤á¤Î½èÍı¡Ê¤Ê¤ó¤È¤â¾ìÅö¤¿¤êÅª¤À¤¬¡Ë
 	$sunday_th = "<th class='sunday'>{$this->week_middle_names[0]}</th>\n" ;
 	if( $this->week_start ) {
 		$week_top_th = "" ;
@@ -1042,23 +1042,23 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 	$last_date = date( 't' , $this->unixtime ) ;
 	$mlast_unixtime = mktime(0,0,0,$this->month+1,1,$this->year) ;
 
-	// æ™‚å·®ã‚’è¨ˆç®—ã—ã¤ã¤ã€WHEREç¯€ã®æœŸé–“ã«é–¢ã™ã‚‹æ¡ä»¶ç”Ÿæˆ
+	// »şº¹¤ò·×»»¤·¤Ä¤Ä¡¢WHEREÀá¤Î´ü´Ö¤Ë´Ø¤¹¤ë¾ò·ïÀ¸À®
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 	if( $tzoffset == 0 ) {
-		// æ™‚å·®ãŒãªã„å ´åˆ ï¼ˆMySQLã«è² è·ã‚’ã‹ã‘ã•ã›ãªã„ãŸã‚ã€ã“ã“ã§æ¡ä»¶åˆ†ã‘ã—ã¨ã)
+		// »şº¹¤¬¤Ê¤¤¾ì¹ç ¡ÊMySQL¤ËÉé²Ù¤ò¤«¤±¤µ¤»¤Ê¤¤¤¿¤á¡¢¤³¤³¤Ç¾ò·ïÊ¬¤±¤·¤È¤¯)
 		$whr_term = "start<='$mlast_unixtime' AND end>'$mtop_unixtime'" ;
 	} else {
-		// æ™‚å·®ãŒã‚ã‚‹å ´åˆã¯ã€alldayã«ã‚ˆã£ã¦å ´åˆåˆ†ã‘
+		// »şº¹¤¬¤¢¤ë¾ì¹ç¤Ï¡¢allday¤Ë¤è¤Ã¤Æ¾ì¹çÊ¬¤±
 		$whr_term = "(allday AND start<='$mlast_unixtime' AND end>'$mtop_unixtime') OR ( ! allday AND start<='".( $mlast_unixtime - $tzoffset )."' AND end>'".( $mtop_unixtime - $tzoffset )."')" ;
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// é•·æœŸã‚¤ãƒ™ãƒ³ãƒˆã®Unique-IDã‚’æœ€å¤§4ä»¶ã€å–å¾—ã—ã¦ãŠã
+	// Ä¹´ü¥¤¥Ù¥ó¥È¤ÎUnique-ID¤òºÇÂç4·ï¡¢¼èÆÀ¤·¤Æ¤ª¤¯
 	$rs = mysql_query( "SELECT DISTINCT unique_id FROM $this->table WHERE ($whr_term) AND ($whr_categories) AND ($whr_class) AND (allday & 2) LIMIT 4" , $this->conn ) ;
 	$long_event_ids = array() ;
 	$bit = 1 ;
@@ -1067,14 +1067,14 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 		$bit ++ ;
 	}
 
-	// ä¸€ãƒ¶æœˆåˆ†ã®ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ã¾ã¨ã‚ã¦å–å¾—ã—ã¦ãŠã
+	// °ì¥ö·îÊ¬¤Î¥¹¥±¥¸¥å¡¼¥ë¤ò¤Ş¤È¤á¤Æ¼èÆÀ¤·¤Æ¤ª¤¯
 	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,unique_id,categories FROM $this->table WHERE ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$numrows_yrs = mysql_num_rows( $yrs ) ;
 
-	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼BODYéƒ¨è¡¨ç¤º
+	// ¥«¥ì¥ó¥À¡¼BODYÉôÉ½¼¨
 	for( $week = 0 ; $week < 6 ; $week ++ ) {
 
-		// é€±è¡¨ç¤ºã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+		// ½µÉ½¼¨¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹
 		if( $date < $last_date ) {
 			$alt_week = $this->week_numbering ? sprintf( _PICAL_FMT_WEEKNO , $week + $mtop_weekno ) : $this->week_numbers[$week+1] ;
 			$week_index = "<div class='week_index'><a href='$get_target?cid=$this->now_cid&amp;smode=Weekly&amp;caldate="
@@ -1087,7 +1087,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 		for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ ) {
 			$date ++;
 
-			// å¯¾è±¡æœˆã®ç¯„å›²å¤–ã«ã‚ã‚‹æ—¥ã®å‡¦ç†
+			// ÂĞ¾İ·î¤ÎÈÏ°Ï³°¤Ë¤¢¤ëÆü¤Î½èÍı
 			if( ! checkdate($this->month,$date,$this->year) ) {
 				$ret .= "<td>$week_index</td>\n" ;
 				$week_index="";
@@ -1099,54 +1099,54 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			$bottomtime_of_day = $toptime_of_day + 86400 ;
 			$link = "$this->year-$this->month-$date" ;
 
-			// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ãƒ¼ã‚¿ã®è¡¨ç¤ºãƒ«ãƒ¼ãƒ—
+			// ¥¹¥±¥¸¥å¡¼¥ë¥Ç¡¼¥¿¤ÎÉ½¼¨¥ë¡¼¥×
 			$waitings = 0 ;
 			$event_str = "<p class='event'>" ;
 			$long_event = 0 ;
 			if( $numrows_yrs > 0 ) mysql_data_seek( $yrs , 0 ) ;
 			while( $event = mysql_fetch_object( $yrs ) ) {
-				// å¯¾è±¡ã‚¤ãƒ™ãƒ³ãƒˆãŒã“ã®æ—¥ã«ã‹ã‹ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
+				// ÂĞ¾İ¥¤¥Ù¥ó¥È¤¬¤³¤ÎÆü¤Ë¤«¤«¤Ã¤Æ¤¤¤ë¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
 				if( $event->allday ) {
 					if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
 				} else {
 					if( $event->start >= $bottomtime_of_day || $event->start != $toptime_of_day && $event->end <= $toptime_of_day ) continue ;
-					// ã¤ã„ã§ã«é–‹å§‹å½“æ—¥ãƒ»çµ‚äº†å½“æ—¥ã®ãƒã‚§ãƒƒã‚¯ã‚‚
+					// ¤Ä¤¤¤Ç¤Ë³«»ÏÅöÆü¡¦½ªÎ»ÅöÆü¤Î¥Á¥§¥Ã¥¯¤â
 					// $event->is_start_date = $event->start >= $toptime_of_day ;
 					// $event->is_end_date = $event->end <= $bottomtime_of_day ;
 				}
 
 				if( $event->admission ) {
 
-					// ã‚µãƒ‹ã‚¿ã‚¤ã‚º
+					// ¥µ¥Ë¥¿¥¤¥º
 					$event->summary = $this->text_sanitizer_for_show( $event->summary ) ;
 					// categories
 					$catname = $this->text_sanitizer_for_show( $this->categories[ intval( $event->categories ) ]->cat_title ) ;
-					// ã¨ã‚Šã‚ãˆãšåŠè§’33å­—ã‚’ä¸Šé™ã¨ã—ã¦ãŠã
+					// ¤È¤ê¤¢¤¨¤ºÈ¾³Ñ33»ú¤ò¾å¸Â¤È¤·¤Æ¤ª¤¯
 					$summary = mb_strcut( $event->summary , 0 , 33 ) ;
 					if( $summary != $event->summary ) $summary .= ".." ;
 					$event_str_tmp = "&bull;&nbsp;<a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' style='font-size:10px;font-weight:normal;text-decoration:none;' class='$catname'>$summary</a>" ;
 
 					$bit = array_search( $event->unique_id , $long_event_ids ) ;
-					// æœ¬æ¥ã¯ !== false ã¨ã™ã¹ãã ãŒã€ã©ã†ã›1ã€œ4ã—ã‹å–ã‚‰ãªã„ã®ã§
+					// ËÜÍè¤Ï !== false ¤È¤¹¤Ù¤­¤À¤¬¡¢¤É¤¦¤»1¡Á4¤·¤«¼è¤é¤Ê¤¤¤Î¤Ç
 					if( $bit > 0 && $bit <= 4 ) {
-						// é•·æœŸã‚¤ãƒ™ãƒ³ãƒˆé…åˆ—ã«ã‚ã‚Œã°è©²å½“ãƒ“ãƒƒãƒˆã‚’ç«‹ã¦ã€legendsé…åˆ—ã«ç™»éŒ²
+						// Ä¹´ü¥¤¥Ù¥ó¥ÈÇÛÎó¤Ë¤¢¤ì¤Ğ³ºÅö¥Ó¥Ã¥È¤òÎ©¤Æ¡¢legendsÇÛÎó¤ËÅĞÏ¿
 						$long_event |= 1 << ( $bit - 1 ) ;
 						$this->long_event_legends[ $bit ] = $event_str_tmp ;
 					} else if( $event->allday & 4 ) {
-						// è¨˜å¿µæ—¥ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ãŸã‚‰ã€$holiday_colorã«ã—ã¦ã€ä¸€ç•ªä¸Šã«æŒã£ã¦ãã‚‹
+						// µ­Ç°Æü¥Õ¥é¥°¤¬Î©¤Ã¤Æ¤¤¤¿¤é¡¢$holiday_color¤Ë¤·¤Æ¡¢°ìÈÖ¾å¤Ë»ı¤Ã¤Æ¤¯¤ë
 						$event_str_tmp = str_replace( " style='" , " style='color:$this->holiday_color;" , $event_str_tmp ) ;
 						$event_str = "$event_str_tmp<br />\n$event_str" ;
 					} else {
-						// ãªã‘ã‚Œã°ã€æ—¥ä»˜ãƒã‚¹å†…ã«æç”»
+						// ¤Ê¤±¤ì¤Ğ¡¢ÆüÉÕ¥Ş¥¹Æâ¤ËÉÁ²è
 						$event_str .= $event_str_tmp . "<br />\n" ;
 					}
 				} else {
-					// æœªæ‰¿èªã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã®ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—
+					// Ì¤¾µÇ§¥¹¥±¥¸¥å¡¼¥ë¤Î¥«¥¦¥ó¥È¥¢¥Ã¥×
 					if( $this->isadmin || ( $this->user_id > 0 AND $this->user_id == $event->uid ) ) $waitings ++ ;
 				}
 			}
 
-			// æœªæ‰¿èªã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯ç·æ•°ã ã‘è¡¨ç¤º
+			// Ì¤¾µÇ§¥¹¥±¥¸¥å¡¼¥ë¤ÏÁí¿ô¤À¤±É½¼¨
 			if( $waitings > 0 ) $event_str .= "<span style='color:#00FF00;font-size:10px;font-weight:normal;'>".sprintf( _PICAL_NTC_NUMBEROFNEEDADMIT , $waitings )."</span><br />\n" ;
 
 			// drawing the result of plugins
@@ -1159,7 +1159,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			$event_str .= "</p>";
 
 
-			// æ›œæ—¥ã‚¿ã‚¤ãƒ—ã«ã‚ˆã‚‹æç”»è‰²æŒ¯ã‚Šåˆ†ã‘
+			// ÍËÆü¥¿¥¤¥×¤Ë¤è¤ëÉÁ²è¿§¿¶¤êÊ¬¤±
 			$date_part_append = '' ;
 			if( isset( $this->holidays[$link] ) ) {
 				//	Holiday
@@ -1186,16 +1186,16 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 				$color = $this->weekday_color ;
 			}
 
-			// é¸æŠæ—¥ã®èƒŒæ™¯è‰²ãƒã‚¤ãƒ©ã‚¤ãƒˆå‡¦ç†
+			// ÁªÂòÆü¤ÎÇØ·Ê¿§¥Ï¥¤¥é¥¤¥È½èÍı
 			if( $date == $this->date ) $bgcolor = $this->targetday_bgcolor ;
 
-			// é•·æœŸã‚¤ãƒ™ãƒ³ãƒˆã®æç”»ï¼ˆèƒŒæ™¯ï¼‰
+			// Ä¹´ü¥¤¥Ù¥ó¥È¤ÎÉÁ²è¡ÊÇØ·Ê¡Ë
 			if( $long_event ) {
 				$background = "background:url($this->images_url/monthbar_0".dechex($long_event).".gif) top repeat-x $bgcolor;" ;
 			} else
 				$background = "background-color:$bgcolor;" ;
 
-			// äºˆå®šã®è¿½åŠ ï¼ˆé‰›ç­†ã‚¢ã‚¤ã‚³ãƒ³ï¼‰
+			// Í½Äê¤ÎÄÉ²Ã¡Ê±ôÉ®¥¢¥¤¥³¥ó¡Ë
 			if( $this->insertable )
 				$insert_link = "<a href='$get_target?cid=$this->now_cid&amp;smode=Monthly&amp;action=Edit&amp;caldate=$link' class='stencil'>
 				<img src='$this->images_url/addevent.gif' border='0' width='14' height='12' alt='"
@@ -1223,7 +1223,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 
 
-// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®æœ¬ä½“ã‚’è¿”ã™ï¼ˆï¼‘é€±é–“åˆ†ï¼‰
+// ¥«¥ì¥ó¥À¡¼¤ÎËÜÂÎ¤òÊÖ¤¹¡Ê£±½µ´ÖÊ¬¡Ë
 function get_weekly_html( )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -1287,29 +1287,29 @@ function get_weekly_html( )
 		}
 	}
 
-	// æ™‚å·®ã‚’è¨ˆç®—ã—ã¤ã¤ã€WHEREç¯€ã®æœŸé–“ã«é–¢ã™ã‚‹æ¡ä»¶ç”Ÿæˆ
+	// »şº¹¤ò·×»»¤·¤Ä¤Ä¡¢WHEREÀá¤Î´ü´Ö¤Ë´Ø¤¹¤ë¾ò·ïÀ¸À®
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 	if( $tzoffset == 0 ) {
-		// æ™‚å·®ãŒãªã„å ´åˆ ï¼ˆMySQLã«è² è·ã‚’ã‹ã‘ã•ã›ãªã„ãŸã‚ã€ã“ã“ã§æ¡ä»¶åˆ†ã‘ã—ã¨ã)
+		// »şº¹¤¬¤Ê¤¤¾ì¹ç ¡ÊMySQL¤ËÉé²Ù¤ò¤«¤±¤µ¤»¤Ê¤¤¤¿¤á¡¢¤³¤³¤Ç¾ò·ïÊ¬¤±¤·¤È¤¯)
 		$whr_term = "start<='$wlast_unixtime' AND end>'$wtop_unixtime'" ;
 	} else {
-		// æ™‚å·®ãŒã‚ã‚‹å ´åˆã¯ã€alldayã«ã‚ˆã£ã¦å ´åˆåˆ†ã‘
+		// »şº¹¤¬¤¢¤ë¾ì¹ç¤Ï¡¢allday¤Ë¤è¤Ã¤Æ¾ì¹çÊ¬¤±
 		$whr_term = "(allday AND start<='$wlast_unixtime' AND end>'$wtop_unixtime') OR ( ! allday AND start<='".( $wlast_unixtime - $tzoffset )."' AND end>'".( $wtop_unixtime - $tzoffset )."')" ;
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// ä¸€é€±é–“åˆ†ã®ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ã¾ã¨ã‚ã¦å–å¾—ã—ã¦ãŠã
+	// °ì½µ´ÖÊ¬¤Î¥¹¥±¥¸¥å¡¼¥ë¤ò¤Ş¤È¤á¤Æ¼èÆÀ¤·¤Æ¤ª¤¯
 	$ars = mysql_query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$numrows_ars = mysql_num_rows( $ars ) ;
 	$wrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission=0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$numrows_wrs = mysql_num_rows( $wrs ) ;
 
-	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼BODYéƒ¨è¡¨ç¤º
+	// ¥«¥ì¥ó¥À¡¼BODYÉôÉ½¼¨
 	$now_date = $wtop_date ;
 	$wday_end = 7 + $this->week_start ;
 	for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ , $now_date ++ ) {
@@ -1322,7 +1322,7 @@ function get_weekly_html( )
 		$disp = $this->get_middle_md( $now_unixtime ) ;
 		$disp .= "<br />({$this->week_middle_names[$wday]})" ;
 		$date_part_append = '' ;
-		// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«è¡¨ç¤ºéƒ¨ã®ãƒ†ãƒ¼ãƒ–ãƒ«é–‹å§‹
+		// ¥¹¥±¥¸¥å¡¼¥ëÉ½¼¨Éô¤Î¥Æ¡¼¥Ö¥ë³«»Ï
 		$event_str = "
 				<table cellpadding='0' cellspacing='2' style='margin:0px;'>
 				  <tr>
@@ -1332,41 +1332,41 @@ function get_weekly_html( )
 		\n" ;
 /*
 					} else if( $event->allday & 4 ) {
-						// è¨˜å¿µæ—¥ãƒ•ãƒ©ã‚°ãŒç«‹ã£ã¦ã„ãŸã‚‰ã€$holiday_colorã«ã—ã¦ã€ä¸€ç•ªä¸Šã«æŒã£ã¦ãã‚‹
+						// µ­Ç°Æü¥Õ¥é¥°¤¬Î©¤Ã¤Æ¤¤¤¿¤é¡¢$holiday_color¤Ë¤·¤Æ¡¢°ìÈÖ¾å¤Ë»ı¤Ã¤Æ¤¯¤ë
 						$event_str_tmp = str_replace( " style='" , " style='color:$this->holiday_color;" , $event_str_tmp ) ;
 						$event_str = "$event_str_tmp<br />\n$event_str" ;
 */
 
 
-		// æ‰¿èªæ¸ˆã¿ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ãƒ‡ãƒ¼ã‚¿ã®è¡¨ç¤ºãƒ«ãƒ¼ãƒ—
+		// ¾µÇ§ºÑ¤ß¥¹¥±¥¸¥å¡¼¥ë¥Ç¡¼¥¿¤ÎÉ½¼¨¥ë¡¼¥×
 		if( $numrows_ars > 0 ) mysql_data_seek( $ars , 0 ) ;
 		while( $event = mysql_fetch_object( $ars ) ) {
 
-			// å¯¾è±¡ã‚¤ãƒ™ãƒ³ãƒˆãŒã“ã®æ—¥ã«ã‹ã‹ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
+			// ÂĞ¾İ¥¤¥Ù¥ó¥È¤¬¤³¤ÎÆü¤Ë¤«¤«¤Ã¤Æ¤¤¤ë¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
 			if( $event->allday ) {
 				if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
 			} else {
 				if( $event->start >= $bottomtime_of_day || $event->start != $toptime_of_day && $event->end <= $toptime_of_day ) continue ;
-				// ã¤ã„ã§ã«é–‹å§‹å½“æ—¥ãƒ»çµ‚äº†å½“æ—¥ã®ãƒã‚§ãƒƒã‚¯ã‚‚
+				// ¤Ä¤¤¤Ç¤Ë³«»ÏÅöÆü¡¦½ªÎ»ÅöÆü¤Î¥Á¥§¥Ã¥¯¤â
 				$event->is_start_date = $event->start >= $toptime_of_day ;
 				$event->is_end_date = $event->end <= $bottomtime_of_day ;
 			}
 
-			// ã‚µãƒ‹ã‚¿ã‚¤ã‚º
+			// ¥µ¥Ë¥¿¥¤¥º
 			$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
 			if( $event->allday ) {
 				if( $event->allday & 4 ) {
-					// è¨˜å¿µæ—¥ãƒ•ãƒ©ã‚°ã®ç«‹ã£ã¦ã„ã‚‹ã‚‚ã®
+					// µ­Ç°Æü¥Õ¥é¥°¤ÎÎ©¤Ã¤Æ¤¤¤ë¤â¤Î
 					$date_part_append .= "<font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='cal_summary_specialday'><font color='$this->holiday_color'>$summary</font></a></font><br />\n" ;
 					continue ;
 				} else {
-					// é€šå¸¸ã®å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
+					// ÄÌ¾ï¤ÎÁ´Æü¥¤¥Ù¥ó¥È
 					$time_part = "             <img border='0' src='$this->images_url/dot_allday.gif' />" ;
 					$summary_class = "calsummary_allday" ;
 				}
 			} else {
-				// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ã‚ã‚Šï¼‰
+				// ÄÌ¾ï¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤¢¤ê¡Ë
 				$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , true ) ;
 				$summary_class = "calsummary" ;
 			}
@@ -1383,31 +1383,31 @@ function get_weekly_html( )
 			\n" ;
 		}
 
-		// æœªæ‰¿èªã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã®è¡¨ç¤ºãƒ«ãƒ¼ãƒ—ï¼ˆuidãŒä¸€è‡´ã™ã‚‹ã‚²ã‚¹ãƒˆä»¥å¤–ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ã¿ï¼‰
+		// Ì¤¾µÇ§¥¹¥±¥¸¥å¡¼¥ë¤ÎÉ½¼¨¥ë¡¼¥×¡Êuid¤¬°ìÃ×¤¹¤ë¥²¥¹¥È°Ê³°¤Î¥ì¥³¡¼¥É¤Î¤ß¡Ë
 		if( $this->isadmin || $this->user_id > 0 ) {
 
 			if( $numrows_wrs > 0 ) mysql_data_seek( $wrs , 0 ) ;
 			while( $event = mysql_fetch_object( $wrs ) ) {
 
-				// å¯¾è±¡ã‚¤ãƒ™ãƒ³ãƒˆãŒã“ã®æ—¥ã«ã‹ã‹ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
+				// ÂĞ¾İ¥¤¥Ù¥ó¥È¤¬¤³¤ÎÆü¤Ë¤«¤«¤Ã¤Æ¤¤¤ë¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
 				if( $event->allday ) {
 					if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
 				} else {
 					if( $event->start >= $bottomtime_of_day || $event->start != $toptime_of_day && $event->end <= $toptime_of_day ) continue ;
-					// ã¤ã„ã§ã«é–‹å§‹å½“æ—¥ãƒ»çµ‚äº†å½“æ—¥ã®ãƒã‚§ãƒƒã‚¯ã‚‚
+					// ¤Ä¤¤¤Ç¤Ë³«»ÏÅöÆü¡¦½ªÎ»ÅöÆü¤Î¥Á¥§¥Ã¥¯¤â
 					$event->is_start_date = $event->start >= $toptime_of_day ;
 					$event->is_end_date = $event->end <= $bottomtime_of_day ;
 				}
 
-				// ã‚µãƒ‹ã‚¿ã‚¤ã‚º
+				// ¥µ¥Ë¥¿¥¤¥º
 				$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
 				if( $event->allday ) {
-					// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆå…¨æ—¥ãƒ•ãƒ©ã‚°ãŒã¤ã„ã¦ã„ã¦ã‚‚ã€é€šå¸¸æ‰±ã„ï¼‰
+					// Á´Æü¥¤¥Ù¥ó¥È¡ÊÁ´Æü¥Õ¥é¥°¤¬¤Ä¤¤¤Æ¤¤¤Æ¤â¡¢ÄÌ¾ï°·¤¤¡Ë
 					$time_part = "             <img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
 					$summary_class = "calsummary_allday" ;
 				} else {
-					// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆ
+					// ÄÌ¾ï¥¤¥Ù¥ó¥È
 					$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , false ) ;
 					$summary_class = "calsummary" ;
 				}
@@ -1438,7 +1438,7 @@ function get_weekly_html( )
 			}
 		}
 
-		// äºˆå®šã®è¿½åŠ ï¼ˆé‰›ç­†ã‚¢ã‚¤ã‚³ãƒ³ï¼‰
+		// Í½Äê¤ÎÄÉ²Ã¡Ê±ôÉ®¥¢¥¤¥³¥ó¡Ë
 		if( $this->insertable ) $event_str .= "
 				  <tr>
 				    <td valign='bottom' colspan='2'>
@@ -1447,10 +1447,10 @@ function get_weekly_html( )
 				  </tr>
 		\n" ;
 
-		// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«è¡¨ç¤ºéƒ¨ã®ãƒ†ãƒ¼ãƒ–ãƒ«çµ‚äº†
+		// ¥¹¥±¥¸¥å¡¼¥ëÉ½¼¨Éô¤Î¥Æ¡¼¥Ö¥ë½ªÎ»
 		$event_str .= "\t\t\t\t</table>\n" ;
 
-		// æ›œæ—¥ã‚¿ã‚¤ãƒ—ã«ã‚ˆã‚‹æç”»è‰²æŒ¯ã‚Šåˆ†ã‘
+		// ÍËÆü¥¿¥¤¥×¤Ë¤è¤ëÉÁ²è¿§¿¶¤êÊ¬¤±
 		if( isset( $this->holidays[ $link ] ) ) {
 			//	Holiday
 			$bgcolor = $this->holiday_bgcolor ;
@@ -1472,7 +1472,7 @@ function get_weekly_html( )
 			$color = $this->weekday_color ;
 		}
 
-		// é¸æŠæ—¥ã®èƒŒæ™¯è‰²ãƒã‚¤ãƒ©ã‚¤ãƒˆå‡¦ç†
+		// ÁªÂòÆü¤ÎÇØ·Ê¿§¥Ï¥¤¥é¥¤¥È½èÍı
 		if( $link == $this->caldate ) $body_bgcolor = $this->targetday_bgcolor ;
 		else $body_bgcolor = $bgcolor ;
 
@@ -1496,7 +1496,7 @@ function get_weekly_html( )
 
 
 
-// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®æœ¬ä½“ã‚’è¿”ã™ï¼ˆï¼‘æ—¥åˆ†ï¼‰
+// ¥«¥ì¥ó¥À¡¼¤ÎËÜÂÎ¤òÊÖ¤¹¡Ê£±ÆüÊ¬¡Ë
 function get_daily_html( )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -1540,19 +1540,19 @@ function get_daily_html( )
 	       </tr>
 	\n" ;
 
-	// æ™‚å·®ã‚’è¨ˆç®—ã—ã¤ã¤ã€WHEREç¯€ã®æœŸé–“ã«é–¢ã™ã‚‹æ¡ä»¶ç”Ÿæˆ
+	// »şº¹¤ò·×»»¤·¤Ä¤Ä¡¢WHEREÀá¤Î´ü´Ö¤Ë´Ø¤¹¤ë¾ò·ïÀ¸À®
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 	$toptime_of_day = $this->unixtime + $this->day_start - $tzoffset ;
 	$bottomtime_of_day = $toptime_of_day + 86400 ;
 	$whr_term = "(allday AND start<='$this->unixtime' AND end>'$this->unixtime') OR ( ! allday AND start<'$bottomtime_of_day' AND (start='$toptime_of_day' OR end>'$toptime_of_day'))" ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// å½“æ—¥ã®ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«å–å¾—ãƒ»è¡¨ç¤º
+	// ÅöÆü¤Î¥¹¥±¥¸¥å¡¼¥ë¼èÆÀ¡¦É½¼¨
 	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
 
@@ -1560,14 +1560,14 @@ function get_daily_html( )
 	else while( $event = mysql_fetch_object( $yrs ) ) {
 
 		if( $event->allday ) {
-			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ãªã—ï¼‰
+			// Á´Æü¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤Ê¤·¡Ë
 			$time_part = "             <img border='0' src='$this->images_url/dot_allday.gif' />" ;
 		} else {
-			// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ã‚ã‚Šï¼‰
+			// ÄÌ¾ï¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤¢¤ê¡Ë
 			$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , true ) ;
 		}
 
-		// ã‚µãƒ‹ã‚¿ã‚¤ã‚º
+		// ¥µ¥Ë¥¿¥¤¥º
 		$description = $this->textarea_sanitizer_for_show( $event->description ) ;
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
@@ -1586,7 +1586,7 @@ function get_daily_html( )
 	       </tr>\n" ;
 	}
 
-	// æœªæ‰¿èªã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«å–å¾—ãƒ»è¡¨ç¤ºï¼ˆuidãŒä¸€è‡´ã™ã‚‹ã‚²ã‚¹ãƒˆä»¥å¤–ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ã¿ï¼‰
+	// Ì¤¾µÇ§¥¹¥±¥¸¥å¡¼¥ë¼èÆÀ¡¦É½¼¨¡Êuid¤¬°ìÃ×¤¹¤ë¥²¥¹¥È°Ê³°¤Î¥ì¥³¡¼¥É¤Î¤ß¡Ë
 	if( $this->isadmin || $this->user_id > 0 ) {
 	  $whr_uid = $this->isadmin ? "1" : "uid=$this->user_id " ;
 	  $yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission=0 AND $whr_uid AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
@@ -1594,14 +1594,14 @@ function get_daily_html( )
 	  while( $event = mysql_fetch_object( $yrs ) ) {
 
 		if( $event->allday ) {
-			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
+			// Á´Æü¥¤¥Ù¥ó¥È
 			$time_part = "             <img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
 		} else {
-			// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆ
+			// ÄÌ¾ï¥¤¥Ù¥ó¥È
 			$time_part = $this->get_time_desc_for_a_day( $event , $tzoffset , $bottomtime_of_day - $this->day_start , true , false ) ;
 		}
 
-		// ã‚µãƒ‹ã‚¿ã‚¤ã‚º
+		// ¥µ¥Ë¥¿¥¤¥º
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
 		$summary_class = $event->allday ? "calsummary_allday" : "calsummary" ;
@@ -1633,7 +1633,7 @@ function get_daily_html( )
 		}
 	}
 
-	// äºˆå®šã®è¿½åŠ ï¼ˆé‰›ç­†ã‚¢ã‚¤ã‚³ãƒ³ï¼‰
+	// Í½Äê¤ÎÄÉ²Ã¡Ê±ôÉ®¥¢¥¤¥³¥ó¡Ë
 	if( $this->insertable ) $ret .= "
 	       <tr>
 	         <td valign='bottom' colspan='2'>
@@ -1656,10 +1656,10 @@ function get_daily_html( )
 
 
 /*******************************************************************/
-/*        ãƒ¡ã‚¤ãƒ³éƒ¨ ï¼ˆå€‹åˆ¥ãƒ‡ãƒ¼ã‚¿æ“ä½œï¼‰                              */
+/*        ¥á¥¤¥óÉô ¡Ê¸ÄÊÌ¥Ç¡¼¥¿Áàºî¡Ë                              */
 /*******************************************************************/
 
-// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«è©³ç´°ç”»é¢è¡¨ç¤ºç”¨æ–‡å­—åˆ—ã‚’è¿”ã™
+// ¥¹¥±¥¸¥å¡¼¥ë¾ÜºÙ²èÌÌÉ½¼¨ÍÑÊ¸»úÎó¤òÊÖ¤¹
 function get_schedule_view_html( $for_print = false )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -1667,13 +1667,13 @@ function get_schedule_view_html( $for_print = false )
 	$editable = $this->editable ;
 	$deletable = $this->deletable ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// äºˆå®šãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+	// Í½Äê¥Ç¡¼¥¿¤Î¼èÆÀ
 	if( empty( $_GET['event_id'] ) ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 	$this->original_id = $event_id = intval( $_GET['event_id'] ) ;
 	$yrs = mysql_query( "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstamp FROM $this->table WHERE id='$event_id' AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
@@ -1682,7 +1682,7 @@ function get_schedule_view_html( $for_print = false )
 
 	$this->event = $event ; // naao
 
-	// rruleã«ã‚ˆã£ã¦å±•é–‹ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã§ã‚ã‚Œã°ã€åˆå›(è¦ª)ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+	// rrule¤Ë¤è¤Ã¤ÆÅ¸³«¤µ¤ì¤¿¥Ç¡¼¥¿¤Ç¤¢¤ì¤Ğ¡¢½é²ó(¿Æ)¤Î¥Ç¡¼¥¿¤ò¼èÆÀ
 	if( trim( $event->rrule ) != '' ) {
 		if( $event->rrule_pid != $event->id ) {
 			$event->id = $event->rrule_pid ;
@@ -1701,17 +1701,17 @@ function get_schedule_view_html( $for_print = false )
 		$rrule = '' ;
 	}
 
-	// ã‚‚ã¨ã‚‚ã¨ç·¨é›†å¯èƒ½ã®è¨­å®šã§ã‚‚ã€é–²è¦§ä¸­ã®uidã¨ãƒ¬ã‚³ãƒ¼ãƒ‰ã®uidãŒ
-	// ä¸€è‡´ã›ãšã€ã‹ã¤ã€Adminãƒ¢ãƒ¼ãƒ‰ã§ãªã„æ™‚ã¯ã€ç·¨é›†ãƒ»å‰Šé™¤ä¸å¯ã¨ã™ã‚‹
+	// ¤â¤È¤â¤ÈÊÔ½¸²ÄÇ½¤ÎÀßÄê¤Ç¤â¡¢±ÜÍ÷Ãæ¤Îuid¤È¥ì¥³¡¼¥É¤Îuid¤¬
+	// °ìÃ×¤»¤º¡¢¤«¤Ä¡¢Admin¥â¡¼¥É¤Ç¤Ê¤¤»ş¤Ï¡¢ÊÔ½¸¡¦ºï½üÉÔ²Ä¤È¤¹¤ë
 	if( $event->uid != $this->user_id && ! $this->isadmin ) {
 		$editable = false ;
 		$deletable = false ;
 	}
 
-	// æœªæ‰¿èªãƒ¬ã‚³ãƒ¼ãƒ‰ã¯ã€$editableã§ãªã‘ã‚Œã°ã€è¡¨ç¤ºã—ãªã„
+	// Ì¤¾µÇ§¥ì¥³¡¼¥É¤Ï¡¢$editable¤Ç¤Ê¤±¤ì¤Ğ¡¢É½¼¨¤·¤Ê¤¤
 	if( ! $event->admission && ! $editable ) die( _PICAL_ERR_NOPERM_TO_SHOW ) ;
 
-	// ç·¨é›†ãƒœã‚¿ãƒ³
+	// ÊÔ½¸¥Ü¥¿¥ó
 	if( $editable && ! $for_print ) {
 		$edit_button = "
 			<form method='get' action='index.php' style='margin:0px;'>
@@ -1723,7 +1723,7 @@ function get_schedule_view_html( $for_print = false )
 			</form>\n" ;
 	} else $edit_button = "" ;
 
-	// å‰Šé™¤ãƒœã‚¿ãƒ³
+	// ºï½ü¥Ü¥¿¥ó
 	if( $deletable && ! $for_print ) {
 		$delete_button = "
 			<form method='post' action='index.php' name='MainForm' style='margin:0px;'>
@@ -1739,7 +1739,7 @@ function get_schedule_view_html( $for_print = false )
 			</form>\n" ;
 	} else $delete_button = "" ;
 
-	// iCalendar å‡ºåŠ›ãƒœã‚¿ãƒ³
+	// iCalendar ½ĞÎÏ¥Ü¥¿¥ó
 	if( $this->can_output_ics && ! $for_print ) {
 		$php_self4disp = strtr( @$_SERVER['PHP_SELF'] , '<>\'"' , '    ' ) ;
 		$ics_output_button = "
@@ -1747,15 +1747,15 @@ function get_schedule_view_html( $for_print = false )
 			<a href='webcal://{$_SERVER['HTTP_HOST']}$php_self4disp?fmt=single&amp;event_id=$event->id&amp;output_ics=1' target='_blank'><img border='0' src='$this->images_url/output_ics_mac.gif' alt='"._PICAL_BTN_OUTPUTICS_MAC."' title='"._PICAL_BTN_OUTPUTICS_MAC."' /></a>\n" ;
 	} else $ics_output_button = "" ;
 
-	// æ—¥ä»˜ãƒ»æ™‚é–“è¡¨ç¤ºã®å‡¦ç†
+	// ÆüÉÕ¡¦»ş´ÖÉ½¼¨¤Î½èÍı
 	if( $event->allday ) {
-		// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ãªã—ï¼‰
+		// Á´Æü¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤Ê¤·¡Ë
 		$tzoffset = 0 ;
 		$event->end -= 300 ;
 		$start_time_str = "("._PICAL_MB_ALLDAY_EVENT.")" ;
 		$end_time_str = "" ;
 	} else {
-		// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆãƒ¦ãƒ¼ã‚¶æ™‚é–“ã¸ã®æ™‚å·®è¨ˆç®—ã‚ã‚Šï¼‰
+		// ÄÌ¾ï¥¤¥Ù¥ó¥È¡Ê¥æ¡¼¥¶»ş´Ö¤Ø¤Î»şº¹·×»»¤¢¤ê¡Ë
 		$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 		$disp_user_tz = $this->get_tz_for_display( $this->user_TZ ) ;
 		$start_time_str = $this->get_middle_hi( $event->start + $tzoffset ) . " $disp_user_tz" ;
@@ -1786,7 +1786,7 @@ function get_schedule_view_html( $for_print = false )
 	$start_datetime_str = "$start_date_str &nbsp; $start_time_str" ;
 	$end_datetime_str = "$end_date_str &nbsp; $end_time_str" ;
 
-	// ç¹°ã‚Šè¿”ã—ã§ã€ã‹ã¤ã€åˆå›(è¦ª)ã§ãªã„ãƒ‡ãƒ¼ã‚¿ã¯ã€è¦ªã¸ã®ãƒªãƒ³ã‚¯ã‚’ä½œã‚‹
+	// ·«¤êÊÖ¤·¤Ç¡¢¤«¤Ä¡¢½é²ó(¿Æ)¤Ç¤Ê¤¤¥Ç¡¼¥¿¤Ï¡¢¿Æ¤Ø¤Î¥ê¥ó¥¯¤òºî¤ë
 	if( trim( $event->rrule ) != '' ) {
 		if( isset( $parent_event ) && $parent_event != $event ) {
 			if( isset( $parent_event->start_date ) ) {
@@ -1800,7 +1800,7 @@ function get_schedule_view_html( $for_print = false )
 		}
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼ã®è¡¨ç¤º
+	// ¥«¥Æ¥´¥ê¡¼¤ÎÉ½¼¨
 	$cat_titles4show = '' ;
 	$cids = explode( "," , $event->categories ) ;
 	foreach( $cids as $cid ) {
@@ -1809,10 +1809,10 @@ function get_schedule_view_html( $for_print = false )
 	}
 	if( $cat_titles4show != '' ) $cat_titles4show = substr( $cat_titles4show , 0 , -1 ) ;
 
-	// æŠ•ç¨¿è€…ã®è¡¨ç¤º
+	// Åê¹Æ¼Ô¤ÎÉ½¼¨
 	$submitter_info = $this->get_submitter_info( $event->uid ) ;
 
-	// å…¬é–‹ãƒ»éå…¬é–‹ãŠã‚ˆã³ãã®å¯¾è±¡ã®å‰å‡¦ç†
+	// ¸ø³«¡¦Èó¸ø³«¤ª¤è¤Ó¤½¤ÎÂĞ¾İ¤ÎÁ°½èÍı
 	if( $event->class == 'PRIVATE' ) {
 		$groupid = intval( $event->groupid ) ;
 		if( $groupid == 0 ) $group = _PICAL_OPT_PRIVATEMYSELF ;
@@ -1823,7 +1823,7 @@ function get_schedule_view_html( $for_print = false )
 		$class_status = _PICAL_MB_PUBLIC ;
 	}
 
-	// ãã®ä»–ã€è¡¨ç¤ºç”¨å‰å‡¦ç†
+	// ¤½¤ÎÂ¾¡¢É½¼¨ÍÑÁ°½èÍı
 	$admission_status = $event->admission ? _PICAL_MB_EVENT_ADMITTED : _PICAL_MB_EVENT_NEEDADMIT ;
 	$last_modified = $this->get_long_ymdn( $event->udtstamp - intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ) ;
 	$description = $this->textarea_sanitizer_for_show( $event->description ) ;
@@ -1831,10 +1831,10 @@ function get_schedule_view_html( $for_print = false )
 	$location = $this->text_sanitizer_for_show( $event->location ) ;
 	$contact = $this->text_sanitizer_for_show( $event->contact ) ;
 
-	// å†åˆ©ç”¨ç”¨
+	// ºÆÍøÍÑÍÑ
 	$this->last_summary = $summary ;
 
-	// è¡¨ç¤ºéƒ¨
+	// É½¼¨Éô
 	$ret = "
 <h2>"._PICAL_MB_TITLE_EVENTINFO." <small>-"._PICAL_MB_SUBTITLE_EVENTDETAIL."-</small></h2>
 	<table border='0' cellpadding='0' cellspacing='2'>
@@ -1911,7 +1911,7 @@ function get_schedule_view_html( $for_print = false )
 
 
 
-// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ç·¨é›†ç”¨ç”»é¢è¡¨ç¤ºç”¨æ–‡å­—åˆ—ã‚’è¿”ã™
+// ¥¹¥±¥¸¥å¡¼¥ëÊÔ½¸ÍÑ²èÌÌÉ½¼¨ÍÑÊ¸»úÎó¤òÊÖ¤¹
 function get_schedule_edit_html( )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
@@ -1919,7 +1919,7 @@ function get_schedule_edit_html( )
 	$deletable = $this->deletable ;
 	$smode = empty( $_GET['smode'] ) ? 'Monthly' : preg_replace('/[^a-zA-Z0-9_-]/','',$_GET['smode']) ;
 
-	// å¤‰æ›´ã®å ´åˆã€ç™»éŒ²æ¸ˆã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«æƒ…å ±å–å¾—
+	// ÊÑ¹¹¤Î¾ì¹ç¡¢ÅĞÏ¿ºÑ¥¹¥±¥¸¥å¡¼¥ë¾ğÊó¼èÆÀ
 	if( ! empty( $_GET[ 'event_id' ] ) ) {
 
 		if( ! $this->editable ) die( "Not allowed" ) ;
@@ -1929,8 +1929,8 @@ function get_schedule_edit_html( )
 		if( mysql_num_rows( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 		$event = mysql_fetch_object( $yrs ) ;
 
-		// ã‚‚ã¨ã‚‚ã¨ç·¨é›†ãƒ»å‰Šé™¤å¯èƒ½ã®è¨­å®šã§ã‚‚ã€é–²è¦§ä¸­ã®uidã¨ãƒ¬ã‚³ãƒ¼ãƒ‰ã®uidãŒ
-		// ä¸€è‡´ã›ãšã€ã‹ã¤ã€Adminãƒ¢ãƒ¼ãƒ‰ã§ãªã„æ™‚ã¯ã€ç·¨é›†ãƒ»å‰Šé™¤ä¸å¯ã¨ã™ã‚‹
+		// ¤â¤È¤â¤ÈÊÔ½¸¡¦ºï½ü²ÄÇ½¤ÎÀßÄê¤Ç¤â¡¢±ÜÍ÷Ãæ¤Îuid¤È¥ì¥³¡¼¥É¤Îuid¤¬
+		// °ìÃ×¤»¤º¡¢¤«¤Ä¡¢Admin¥â¡¼¥É¤Ç¤Ê¤¤»ş¤Ï¡¢ÊÔ½¸¡¦ºï½üÉÔ²Ä¤È¤¹¤ë
 		if( $event->uid != $this->user_id && ! $this->isadmin ) {
 			$editable = false ;
 			$deletable = false ;
@@ -1959,9 +1959,9 @@ function get_schedule_edit_html( )
 		$tz_options = $this->get_tz_options( $event->event_tz ) ;
 		$poster_tz = $event->poster_tz ;
 
-		// æ—¥ä»˜ãƒ»æ™‚é–“è¡¨ç¤ºã®å‡¦ç†
+		// ÆüÉÕ¡¦»ş´ÖÉ½¼¨¤Î½èÍı
 		if( $event->allday ) {
-			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ãªã—ï¼‰
+			// Á´Æü¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤Ê¤·¡Ë
 			$select_timezone_disabled = "disabled='disabled'" ;
 			$allday_checkbox = "checked='checked'" ;
 			$allday_select = "disabled='disabled'" ;
@@ -1986,7 +1986,7 @@ function get_schedule_edit_html( )
 			$end_hour = 23 ;
 			$end_min = 55 ;
 		} else {
-			// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆevent_tz ã§ã®æ™‚é–“è¡¨ç¤ºï¼‰
+			// ÄÌ¾ï¥¤¥Ù¥ó¥È¡Êevent_tz ¤Ç¤Î»ş´ÖÉ½¼¨¡Ë
 			$select_timezone_disabled = "" ;
 			$tzoffset_s2e = intval( ( $event->event_tz - $this->server_TZ ) * 3600 ) ;
 			$event->start += $tzoffset_s2e ;
@@ -2004,7 +2004,7 @@ function get_schedule_edit_html( )
 			$end_min = date( "i" , $event->end ) ;
 		}
 
-	// æ–°è¦ç™»éŒ²ã®å ´åˆ
+	// ¿·µ¬ÅĞÏ¿¤Î¾ì¹ç
 	} else {
 
 		if( ! $this->insertable ) die( "Not allowed" ) ;
@@ -2092,10 +2092,10 @@ function get_schedule_edit_html( )
 	}
 	$select_private .= "</select>" ;
 
-	// XOOPSç”¨ã‹ã©ã†ã‹ã§ã®å‡¦ç†åˆ†ã‘
+	// XOOPSÍÑ¤«¤É¤¦¤«¤Ç¤Î½èÍıÊ¬¤±
 	if( defined( 'XOOPS_ROOT_PATH' ) ) {
 
-		// DHTMLãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒªã‚¢ã®å‡¦ç†
+		// DHTML¥Æ¥­¥¹¥È¥¨¥ê¥¢¤Î½èÍı
 		include_once( XOOPS_ROOT_PATH . "/include/xoopscodes.php" ) ;
 		ob_start();
 		$GLOBALS["description_text"] = $description;
@@ -2104,7 +2104,7 @@ function get_schedule_edit_html( )
 		ob_end_clean();
 
 	} else {
-		// XOOPSä»¥å¤–ã§ã¯ã€å˜ãªã‚‹ãƒ—ãƒ¬ãƒ¼ãƒ³textare
+		// XOOPS°Ê³°¤Ç¤Ï¡¢Ã±¤Ê¤ë¥×¥ì¡¼¥ótextare
 		$description_textarea = "<textarea name='description' cols='50' rows='6' wrap='soft'>$description</textarea>" ;
 	}
 
@@ -2209,23 +2209,23 @@ function get_schedule_edit_html( )
 
 
 
-// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã®æ›´æ–°ãŠã‚ˆã³æ–°è¦ç™»éŒ²
+// ¥¹¥±¥¸¥å¡¼¥ë¤Î¹¹¿·¤ª¤è¤Ó¿·µ¬ÅĞÏ¿
 function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_callback = null )
 {
-	// debugãƒ¢ãƒ¼ãƒ‰ã§ Location ãŒåŠ¹ã‹ãªããªã‚‹ã®ã‚’é˜²ã
+	// debug¥â¡¼¥É¤Ç Location ¤¬¸ú¤«¤Ê¤¯¤Ê¤ë¤Î¤òËÉ¤°
 //	error_reporting( 0 ) ;
 
-	// $_SERVER å¤‰æ•°ã®å–å¾—
+	// $_SERVER ÊÑ¿ô¤Î¼èÆÀ
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 
-	// summaryã®ãƒã‚§ãƒƒã‚¯ï¼ˆæœªè¨˜å…¥ãªã‚‰ãã®æ—¨ã‚’è¿½åŠ ï¼‰
+	// summary¤Î¥Á¥§¥Ã¥¯¡ÊÌ¤µ­Æş¤Ê¤é¤½¤Î»İ¤òÄÉ²Ã¡Ë
 	if( $_POST[ 'summary' ] == "" ) $_POST[ 'summary' ] = _PICAL_MB_NOSUBJECT ;
 
-	// æ—¥ä»˜ã®å‰å‡¦ç†ï¼ˆç„¡åŠ¹ãªæ—¥ä»˜ãªã‚‰caldateã«ã‚»ãƒƒãƒˆï¼‰
+	// ÆüÉÕ¤ÎÁ°½èÍı¡ÊÌµ¸ú¤ÊÆüÉÕ¤Ê¤écaldate¤Ë¥»¥Ã¥È¡Ë
 	list( $start , $start_date , $use_default ) = $this->parse_posted_date( $this->mb_convert_kana( $_POST[ 'StartDate' ] , "a" ) , $this->unixtime ) ;
 	list( $end , $end_date , $use_default ) = $this->parse_posted_date( $this->mb_convert_kana( $_POST[ 'EndDate' ] , "a" ) , $this->unixtime ) ;
 
-	// allday å±æ€§ã®ãƒ“ãƒƒãƒˆã‚’ç«‹ã¦ã‚‹
+	// allday Â°À­¤Î¥Ó¥Ã¥È¤òÎ©¤Æ¤ë
 	$allday = 1 ;
 	if( isset( $_POST[ 'allday_bits' ] ) ) {
 		$bits = $_POST[ 'allday_bits' ] ;
@@ -2237,7 +2237,7 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 	}
 
 	if( $start_date || $end_date ) {
-		// 1970ä»¥å‰ã€2038å¹´ä»¥é™ã®æ—¥ä»˜ãŒã‹ã‚‰ã‚“ã ç‰¹æ®Šãªå…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
+		// 1970°ÊÁ°¡¢2038Ç¯°Ê¹ß¤ÎÆüÉÕ¤¬¤«¤é¤ó¤ÀÆÃ¼ì¤ÊÁ´Æü¥¤¥Ù¥ó¥È
 		if( $start_date ) $date_append = ", start_date='$start_date'" ;
 		else $date_append = ", start_date=null" ;
 		if( $end_date ) $date_append .= ", end_date='$end_date'" ;
@@ -2248,15 +2248,15 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 		$set_sql_date = "start='$start', end='$end', allday='$allday' $date_append" ;
 		$allday_flag = true ;
 	} else if( ! empty( $_POST[ 'allday' ] ) ) {
-		// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ãªã—ï¼‰
+		// Á´Æü¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤Ê¤·¡Ë
 		if( $start > $end ) list( $start , $end ) = array( $end , $start ) ;
-		$end += 86400 ;		// çµ‚äº†æ™‚é–“ã¯ã€çµ‚äº†ã—ãŸç¿Œæ—¥0:00ã‚’æŒ‡ã™
+		$end += 86400 ;		// ½ªÎ»»ş´Ö¤Ï¡¢½ªÎ»¤·¤¿ÍâÆü0:00¤ò»Ø¤¹
 		$set_sql_date = "start='$start', end='$end', allday='$allday', start_date=null, end_date=null" ;
 		$allday_flag = true ;
 	} else {
-		// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®è¨ˆç®—ã‚ã‚Šï¼‰
+		// ÄÌ¾ï¥¤¥Ù¥ó¥È¡Ê»şº¹·×»»¤¢¤ê¡Ë
 
-		// Timezone ã®å‡¦ç†ï¼ˆã“ã“ã®ã¿ã€ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“ã‹ã‚‰ã‚µãƒ¼ãƒæ™‚é–“ã¸ã®å¤‰æ›ï¼‰
+		// Timezone ¤Î½èÍı¡Ê¤³¤³¤Î¤ß¡¢¥¤¥Ù¥ó¥È»ş´Ö¤«¤é¥µ¡¼¥Ğ»ş´Ö¤Ø¤ÎÊÑ´¹¡Ë
 		if( ! isset( $_POST['event_tz'] ) ) $_POST['event_tz'] = $this->user_TZ ;
 		$tzoffset_e2s = intval( ( $this->server_TZ - $_POST['event_tz'] ) * 3600 ) ;
 		//$tzoffset_e2s = intval( date( 'Z' , $start ) - $_POST['event_tz'] * 3600 ) ;
@@ -2268,15 +2268,15 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 		$allday_flag = false ;
 	}
 
-	// ã‚µãƒ¼ãƒTZã‚’è¨˜éŒ²
+	// ¥µ¡¼¥ĞTZ¤òµ­Ï¿
 	$set_sql_date .= ",server_tz='$this->server_TZ'" ;
 
-	// description ã®XOOPSç”¨å‰å‡¦ç† (éœ²éª¨ãªãƒ„ã‚®ãƒã‚®ã§ã€ã‚ã¾ã‚Šæ ¼å¥½è‰¯ããªã„ã‘ã©â€¦â€¦)
+	// description ¤ÎXOOPSÍÑÁ°½èÍı (Ïª¹ü¤Ê¥Ä¥®¥Ï¥®¤Ç¡¢¤¢¤Ş¤ê³Ê¹¥ÎÉ¤¯¤Ê¤¤¤±¤É¡Ä¡Ä)
 	if( ! isset( $_POST[ 'description' ] ) && isset( $_POST[ 'description_text' ] ) ) {
 		$_POST[ 'description' ] = $_POST[ 'description_text' ] ;
 	}
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼ã®å‡¦ç†
+	// ¥«¥Æ¥´¥ê¡¼¤Î½èÍı
 	$_POST[ 'categories' ] = '' ;
 	$cids = is_array( @$_POST['cids'] ) ? $_POST['cids'] : array() ;
 	foreach( $cids as $cid ) {
@@ -2290,63 +2290,63 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 		}
 	}
 
-	// RRULEã®å–å¾—
+	// RRULE¤Î¼èÆÀ
 	$rrule = $this->rrule_from_post( $start , $allday_flag ) ;
 
-	// æ›´æ–°å¯¾è±¡ã‚«ãƒ©ãƒ è¨­å®š
+	// ¹¹¿·ÂĞ¾İ¥«¥é¥àÀßÄê
 	$cols = array( "summary" => "255:J:1" , "location" => "255:J:0" , "contact" => "255:J:0" , "description" => "A:J:0" , "categories" => "255:E:0" , "class" => "255:E:0" , "groupid" => "I:N:0" , "poster_tz" => "F:N:0" , "event_tz" => "F:N:0" ) ;
 
 	$set_str = $this->get_sql_set( $cols ) . ", $set_sql_date $set_sql_append" ;
 
-	// event_idã‚’POSTã‹ã‚‰å–å¾—ã—ã¦ã€æœ‰åŠ¹ãã†ãªã‚‰UPDATEã€ç„¡åŠ¹ãªã‚‰INSERTã‚’è©¦ã¿ã‚‹
+	// event_id¤òPOST¤«¤é¼èÆÀ¤·¤Æ¡¢Í­¸ú¤½¤¦¤Ê¤éUPDATE¡¢Ìµ¸ú¤Ê¤éINSERT¤ò»î¤ß¤ë
 	$event_id = intval( $_POST[ 'event_id' ] ) ;
 	if( $event_id > 0 ) {
-		// æ›´æ–°å‡¦ç†
+		// ¹¹¿·½èÍı
 
-		// ã¾ãšã¯ã€rrule_pidã‚’å–å¾—ã—ã€æœ‰åŠ¹ãªidãªã‚‰ã€åŒã˜rrule_pidã‚’æŒã¤
-		// ä»–ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å‰Šé™¤
+		// ¤Ş¤º¤Ï¡¢rrule_pid¤ò¼èÆÀ¤·¡¢Í­¸ú¤Êid¤Ê¤é¡¢Æ±¤¸rrule_pid¤ò»ı¤Ä
+		// Â¾¥ì¥³¡¼¥É¤òºï½ü
 		$rs = mysql_query( "SELECT rrule_pid FROM $this->table WHERE id='$event_id' $whr_sql_append" , $this->conn ) ;
 		if( ! ( $event = mysql_fetch_object( $rs ) ) ) die( "Record Not Exists." ) ;
 		if( $event->rrule_pid > 0 ) {
 			if( ! mysql_query( "DELETE FROM $this->table WHERE rrule_pid='$event->rrule_pid' AND id<>'$event_id'" , $this->conn ) ) echo mysql_error() ;
 		}
 
-		// å¯¾è±¡ãƒ¬ã‚³ãƒ¼ãƒ‰ã®UPDATEå‡¦ç†
+		// ÂĞ¾İ¥ì¥³¡¼¥É¤ÎUPDATE½èÍı
 		if( $rrule != '' ) $set_str .= ", rrule_pid=id" ;
 		$sql = "UPDATE $this->table SET $set_str , rrule='$rrule' , sequence=sequence+1 WHERE id='$event_id' $whr_sql_append" ;
 		if( ! mysql_query( $sql , $this->conn ) ) echo mysql_error() ;
 
-		// RRULEã‹ã‚‰ã€å­ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å±•é–‹
+		// RRULE¤«¤é¡¢»Ò¥ì¥³¡¼¥É¤òÅ¸³«
 		if( $rrule != '' ) {
 			$this->rrule_extract( $event_id ) ;
 		}
 
-		// ã™ã¹ã¦ã‚’æ›´æ–°å¾Œã€æ–°ã—ã„æ—¥ä»˜ã®ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’ãƒªãƒ­ãƒ¼ãƒ‰
+		// ¤¹¤Ù¤Æ¤ò¹¹¿·¸å¡¢¿·¤·¤¤ÆüÉÕ¤Î¥«¥ì¥ó¥À¡¼¤ò¥ê¥í¡¼¥É
 		$last_smode = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_POST['last_smode'] ) ;
 		//$last_caldate = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_POST['last_caldate'] ) ;
 		$new_caldate = $start_date ? $start_date : date( 'Y-n-j' , $start ) ;
 		$this->redirect( "smode=$last_smode&caldate=$new_caldate" ) ;
 
 	} else {
-		// æ–°è¦ç™»éŒ²å‡¦ç†
+		// ¿·µ¬ÅĞÏ¿½èÍı
 
-		// åˆå›(è¦ª)ãƒ¬ã‚³ãƒ¼ãƒ‰ã®INSERTå‡¦ç†
+		// ½é²ó(¿Æ)¥ì¥³¡¼¥É¤ÎINSERT½èÍı
 		$sql = "INSERT INTO $this->table SET $set_str , rrule='$rrule' , sequence=0" ;
 		if( ! mysql_query( $sql , $this->conn ) ) echo mysql_error() ;
-		// è¦ªãƒ¬ã‚³ãƒ¼ãƒ‰ã¸ unique_id,rrule_pid ã®è¨ˆç®—ã¨ç™»éŒ²
+		// ¿Æ¥ì¥³¡¼¥É¤Ø unique_id,rrule_pid ¤Î·×»»¤ÈÅĞÏ¿
 		$event_id = mysql_insert_id( $this->conn ) ;
 		$unique_id = 'pical060-' . md5( "{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}$event_id") ;
 		$rrule_pid = $rrule ? $event_id : 0 ;
 		mysql_query( "UPDATE $this->table SET unique_id='$unique_id',rrule_pid='$rrule_pid' WHERE id='$event_id'" , $this->conn ) ;
 
-		// RRULEã‹ã‚‰ã€å­ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å±•é–‹
+		// RRULE¤«¤é¡¢»Ò¥ì¥³¡¼¥É¤òÅ¸³«
 		if( $rrule != '' ) {
 			$this->rrule_extract( $event_id ) ;
 		}
 
 		if( isset( $notify_callback ) ) $this->$notify_callback( $event_id ) ;
 
-		// ã™ã¹ã¦ã‚’ç™»éŒ²å¾Œã€startæ—¥ ã®ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚’ãƒªãƒ­ãƒ¼ãƒ‰
+		// ¤¹¤Ù¤Æ¤òÅĞÏ¿¸å¡¢startÆü ¤Î¥«¥ì¥ó¥À¡¼¤ò¥ê¥í¡¼¥É
 		$last_smode = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_POST['last_smode'] ) ;
 		$last_caldate = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_POST['last_caldate'] ) ;
 		$this->redirect( "smode=$last_smode&caldate=$last_caldate" ) ;
@@ -2356,30 +2356,30 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 
 
 
-// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã®å‰Šé™¤ï¼ˆRRULEä»˜ããªã‚‰è¦ªã‹ã‚‰ã™ã¹ã¦ï¼‰
+// ¥¹¥±¥¸¥å¡¼¥ë¤Îºï½ü¡ÊRRULEÉÕ¤­¤Ê¤é¿Æ¤«¤é¤¹¤Ù¤Æ¡Ë
 function delete_schedule( $whr_sql_append = '' , $eval_after = null )
 {
-	// debugãƒ¢ãƒ¼ãƒ‰ã§ Location ãŒåŠ¹ã‹ãªããªã‚‹ã®ã‚’é˜²ã
+	// debug¥â¡¼¥É¤Ç Location ¤¬¸ú¤«¤Ê¤¯¤Ê¤ë¤Î¤òËÉ¤°
 	// error_reporting( 0 ) ;
 
 	if( ! empty( $_POST[ 'event_id' ] ) ) {
 
 		$event_id = intval( $_POST[ 'event_id' ] ) ;
 
-		// ã¾ãšã¯ã€rrule_pidã‚’å–å¾—ã—ã€æœ‰åŠ¹ãªidãªã‚‰ã€åŒã˜rrule_pidã‚’æŒã¤
-		// å…¨ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å‰Šé™¤
+		// ¤Ş¤º¤Ï¡¢rrule_pid¤ò¼èÆÀ¤·¡¢Í­¸ú¤Êid¤Ê¤é¡¢Æ±¤¸rrule_pid¤ò»ı¤Ä
+		// Á´¥ì¥³¡¼¥É¤òºï½ü
 		$rs = mysql_query( "SELECT rrule_pid FROM $this->table WHERE id='$event_id' $whr_sql_append" , $this->conn ) ;
 		if( ! ( $event = mysql_fetch_object( $rs ) ) ) die( "Record Not Exists." ) ;
 		if( $event->rrule_pid > 0 ) {
 			if( ! mysql_query( "DELETE FROM $this->table WHERE rrule_pid='$event->rrule_pid' $whr_sql_append" , $this->conn ) ) echo mysql_error() ;
-			// å‰Šé™¤æˆåŠŸå¾Œã®è¿½åŠ å‡¦ç†ã‚’evalã§å—ã‘ã‚‹ (XOOPSã§ã¯ã€ã‚³ãƒ¡ãƒ³ãƒˆã®å‰Šé™¤ï¼‰
+			// ºï½üÀ®¸ù¸å¤ÎÄÉ²Ã½èÍı¤òeval¤Ç¼õ¤±¤ë (XOOPS¤Ç¤Ï¡¢¥³¥á¥ó¥È¤Îºï½ü¡Ë
 			if( mysql_affected_rows() > 0 && isset( $eval_after ) ) {
 				$id = $event->rrule_pid ;
 				eval( $eval_after ) ;
 			}
 		} else {
 			if( ! mysql_query( "DELETE FROM $this->table WHERE id='$event_id' $whr_sql_append" , $this->conn ) ) echo mysql_error() ;
-			// å‰Šé™¤æˆåŠŸå¾Œã®è¿½åŠ å‡¦ç†ã‚’evalã§å—ã‘ã‚‹ (XOOPSã§ã¯ã€ã‚³ãƒ¡ãƒ³ãƒˆã®å‰Šé™¤ï¼‰
+			// ºï½üÀ®¸ù¸å¤ÎÄÉ²Ã½èÍı¤òeval¤Ç¼õ¤±¤ë (XOOPS¤Ç¤Ï¡¢¥³¥á¥ó¥È¤Îºï½ü¡Ë
 			if( mysql_affected_rows() == 1 && isset( $eval_after ) ) {
 				$id = $event_id ;
 				eval( $eval_after ) ;
@@ -2394,7 +2394,7 @@ function delete_schedule( $whr_sql_append = '' , $eval_after = null )
 
 
 
-// ã‚¹ã‚±ã‚¸ãƒ¥ãƒ¼ãƒ«ã®ä¸€ä»¶å‰Šé™¤ï¼ˆRRULEã®å­ä¾›ãƒ¬ã‚³ãƒ¼ãƒ‰ï¼‰
+// ¥¹¥±¥¸¥å¡¼¥ë¤Î°ì·ïºï½ü¡ÊRRULE¤Î»Ò¶¡¥ì¥³¡¼¥É¡Ë
 function delete_schedule_one( $whr_sql_append = '' )
 {
 	if( ! empty( $_POST[ 'subevent_id' ] ) ) {
@@ -2412,10 +2412,10 @@ function delete_schedule_one( $whr_sql_append = '' )
 
 
 /*******************************************************************/
-/*        å°ç‰©é–¢æ•°                                                 */
+/*        ¾®Êª´Ø¿ô                                                 */
 /*******************************************************************/
 
-// ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã™ã‚‹
+// ¥ê¥À¥¤¥ì¥¯¥È¤¹¤ë
 function redirect( $query )
 {
 	// character white list and black list against 'javascript'
@@ -2444,14 +2444,14 @@ function redirect( $query )
 }
 
 
-// -12.0ã€œ12.0ã¾ã§ã®å€¤ã‚’å—ã‘ã¦ã€(GMT+HH:MM) ã¨ã„ã†æ–‡å­—åˆ—ã‚’è¿”ã™
+// -12.0¡Á12.0¤Ş¤Ç¤ÎÃÍ¤ò¼õ¤±¤Æ¡¢(GMT+HH:MM) ¤È¤¤¤¦Ê¸»úÎó¤òÊÖ¤¹
 function get_tz_for_display( $offset )
 {
 	return "(GMT" . ( $offset >= 0 ? "+" : "-" ) . sprintf( "%02d:%02d" , abs( $offset ) , abs( $offset ) * 60 % 60 ) . ")" ;
 }
 
 
-// -12.0ã€œ12.0ã¾ã§ã®Timzone SELECTãƒœãƒƒã‚¯ã‚¹ç”¨Optionæ–‡å­—åˆ—ã‚’è¿”ã™
+// -12.0¡Á12.0¤Ş¤Ç¤ÎTimzone SELECT¥Ü¥Ã¥¯¥¹ÍÑOptionÊ¸»úÎó¤òÊÖ¤¹
 function get_tz_options( $selected = 0 )
 {
 	$tzs = array( '-12','-11','-10','-9','-8','-7','-6',
@@ -2469,7 +2469,7 @@ function get_tz_options( $selected = 0 )
 }
 
 
-// -12.0ã€œ12.0ã¾ã§ã®å€¤ã‚’å—ã‘ã¦ã€array(TZOFFSET,TZID)ã‚’è¿”ã™
+// -12.0¡Á12.0¤Ş¤Ç¤ÎÃÍ¤ò¼õ¤±¤Æ¡¢array(TZOFFSET,TZID)¤òÊÖ¤¹
 function get_timezone_desc( $tz )
 {
 	if( $tz == 0 ) {
@@ -2488,7 +2488,7 @@ function get_timezone_desc( $tz )
 }
 
 
-// ã‚«ãƒ†ã‚´ãƒªãƒ¼é¸æŠæ–‡å­—ãƒœãƒƒã‚¯ã‚¹ã‚’ãƒ•ã‚©ãƒ¼ãƒ ã”ã¨ä½œæˆã™ã‚‹
+// ¥«¥Æ¥´¥ê¡¼ÁªÂòÊ¸»ú¥Ü¥Ã¥¯¥¹¤ò¥Õ¥©¡¼¥à¤´¤ÈºîÀ®¤¹¤ë
 function get_categories_selform( $get_target = '' , $smode = null )
 {
 	if( empty( $this->categories ) ) return '' ;
@@ -2516,7 +2516,7 @@ function get_categories_selform( $get_target = '' , $smode = null )
 }
 
 
-// å¹´æœˆæ—¥ã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹å…¥åŠ›ã‚’å—ã‘ã¦ã€UnixTimestampã‚’è¿”ã™
+// Ç¯·îÆü¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹ÆşÎÏ¤ò¼õ¤±¤Æ¡¢UnixTimestamp¤òÊÖ¤¹
 function parse_posted_date( $date_desc , $default_unixtime )
 {
 //HACK by domifara for php5.3+
@@ -2526,12 +2526,12 @@ function parse_posted_date( $date_desc , $default_unixtime )
 		$use_default = true ;
 		$iso_date = '' ;
 	} else if( $regs[1] >= 2038 ) {
-		// 2038å¹´ä»¥é™ã®å ´åˆ 2038/1/1 ã«ã‚»ãƒƒãƒˆ
+		// 2038Ç¯°Ê¹ß¤Î¾ì¹ç 2038/1/1 ¤Ë¥»¥Ã¥È
 		$unixtime = mktime( 0 , 0 , 0 , 1 , 1 , 2038 ) ;
 		$use_default = false ;
 		$iso_date = "{$regs[1]}-{$regs[2]}-{$regs[3]}" ;
 	} else if( $regs[1] <= 1970 ) {
-		// 1970å¹´ä»¥å‰ã®å ´åˆ 1970/12/31ã«ã‚»ãƒƒãƒˆ
+		// 1970Ç¯°ÊÁ°¤Î¾ì¹ç 1970/12/31¤Ë¥»¥Ã¥È
 		$unixtime = mktime( 0 , 0 , 0 , 12 , 31 , 1970 ) ;
 		$use_default = false ;
 		$iso_date = "{$regs[1]}-{$regs[2]}-{$regs[3]}" ;
@@ -2549,7 +2549,7 @@ function parse_posted_date( $date_desc , $default_unixtime )
 }
 
 
-// timezoneé…åˆ—ã‚’å—ã‘ã¦ã€RFC2445ã®VTIMEZONEç”¨æ–‡å­—åˆ—ã‚’è¿”ã™
+// timezoneÇÛÎó¤ò¼õ¤±¤Æ¡¢RFC2445¤ÎVTIMEZONEÍÑÊ¸»úÎó¤òÊÖ¤¹
 function get_vtimezones_str( $timezones )
 {
 	if( empty( $timezones ) ) {
@@ -2589,7 +2589,7 @@ END:VTIMEZONE\r\n" ;
 }
 
 
-// é€£æƒ³é…åˆ—ã‚’å¼•æ•°ã«å–ã‚Šã€$_POSTã‹ã‚‰INSERT,UPDATEç”¨ã®SETæ–‡ã‚’ç”Ÿæˆã™ã‚‹ã‚¯ãƒ©ã‚¹é–¢æ•°
+// Ï¢ÁÛÇÛÎó¤ò°ú¿ô¤Ë¼è¤ê¡¢$_POST¤«¤éINSERT,UPDATEÍÑ¤ÎSETÊ¸¤òÀ¸À®¤¹¤ë¥¯¥é¥¹´Ø¿ô
 function get_sql_set( $cols )
 {
 	$ret = "" ;
@@ -2598,30 +2598,30 @@ function get_sql_set( $cols )
 
 		list( $field , $lang , $essential ) = explode( ':' , $types ) ;
 
-		// æœªå®šç¾©ãªã‚‰''ã¨è¦‹ãªã™
+		// Ì¤ÄêµÁ¤Ê¤é''¤È¸«¤Ê¤¹
 		if( ! isset( $_POST[ $col ] ) ) $data = '' ;
 		else if( get_magic_quotes_gpc() ) $data = stripslashes( $_POST[ $col ] ) ;
 		else $data = $_POST[ $col ] ;
 
-		// å¿…é ˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ãƒã‚§ãƒƒã‚¯
+		// É¬¿Ü¥Õ¥£¡¼¥ë¥É¤Î¥Á¥§¥Ã¥¯
 		if( $essential && $data === '' ) {
 			die( sprintf( _PICAL_ERR_LACKINDISPITEM , $col ) ) ;
 		}
 
-		// è¨€èªãƒ»æ•°å­—ãªã©ã®åˆ¥ã«ã‚ˆã‚‹å‡¦ç†
+		// ¸À¸ì¡¦¿ô»ú¤Ê¤É¤ÎÊÌ¤Ë¤è¤ë½èÍı
 		switch( $lang ) {
-			case 'N' :	// æ•°å€¤ (æ¡å–ã‚Šã® , ã‚’å–ã‚‹)
+			case 'N' :	// ¿ôÃÍ (·å¼è¤ê¤Î , ¤ò¼è¤ë)
 				$data = intval( str_replace( "," , "" , $data ) ) ;
 				break ;
-			case 'J' :	// æ—¥æœ¬èªãƒ†ã‚­ã‚¹ãƒˆ (åŠè§’ã‚«ãƒŠâ†’å…¨è§’ã‹ãª)
+			case 'J' :	// ÆüËÜ¸ì¥Æ¥­¥¹¥È (È¾³Ñ¥«¥Ê¢ªÁ´³Ñ¤«¤Ê)
 				$data = $this->mb_convert_kana( $data , "KV" ) ;
 				break ;
-			case 'E' :	// åŠè§’è‹±æ•°å­—ã®ã¿
+			case 'E' :	// È¾³Ñ±Ñ¿ô»ú¤Î¤ß
 				$data = $this->mb_convert_kana( $data , "as" ) ;
 				break ;
 		}
 
-		// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å‹ã«ã‚ˆã‚‹å‡¦ç†
+		// ¥Õ¥£¡¼¥ë¥É¤Î·¿¤Ë¤è¤ë½èÍı
 		switch( $field ) {
 			case 'A' :	// textarea
 				$ret .= "$col='".addslashes($data)."'," ;
@@ -2634,14 +2634,14 @@ function get_sql_set( $cols )
 				$data = doubleval( $data ) ;
 				$ret .= "$col='$data'," ;
 				break ;
-			default :	// varchar(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ)ã¯æ•°å€¤ã«ã‚ˆã‚‹æ–‡å­—æ•°æŒ‡å®š
+			default :	// varchar(¥Ç¥Õ¥©¥ë¥È)¤Ï¿ôÃÍ¤Ë¤è¤ëÊ¸»ú¿ô»ØÄê
 				if( $field < 1 ) $field = 255 ;
 				$data = mb_strcut( $data , 0 , $field ) ;
 				$ret .= "$col='".addslashes($data)."'," ;
 		}
 	}
 
-	// æœ€å¾Œã® , ã‚’å‰Šé™¤
+	// ºÇ¸å¤Î , ¤òºï½ü
 	$ret = substr( $ret , 0 , -1 ) ;
 
 	return $ret ;
@@ -2649,7 +2649,7 @@ function get_sql_set( $cols )
 
 
 
-// unixtimestampã‹ã‚‰ã€ç¾åœ¨ã®è¨€èªã§è¡¨ç¾ã•ã‚ŒãŸé•·ã„è¡¨è¨˜ã® YMDN ã‚’å¾—ã‚‹
+// unixtimestamp¤«¤é¡¢¸½ºß¤Î¸À¸ì¤ÇÉ½¸½¤µ¤ì¤¿Ä¹¤¤É½µ­¤Î YMDN ¤òÆÀ¤ë
 function get_long_ymdn( $time )
 {
 	return sprintf(
@@ -2663,7 +2663,7 @@ function get_long_ymdn( $time )
 
 
 
-// unixtimestampã‹ã‚‰ã€ç¾åœ¨ã®è¨€èªã§è¡¨ç¾ã•ã‚ŒãŸæ¨™æº–é•·è¡¨è¨˜ã® MD ã‚’å¾—ã‚‹
+// unixtimestamp¤«¤é¡¢¸½ºß¤Î¸À¸ì¤ÇÉ½¸½¤µ¤ì¤¿É¸½àÄ¹É½µ­¤Î MD ¤òÆÀ¤ë
 function get_middle_md( $time )
 {
 	return sprintf(
@@ -2675,7 +2675,7 @@ function get_middle_md( $time )
 
 
 
-// unixtimestampã‹ã‚‰ã€ç¾åœ¨ã®è¨€èªã§è¡¨ç¾ã•ã‚ŒãŸ DHI ã‚’å¾—ã‚‹
+// unixtimestamp¤«¤é¡¢¸½ºß¤Î¸À¸ì¤ÇÉ½¸½¤µ¤ì¤¿ DHI ¤òÆÀ¤ë
 function get_middle_dhi( $time , $is_over24 = false )
 {
 	$hour_offset = $is_over24 ? 24 : 0 ;
@@ -2692,7 +2692,7 @@ function get_middle_dhi( $time , $is_over24 = false )
 
 
 
-// unixtimestampã‹ã‚‰ã€ç¾åœ¨ã®è¨€èªã§è¡¨ç¾ã•ã‚ŒãŸ HI ã‚’å¾—ã‚‹
+// unixtimestamp¤«¤é¡¢¸½ºß¤Î¸À¸ì¤ÇÉ½¸½¤µ¤ì¤¿ HI ¤òÆÀ¤ë
 function get_middle_hi( $time , $is_over24 = false )
 {
 	$hour_offset = $is_over24 ? 24 : 0 ;
@@ -2722,23 +2722,23 @@ function get_options_for_hour( $default_hour = 0 )
 
 
 
-// unixtimestampã‹ã‚‰ã€ã‚ã‚‹æ™‚é–“(timestampå½¢å¼)ä»¥é™ã®äºˆå®šæ—¥æ™‚ã®æ–‡å­—åˆ—ã‚’å¾—ã‚‹
+// unixtimestamp¤«¤é¡¢¤¢¤ë»ş´Ö(timestamp·Á¼°)°Ê¹ß¤ÎÍ½ÄêÆü»ş¤ÎÊ¸»úÎó¤òÆÀ¤ë
 function get_coming_time_description( $start , $now , $admission = true )
 {
-	// æ‰¿èªã®æœ‰ç„¡ã«ã‚ˆã£ã¦ãƒ‰ãƒƒãƒˆGIFã‚’æ›¿ãˆã‚‹
+	// ¾µÇ§¤ÎÍ­Ìµ¤Ë¤è¤Ã¤Æ¥É¥Ã¥ÈGIF¤òÂØ¤¨¤ë
 	if( $admission ) $dot = "" ;
 	else $dot = "<img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
 
 	if( $start >= $now && $start - $now < 86400 ) {
-		// 24æ™‚é–“ä»¥å†…ã®ã‚¤ãƒ™ãƒ³ãƒˆ
+		// 24»ş´Ö°ÊÆâ¤Î¥¤¥Ù¥ó¥È
 		if( ! $dot ) $dot = "<img border='0' src='$this->images_url/dot_today.gif' />" ;
 		$ret = "$dot <b>" . $this->get_middle_hi( $start ) . "</b>"._PICAL_MB_TIMESEPARATOR ;
 	} else if( $start < $now ) {
-		// ã™ã§ã«é–‹å§‹ã•ã‚ŒãŸã‚¤ãƒ™ãƒ³ãƒˆ
+		// ¤¹¤Ç¤Ë³«»Ï¤µ¤ì¤¿¥¤¥Ù¥ó¥È
 		if( ! $dot ) $dot = "<img border='0' src='$this->images_url/dot_started.gif' />" ;
 		$ret = "$dot "._PICAL_MB_CONTINUING ;
 	} else {
-		// ç¿Œæ—¥ä»¥é™ã«é–‹å§‹ã«ãªã‚‹ã‚¤ãƒ™ãƒ³ãƒˆ
+		// ÍâÆü°Ê¹ß¤Ë³«»Ï¤Ë¤Ê¤ë¥¤¥Ù¥ó¥È
 		if( ! $dot ) $dot = "<img border='0' src='$this->images_url/dot_future.gif' />" ;
 //		$ret = "$dot " . date( "n/j H:i" , $start ) . _PICAL_MB_TIMESEPARATOR ;
 		$ret = "$dot " . $this->get_middle_md( $start ) . " " . $this->get_middle_hi( $start ) . _PICAL_MB_TIMESEPARATOR ;
@@ -2749,14 +2749,14 @@ function get_coming_time_description( $start , $now , $admission = true )
 
 
 
-// ï¼’ã¤ã®unixtimestampã‹ã‚‰ã€ã‚ã‚‹æ—¥(Y-n-jå½¢å¼)ã®äºˆå®šæ™‚é–“ã®æ–‡å­—åˆ—ã‚’å¾—ã‚‹ï¼ˆæ—¢ã«ã‚´ãƒŸï¼‰
+// £²¤Ä¤Îunixtimestamp¤«¤é¡¢¤¢¤ëÆü(Y-n-j·Á¼°)¤ÎÍ½Äê»ş´Ö¤ÎÊ¸»úÎó¤òÆÀ¤ë¡Ê´û¤Ë¥´¥ß¡Ë
 function get_todays_time_description( $start , $end , $ynj , $justify = true , $admission = true , $is_start_date = null , $is_end_date = null , $border_for_2400 = null )
 {
 	if( ! isset( $is_start_date ) ) $is_start_date = ( date( "Y-n-j" , $start ) == $ynj ) ;
 	if( ! isset( $is_end_date ) ) $is_end_date = ( date( "Y-n-j" , $end ) == $ynj ) ;
 	if( ! isset( $border_for_2400 ) ) $this->unixtime - intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) + 86400 ;
 
-	// $day_start æŒ‡å®šãŒã‚ã‚‹æ™‚ã®ã€24:00ä»¥é™ã®å‡¦ç†
+	// $day_start »ØÄê¤¬¤¢¤ë»ş¤Î¡¢24:00°Ê¹ß¤Î½èÍı
 	if( $is_start_date && $start > $border_for_2400 ) {
 		$start_desc = $this->get_middle_hi( $start , true ) ;
 	} else $start_desc = $this->get_middle_hi( $start ) ;
@@ -2767,7 +2767,7 @@ function get_todays_time_description( $start , $end , $ynj , $justify = true , $
 
 	$stuffing = $justify ? '     ' : '' ;
 
-	// äºˆå®šæ™‚é–“æŒ‡å®šã®æœ‰ç„¡ãƒ»æ‰¿èªã®æœ‰ç„¡ã«ã‚ˆã£ã¦ãƒ‰ãƒƒãƒˆGIFã‚’æ›¿ãˆã‚‹
+	// Í½Äê»ş´Ö»ØÄê¤ÎÍ­Ìµ¡¦¾µÇ§¤ÎÍ­Ìµ¤Ë¤è¤Ã¤Æ¥É¥Ã¥ÈGIF¤òÂØ¤¨¤ë
 	if( $admission ) {
 		if( $is_start_date ) $dot = "<img border='0' src='$this->images_url/dot_startday.gif' />" ;
 		else if( $is_end_date ) $dot = "<img border='0' src='$this->images_url/dot_endday.gif' />" ;
@@ -2786,13 +2786,13 @@ function get_todays_time_description( $start , $end , $ynj , $justify = true , $
 }
 
 
-// $eventã‚¯ã‚¨ãƒªçµæœã‹ã‚‰ã€ã‚ã‚‹æ—¥ã®äºˆå®šæ™‚é–“ã®æ–‡å­—åˆ—ã‚’å¾—ã‚‹ï¼ˆé€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆã®ã¿ï¼‰
+// $event¥¯¥¨¥ê·ë²Ì¤«¤é¡¢¤¢¤ëÆü¤ÎÍ½Äê»ş´Ö¤ÎÊ¸»úÎó¤òÆÀ¤ë¡ÊÄÌ¾ï¥¤¥Ù¥ó¥È¤Î¤ß¡Ë
 function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justify = true , $admission = true )
 {
 	$start = $event->start + $tzoffset ;
 	$end = $event->end + $tzoffset ;
 
-	// $day_start æŒ‡å®šãŒã‚ã‚‹æ™‚ã®ã€24:00ä»¥é™ã®å‡¦ç†
+	// $day_start »ØÄê¤¬¤¢¤ë»ş¤Î¡¢24:00°Ê¹ß¤Î½èÍı
 	if( $event->is_start_date && $event->start >= $border_for_2400 ) {
 		$start_desc = $this->get_middle_hi( $start , true ) ;
 	} else $start_desc = $this->get_middle_hi( $start ) ;
@@ -2803,7 +2803,7 @@ function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justi
 
 	$stuffing = $justify ? '     ' : '' ;
 
-	// äºˆå®šæ™‚é–“æŒ‡å®šã®æœ‰ç„¡ãƒ»æ‰¿èªã®æœ‰ç„¡ã«ã‚ˆã£ã¦ãƒ‰ãƒƒãƒˆGIFã‚’æ›¿ãˆã‚‹
+	// Í½Äê»ş´Ö»ØÄê¤ÎÍ­Ìµ¡¦¾µÇ§¤ÎÍ­Ìµ¤Ë¤è¤Ã¤Æ¥É¥Ã¥ÈGIF¤òÂØ¤¨¤ë
 	if( $admission ) {
 		if( $event->is_start_date ) $dot = "<img border='0' src='$this->images_url/dot_startday.gif' />" ;
 		else if( $event->is_end_date ) $dot = "<img border='0' src='$this->images_url/dot_endday.gif' />" ;
@@ -2822,7 +2822,7 @@ function get_time_desc_for_a_day( $event , $tzoffset , $border_for_2400 , $justi
 }
 
 
-// æ—¥ä»˜å…¥åŠ›ãƒœãƒƒã‚¯ã‚¹ã®é–¢æ•° (JavaScriptã§å…¥åŠ›ã™ã‚‹éš›ã®Overrideå¯¾è±¡)
+// ÆüÉÕÆşÎÏ¥Ü¥Ã¥¯¥¹¤Î´Ø¿ô (JavaScript¤ÇÆşÎÏ¤¹¤ëºİ¤ÎOverrideÂĞ¾İ)
 
 function get_formtextdateselect( $name , $value )
 {
@@ -2831,7 +2831,7 @@ function get_formtextdateselect( $name , $value )
 
 
 
-// $this->images_urlä¸‹ã«ã‚ã‚‹style.cssã‚’èª­ã¿è¾¼ã¿ã€ã‚µãƒ‹ã‚¿ã‚¤ã‚ºã—ã¦å¼•ãæ¸¡ã™
+// $this->images_url²¼¤Ë¤¢¤ëstyle.css¤òÆÉ¤ß¹ş¤ß¡¢¥µ¥Ë¥¿¥¤¥º¤·¤Æ°ú¤­ÅÏ¤¹
 function get_embed_css( )
 {
 	$css_filename = "$this->images_path/style.css" ;
@@ -2841,7 +2841,7 @@ function get_embed_css( )
 
 
 
-// æŠ•ç¨¿è€…ã®è¡¨ç¤ºæ–‡å­—åˆ—ã‚’è¿”ã™ (Overrideå¯¾è±¡)
+// Åê¹Æ¼Ô¤ÎÉ½¼¨Ê¸»úÎó¤òÊÖ¤¹ (OverrideÂĞ¾İ)
 function get_submitter_info( $uid )
 {
 	return '' ;
@@ -2849,20 +2849,20 @@ function get_submitter_info( $uid )
 
 
 
-// ã‚«ãƒ†ã‚´ãƒªé–¢ä¿‚ã®WHEREç”¨æ¡ä»¶ã‚’ç”Ÿæˆ
+// ¥«¥Æ¥´¥ê´Ø·¸¤ÎWHEREÍÑ¾ò·ï¤òÀ¸À®
 function get_where_about_categories()
 {
 	if( $this->isadmin ) {
 		if( empty( $this->now_cid ) ) {
-			// é–²è¦§è€…ãŒç®¡ç†è€…ã§$cidæŒ‡å®šãŒãªã‘ã‚Œã°å¸¸ã«True
+			// ±ÜÍ÷¼Ô¤¬´ÉÍı¼Ô¤Ç$cid»ØÄê¤¬¤Ê¤±¤ì¤Ğ¾ï¤ËTrue
 			return "1" ;
 		} else {
-			// é–²è¦§è€…ãŒç®¡ç†è€…ã§$cidæŒ‡å®šãŒã‚ã‚Œã°ã€ãã“ã ã‘LIKEæŒ‡å®š
+			// ±ÜÍ÷¼Ô¤¬´ÉÍı¼Ô¤Ç$cid»ØÄê¤¬¤¢¤ì¤Ğ¡¢¤½¤³¤À¤±LIKE»ØÄê
 			return "categories LIKE '%".sprintf("%05d,",$this->now_cid)."%'" ;
 		}
 	} else {
 		if( empty( $this->now_cid ) ) {
-			// é–²è¦§è€…ãŒç®¡ç†è€…ä»¥å¤–ã§$cidæŒ‡å®šãŒãªã‘ã‚Œã°ã€CAT2GROUPã«ã‚ˆã‚‹åˆ¶é™
+			// ±ÜÍ÷¼Ô¤¬´ÉÍı¼Ô°Ê³°¤Ç$cid»ØÄê¤¬¤Ê¤±¤ì¤Ğ¡¢CAT2GROUP¤Ë¤è¤ëÀ©¸Â
 			$limit_from_perm = "categories='' OR " ;
 			foreach( $this->categories as $cid => $cat ) {
 				$limit_from_perm .= "categories LIKE '%".sprintf("%05d,",$cid)."%' OR " ;
@@ -2870,11 +2870,11 @@ function get_where_about_categories()
 			$limit_from_perm = substr( $limit_from_perm , 0 , -3 ) ;
 			return $limit_from_perm ;
 		} else {
-			// é–²è¦§è€…ãŒç®¡ç†è€…ä»¥å¤–ã§$cidæŒ‡å®šãŒã‚ã‚Œã°ã€æ¨©é™ãƒã‚§ãƒƒã‚¯ã—ã¦$cidæŒ‡å®š
+			// ±ÜÍ÷¼Ô¤¬´ÉÍı¼Ô°Ê³°¤Ç$cid»ØÄê¤¬¤¢¤ì¤Ğ¡¢¸¢¸Â¥Á¥§¥Ã¥¯¤·¤Æ$cid»ØÄê
 			if( isset( $this->categories[ $this->now_cid ] ) ) {
 				return "categories LIKE '%".sprintf("%05d,",$this->now_cid)."%'" ;
 			} else {
-				// æŒ‡å®šã•ã‚ŒãŸcidãŒæ¨©é™ã«ãªã„
+				// »ØÄê¤µ¤ì¤¿cid¤¬¸¢¸Â¤Ë¤Ê¤¤
 				return '0' ;
 			}
 		}
@@ -2883,17 +2883,17 @@ function get_where_about_categories()
 
 
 
-// CLASS(å…¬é–‹ãƒ»éå…¬é–‹)é–¢ä¿‚ã®WHEREç”¨æ¡ä»¶ã‚’ç”Ÿæˆ
+// CLASS(¸ø³«¡¦Èó¸ø³«)´Ø·¸¤ÎWHEREÍÑ¾ò·ï¤òÀ¸À®
 function get_where_about_class()
 {
 	if( $this->isadmin ) {
-		// é–²è¦§è€…ãŒç®¡ç†è€…ãªã‚‰å¸¸ã«True
+		// ±ÜÍ÷¼Ô¤¬´ÉÍı¼Ô¤Ê¤é¾ï¤ËTrue
 		return "1" ;
 	} else if( $this->user_id <= 0 ) {
-		// é–²è¦§è€…ãŒã‚²ã‚¹ãƒˆãªã‚‰å…¬é–‹(PUBLIC)ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ã¿
+		// ±ÜÍ÷¼Ô¤¬¥²¥¹¥È¤Ê¤é¸ø³«(PUBLIC)¥ì¥³¡¼¥É¤Î¤ß
 		return "class='PUBLIC'" ;
 	} else {
-		// é€šå¸¸ãƒ¦ãƒ¼ã‚¶ãªã‚‰ã€PUBLICãƒ¬ã‚³ãƒ¼ãƒ‰ã‹ã€ãƒ¦ãƒ¼ã‚¶IDãŒä¸€è‡´ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ã€ã¾ãŸã¯ã€æ‰€å±ã—ã¦ã„ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—IDã®ã†ã¡ã®ä¸€ã¤ãŒãƒ¬ã‚³ãƒ¼ãƒ‰ã®ã‚°ãƒ«ãƒ¼ãƒ—IDã¨ä¸€è‡´ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰
+		// ÄÌ¾ï¥æ¡¼¥¶¤Ê¤é¡¢PUBLIC¥ì¥³¡¼¥É¤«¡¢¥æ¡¼¥¶ID¤¬°ìÃ×¤¹¤ë¥ì¥³¡¼¥É¡¢¤Ş¤¿¤Ï¡¢½êÂ°¤·¤Æ¤¤¤ë¥°¥ë¡¼¥×ID¤Î¤¦¤Á¤Î°ì¤Ä¤¬¥ì¥³¡¼¥É¤Î¥°¥ë¡¼¥×ID¤È°ìÃ×¤¹¤ë¥ì¥³¡¼¥É
 		$ids = ' ' ;
 		foreach( $this->groups as $id => $name ) {
 			$ids .= "$id," ;
@@ -2907,10 +2907,10 @@ function get_where_about_class()
 
 
 
-// mb_convert_kanaã®å‡¦ç†
+// mb_convert_kana¤Î½èÍı
 function mb_convert_kana( $str , $option )
 {
-	// convert_kana ã®å‡¦ç†ã¯ã€æ—¥æœ¬èªã§ã®ã¿è¡Œã†
+	// convert_kana ¤Î½èÍı¤Ï¡¢ÆüËÜ¸ì¤Ç¤Î¤ß¹Ô¤¦
 	if( $this->language != 'japanese' || ! function_exists( 'mb_convert_kana' ) ) {
 		return $str ;
 	} else {
@@ -2921,7 +2921,7 @@ function mb_convert_kana( $str , $option )
 
 
 /*******************************************************************/
-/*   ã‚µãƒ‹ã‚¿ã‚¤ã‚ºé–¢é€£ã®é–¢æ•° (ã‚µãƒ–ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹æ™‚ã®Overrideå¯¾è±¡)   */
+/*   ¥µ¥Ë¥¿¥¤¥º´ØÏ¢¤Î´Ø¿ô (¥µ¥Ö¥¯¥é¥¹¤òºîÀ®¤¹¤ë»ş¤ÎOverrideÂĞ¾İ)   */
 /*******************************************************************/
 
 function textarea_sanitizer_for_show( $data )
@@ -2951,22 +2951,22 @@ function textarea_sanitizer_for_export_ics( $data )
 
 
 /*******************************************************************/
-/*        iCalendar å‡¦ç†é–¢æ•°                                       */
+/*        iCalendar ½èÍı´Ø¿ô                                       */
 /*******************************************************************/
 
-// iCalendarå½¢å¼ã§ã®ãƒãƒƒãƒå‡ºåŠ›ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ é¸æŠç”¨ãƒ•ã‚©ãƒ¼ãƒ ã‚’è¿”ã™
-// $_POST['ids']ã§æŒ‡å®š
+// iCalendar·Á¼°¤Ç¤Î¥Ğ¥Ã¥Á½ĞÎÏ¥×¥é¥Ã¥È¥Õ¥©¡¼¥àÁªÂòÍÑ¥Õ¥©¡¼¥à¤òÊÖ¤¹
+// $_POST['ids']¤Ç»ØÄê
 function output_ics_confirm( $post_target , $target = '_self' )
 {
-	// POSTã§å—ã‘å–ã£ãŸidé…åˆ—ã‚’ã€event_idsé…åˆ—ã¨ã—ã¦POSTã™ã‚‹
+	// POST¤Ç¼õ¤±¼è¤Ã¤¿idÇÛÎó¤ò¡¢event_idsÇÛÎó¤È¤·¤ÆPOST¤¹¤ë
 	$hiddens = "" ;
 	foreach( $_POST[ 'ids' ] as $id ) {
 		$id = intval( $id ) ;
 		$hiddens .= "<input type='hidden' name='event_ids[]' value='$id' />\n" ;
 	}
-	// webcalãƒªãƒ³ã‚¯ç”Ÿæˆ
+	// webcal¥ê¥ó¥¯À¸À®
 	$webcal_url = str_replace( 'http://' , 'webcal://' , $post_target ) ;
-	// ç¢ºèªãƒ•ã‚©ãƒ¼ãƒ ã‚’è¿”ã™
+	// ³ÎÇ§¥Õ¥©¡¼¥à¤òÊÖ¤¹
 	return "
 	<div style='text-align:center;width:100%;'>&nbsp;<br /><b>"._PICAL_MB_ICALSELECTPLATFORM."</b><br />&nbsp;</div>
 	<table border='0' cellpadding='5' cellspacing='2' width='100%'>
@@ -2988,25 +2988,25 @@ function output_ics_confirm( $post_target , $target = '_self' )
 }
 
 
-// iCalendarå½¢å¼ã§ã®å‡ºåŠ› (mbstringå¿…é ˆ)
-// å‡ºåŠ›ãŒä¸€ä»¶ã®ã¿ã®å ´åˆã¯$_GET['event_id']ã€é…åˆ—ã®å ´åˆã¯$_POST['event_ids']
+// iCalendar·Á¼°¤Ç¤Î½ĞÎÏ (mbstringÉ¬¿Ü)
+// ½ĞÎÏ¤¬°ì·ï¤Î¤ß¤Î¾ì¹ç¤Ï$_GET['event_id']¡¢ÇÛÎó¤Î¾ì¹ç¤Ï$_POST['event_ids']
 function output_ics( )
 {
-	// $event_id ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã‘ã‚Œã°çµ‚äº†
+	// $event_id ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ½ªÎ»
 	if( empty( $_GET[ 'event_id' ] ) && empty( $_POST[ 'event_ids' ] ) ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 
-	// iCalendarå‡ºåŠ›è¨±å¯ãŒãªã‘ã‚Œã°çµ‚äº†
+	// iCalendar½ĞÎÏµö²Ä¤¬¤Ê¤±¤ì¤Ğ½ªÎ»
 	if( ! $this->can_output_ics ) die( _PICAL_ERR_NOPERM_TO_OUTPUTICS ) ;
 	if( isset( $_GET[ 'event_id' ] ) ) {
-		// $_GET[ 'event_id' ] ã«ã‚ˆã‚‹ä¸€ä»¶ã ã‘ã®æŒ‡å®šã®å ´åˆ
+		// $_GET[ 'event_id' ] ¤Ë¤è¤ë°ì·ï¤À¤±¤Î»ØÄê¤Î¾ì¹ç
 		$event_id = intval( $_GET['event_id'] ) ;
 		$event_ids = array( $event_id ) ;
 		$rs = mysql_query( "SELECT summary AS udtstmp FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
 		if( mysql_num_rows( $rs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 		$summary = mysql_result( $rs , 0 , 0 ) ;
-		// ä»¶å ã‚’ X-WR-CALNAME ã¨ã™ã‚‹
+		// ·ïÌ¾ ¤ò X-WR-CALNAME ¤È¤¹¤ë
 		$x_wr_calname = $summary ;
-		// ãƒ•ã‚¡ã‚¤ãƒ«åã«ä½¿ãˆãªã•ãã†ãªæ–‡å­—ã¯å‰Šã‚‹
+		// ¥Õ¥¡¥¤¥ëÌ¾¤Ë»È¤¨¤Ê¤µ¤½¤¦¤ÊÊ¸»ú¤Ïºï¤ë
 		if( function_exists( "mb_ereg_replace" ) ) {
 			$summary = mb_ereg_replace( '[<>|"?*,:;\\/]' , '' , $summary ) ;
 		} else {
@@ -3014,25 +3014,25 @@ function output_ics( )
 //			$summary = ereg_replace( '[<>|"?*,:;\\/]' , '' , $summary ) ;
 			$summary = preg_replace( '/[<>|"?*,:;\\/]/' , '' , $summary ) ;
 		}
-		// ç¦æ­¢æ–‡å­—ã‚’å‰Šã£ãŸä»¶å.ics ã‚’ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã™ã‚‹ (è¦SJISå¤‰æ›)
+		// ¶Ø»ßÊ¸»ú¤òºï¤Ã¤¿·ïÌ¾.ics ¤ò¥Õ¥¡¥¤¥ëÌ¾¤È¤¹¤ë (Í×SJISÊÑ´¹)
 		$output_filename = mb_convert_encoding( $summary , "SJIS" ) . '.ics' ;
 	} else if( is_array( $_POST[ 'event_ids' ] ) ) {
-		// $_POST[ 'event_ids' ] ã«ã‚ˆã‚‹é…åˆ—ã«ã‚ˆã‚‹æŒ‡å®šã®å ´åˆ
+		// $_POST[ 'event_ids' ] ¤Ë¤è¤ëÇÛÎó¤Ë¤è¤ë»ØÄê¤Î¾ì¹ç
 		$event_ids = array_unique( $_POST[ 'event_ids' ] ) ;
-		// events-ç”Ÿæˆæ—¥æ™‚(GMT) ã‚’ X-WR-CALNAME ã¨ã™ã‚‹
+		// events-À¸À®Æü»ş(GMT) ¤ò X-WR-CALNAME ¤È¤¹¤ë
 		$x_wr_calname = 'events-' . gmdate( 'Ymd\THis\Z' ) ;
-		// events-ç”Ÿæˆæ—¥æ™‚.ics ã‚’ãƒ•ã‚¡ã‚¤ãƒ«åã¨ã™ã‚‹
+		// events-À¸À®Æü»ş.ics ¤ò¥Õ¥¡¥¤¥ëÌ¾¤È¤¹¤ë
 		$output_filename = $x_wr_calname . '.ics' ;
 	} else die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 
-	// HTTPãƒ˜ãƒƒãƒ€å‡ºåŠ›
+	// HTTP¥Ø¥Ã¥À½ĞÎÏ
 	header("Content-type: text/calendar");
 	header("Content-Disposition: attachment; filename=$output_filename" );
 	header("Expires: 0");
 	header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
 	header("Pragma: public");
 
-	// iCalendarãƒ˜ãƒƒãƒ€
+	// iCalendar¥Ø¥Ã¥À
 	$ical_header = "BEGIN:VCALENDAR\r
 CALSCALE:GREGORIAN\r
 X-WR-TIMEZONE;VALUE=TEXT:GMT\r
@@ -3041,13 +3041,13 @@ X-WR-CALNAME;VALUE=TEXT:$x_wr_calname\r
 VERSION:2.0\r
 METHOD:PUBLISH\r\n" ;
 
-	// ã‚«ãƒ†ã‚´ãƒªãƒ¼é–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// ¥«¥Æ¥´¥ê¡¼´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_categories = $this->get_where_about_categories() ;
 
-	// CLASSé–¢é€£ã®WHEREæ¡ä»¶å–å¾—
+	// CLASS´ØÏ¢¤ÎWHERE¾ò·ï¼èÆÀ
 	$whr_class = $this->get_where_about_class() ;
 
-	// ã‚¤ãƒ™ãƒ³ãƒˆæ¯ã®ãƒ«ãƒ¼ãƒ—
+	// ¥¤¥Ù¥ó¥ÈËè¤Î¥ë¡¼¥×
 	$vevents_str = "" ;
 	$timezones = array() ;
 	foreach( $event_ids as $event_id ) {
@@ -3059,7 +3059,7 @@ METHOD:PUBLISH\r\n" ;
 		if( ! $event ) continue ;
 
 		if( isset( $event->start_date ) ) {
-			// 1970ä»¥å‰ã€2038å¹´ä»¥é™ã®æ—¥ä»˜ãŒã‹ã‚‰ã‚“ã ç‰¹æ®Šãªå…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆ
+			// 1970°ÊÁ°¡¢2038Ç¯°Ê¹ß¤ÎÆüÉÕ¤¬¤«¤é¤ó¤ÀÆÃ¼ì¤ÊÁ´Æü¥¤¥Ù¥ó¥È
 			$dtstart = str_replace( '-' , '' , $event->start_date ) ;
 			if( isset( $event->end_date_offseted ) ) {
 				$dtend = str_replace( '-' , '' , $event->end_date_offseted ) ;
@@ -3068,28 +3068,28 @@ METHOD:PUBLISH\r\n" ;
 			}
 			$dtstart_opt = $dtend_opt = ";VALUE=DATE" ;
 		} else if( $event->allday ) {
-			// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆï¼ˆæ™‚å·®å‡¦ç†ãªã—ï¼‰
+			// Á´Æü¥¤¥Ù¥ó¥È¡Ê»şº¹½èÍı¤Ê¤·¡Ë
 			$dtstart = date( 'Ymd' , $event->start ) ;
 			if( isset( $event->end_date_offseted ) ) {
 				$dtend = str_replace( '-' , '' , $event->end_date_offseted ) ;
 			} else {
 				$dtend = date( 'Ymd' , $event->end ) ;
 			}
-			// é–‹å§‹ã¨çµ‚äº†ãŒåŒæ—¥ã®å ´åˆã¯ã€çµ‚äº†ã‚’ï¼‘æ—¥å¾Œã‚ã«ãšã‚‰ã™
+			// ³«»Ï¤È½ªÎ»¤¬Æ±Æü¤Î¾ì¹ç¤Ï¡¢½ªÎ»¤ò£±Æü¸å¤í¤Ë¤º¤é¤¹
 			if( $dtstart == $dtend ) $dtend = date( 'Ymd' , $event->end + 86400 ) ;
 			$dtstart_opt = $dtend_opt = ";VALUE=DATE" ;
 		} else {
 			if( $event->rrule ) {
-				// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆã§RRULEãŒã‚ã‚Œã°ã€ã‚¤ãƒ™ãƒ³ãƒˆTZã§å‡ºåŠ›
+				// ÄÌ¾ï¥¤¥Ù¥ó¥È¤ÇRRULE¤¬¤¢¤ì¤Ğ¡¢¥¤¥Ù¥ó¥ÈTZ¤Ç½ĞÎÏ
 				$tzoffset = intval( ( $this->server_TZ - $event->event_tz ) * 3600 ) ;
 				list( , $tzid ) = $this->get_timezone_desc( $event->event_tz ) ;
 				$dtstart = date( 'Ymd\THis' , $event->start - $tzoffset ) ;
 				$dtend = date( 'Ymd\THis' , $event->end - $tzoffset ) ;
 				$dtstart_opt = $dtend_opt = ";TZID=$tzid" ;
-				// ã•ã‚‰ã«ã€ãã®VTIMEZONEã‚‚å‡ºåŠ›
+				// ¤µ¤é¤Ë¡¢¤½¤ÎVTIMEZONE¤â½ĞÎÏ
 				$timezones[$event->event_tz] = 1 ;
 			} else {
-				// é€šå¸¸ã‚¤ãƒ™ãƒ³ãƒˆã§RRULEãŒç„¡ã‘ã‚Œã°ã€ã‚µãƒ¼ãƒã®æ™‚å·®å‡¦ç†ã ã‘ã—ã¦GMTè¡¨ç¾
+				// ÄÌ¾ï¥¤¥Ù¥ó¥È¤ÇRRULE¤¬Ìµ¤±¤ì¤Ğ¡¢¥µ¡¼¥Ğ¤Î»şº¹½èÍı¤À¤±¤·¤ÆGMTÉ½¸½
 				$tzoffset = $this->server_TZ * 3600 ;
 				$dtstart = date( 'Ymd\THis\Z' , $event->start - $tzoffset ) ;
 				$dtend = date( 'Ymd\THis\Z' , $event->end - $tzoffset ) ;
@@ -3097,16 +3097,16 @@ METHOD:PUBLISH\r\n" ;
 			}
 		}
 
-		// DTSTAMPã¯å¸¸ã«GMT
+		// DTSTAMP¤Ï¾ï¤ËGMT
 		$dtstamp = date( 'Ymd\THis\Z' , $event->udtstmp - $this->server_TZ * 3600 ) ;
 
-		// DESCRIPTIONã® folding , \rå‰Šé™¤ ãŠã‚ˆã³ \n -> \\n å¤‰æ›, ã‚µãƒ‹ã‚¿ã‚¤ã‚º
-		// (folding æœªå®Ÿè£…) TODO
+		// DESCRIPTION¤Î folding , \rºï½ü ¤ª¤è¤Ó \n -> \\n ÊÑ´¹, ¥µ¥Ë¥¿¥¤¥º
+		// (folding Ì¤¼ÂÁõ) TODO
 		$description = str_replace( "\r" , '' , $event->description ) ;
 		$description = str_replace( "\n" , '\n' , $description ) ;
 		$description = $this->textarea_sanitizer_for_export_ics( $description ) ;
 
-		// ã‚«ãƒ†ã‚´ãƒªãƒ¼ã®è¡¨ç¤º
+		// ¥«¥Æ¥´¥ê¡¼¤ÎÉ½¼¨
 		$categories = '' ;
 		$cids = explode( "," , $event->categories ) ;
 		foreach( $cids as $cid ) {
@@ -3115,10 +3115,10 @@ METHOD:PUBLISH\r\n" ;
 		}
 		if( $categories != '' ) $categories = substr( $categories , 0 , -1 ) ;
 
-		// RRULEè¡Œã¯ã€RRULEã®ä¸­èº«ãŒã‚ã‚‹æ™‚ã ã‘å‡ºåŠ›
+		// RRULE¹Ô¤Ï¡¢RRULE¤ÎÃæ¿È¤¬¤¢¤ë»ş¤À¤±½ĞÎÏ
 		$rrule_line = $event->rrule ? "RRULE:{$event->rrule}\r\n" : "" ;
 
-		// ã‚¤ãƒ™ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã®å‡ºåŠ›
+		// ¥¤¥Ù¥ó¥È¥Ç¡¼¥¿¤Î½ĞÎÏ
 		$vevents_str .= "BEGIN:VEVENT\r
 DTSTART{$dtstart_opt}:{$dtstart}\r
 DTEND{$dtend_opt}:{$dtend}\r
@@ -3139,12 +3139,12 @@ END:VEVENT\r\n" ;
 	// VTIMEZONE
 	$vtimezones_str = $this->get_vtimezones_str( $timezones ) ;
 
-	// iCalendarãƒ•ãƒƒã‚¿
+	// iCalendar¥Õ¥Ã¥¿
 	$ical_footer = "END:VCALENDAR\r\n" ;
 
 	$ical_data = "$ical_header$vtimezones_str$vevents_str$ical_footer" ;
 
-	// mbstring ãŒã‚ã‚‹å ´åˆã®ã¿ã€UTF-8 ã¸ã®å¤‰æ›
+	// mbstring ¤¬¤¢¤ë¾ì¹ç¤Î¤ß¡¢UTF-8 ¤Ø¤ÎÊÑ´¹
 	if( extension_loaded( 'mbstring' ) ) {
 		mb_http_output( "pass" ) ;
 		$ical_data = mb_convert_encoding( $ical_data , "UTF-8" ) ;
@@ -3161,21 +3161,21 @@ function import_ics_via_fopen( $uri , $force_http = true , $user_uri = '' )
 {
 	if( strlen( $uri ) < 5 ) return "-1:" ;
 	$user_uri = empty( $user_uri ) ? '' : $uri ;
-	// webcal://* ã‚‚ connectionæœªæŒ‡å®šã‚‚ã€ã™ã¹ã¦ http://* ã«çµ±ä¸€
+	// webcal://* ¤â connectionÌ¤»ØÄê¤â¡¢¤¹¤Ù¤Æ http://* ¤ËÅı°ì
 	$uri = str_replace( "webcal://" , "http://" , $uri ) ;
 
 	if( $force_http ) {
 		if( substr( $uri , 0 , 7 ) != 'http://' ) $uri = "http://" . $uri ;
 	}
 
-	// iCal parser ã«ã‚ˆã‚‹å‡¦ç†
+	// iCal parser ¤Ë¤è¤ë½èÍı
 	include_once "$this->base_path/class/iCal_parser.php" ;
 	$ical = new iCal_parser() ;
 	$ical->language = $this->language ;
 	$ical->timezone = ( $this->server_TZ >= 0 ? "+" : "-" ) . sprintf( "%02d%02d" , abs( $this->server_TZ ) , abs( $this->server_TZ ) * 60 % 60 ) ;
 	list( $ret_code , $message , $filename ) = explode( ":" , $ical->parse( $uri , $user_uri ) , 3 ) ;
 	if( $ret_code != 0 ) {
-		// ãƒ‘ãƒ¼ã‚¹å¤±æ•—ãªã‚‰-1ã¨ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¿”ã™
+		// ¥Ñ¡¼¥¹¼ºÇÔ¤Ê¤é-1¤È¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÊÖ¤¹
 		return "-1: $message : $filename" ;
 	}
 	$setsqls = $ical->output_setsqls() ;
@@ -3197,14 +3197,14 @@ function import_ics_via_fopen( $uri , $force_http = true , $user_uri = '' )
 
 function import_ics_via_upload( $userfile )
 {
-	// icsãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãƒã‚·ãƒ³ã‹ã‚‰ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã—ã¦èª­è¾¼ã¿
+	// ics¥Õ¥¡¥¤¥ë¤ò¥¯¥é¥¤¥¢¥ó¥È¥Ş¥·¥ó¤«¤é¥¢¥Ã¥×¥í¡¼¥É¤·¤ÆÆÉ¹ş¤ß
 	include_once "$this->base_path/class/iCal_parser.php" ;
 	$ical = new iCal_parser() ;
 	$ical->language = $this->language ;
 	$ical->timezone = ( $this->server_TZ >= 0 ? "+" : "-" ) . sprintf( "%02d%02d" , abs( $this->server_TZ ) , abs( $this->server_TZ ) * 60 % 60 ) ;
 	list( $ret_code , $message , $filename ) = explode( ":" , $ical->parse( $_FILES[ $userfile ][ 'tmp_name' ] , $_FILES[ $userfile ][ 'name' ] ) , 3 ) ;
 	if( $ret_code != 0 ) {
-		// ãƒ‘ãƒ¼ã‚¹å¤±æ•—ãªã‚‰-1ã¨ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¿”ã™
+		// ¥Ñ¡¼¥¹¼ºÇÔ¤Ê¤é-1¤È¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÊÖ¤¹
 		return "-1: $message : $filename" ;
 	}
 	$setsqls = $ical->output_setsqls() ;
@@ -3224,13 +3224,13 @@ function import_ics_via_upload( $userfile )
 
 
 
-// ï¼‘ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’èª­ã¿è¾¼ã¿å¾Œã«è¡Œã†å‡¦ç† ï¼ˆrruleã®å±•é–‹ã€categoriesã®cidåŒ–ãªã©ï¼‰
+// £±¥ì¥³¡¼¥É¤òÆÉ¤ß¹ş¤ß¸å¤Ë¹Ô¤¦½èÍı ¡Êrrule¤ÎÅ¸³«¡¢categories¤Îcid²½¤Ê¤É¡Ë
 function update_record_after_import( $event_id )
 {
 	$rs = mysql_query( "SELECT categories,rrule FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
 	$event = mysql_fetch_object( $rs ) ;
 
-	// categories ã® cidåŒ– ( '\,' -> ',' ã¯Outlookå¯¾ç­–)
+	// categories ¤Î cid²½ ( '\,' -> ',' ¤ÏOutlookÂĞºö)
 	$event->categories = str_replace( '\,' , ',' , $event->categories ) ;
 	$cat_names = explode( ',' , $event->categories ) ;
 	for( $i = 0 ; $i < sizeof( $cat_names ) ; $i ++ ) {
@@ -3243,32 +3243,32 @@ function update_record_after_import( $event_id )
 		}
 	}
 
-	// rrule_pid ã®å‡¦ç†
+	// rrule_pid ¤Î½èÍı
 	$rrule_pid = $event->rrule ? $event_id : 0 ;
 
-	// ãƒ¬ã‚³ãƒ¼ãƒ‰æ›´æ–°
+	// ¥ì¥³¡¼¥É¹¹¿·
 	mysql_query( "UPDATE $this->table SET categories='$categories',rrule_pid='$rrule_pid' WHERE id='$event_id'" , $this->conn ) ;
 
-	// RRULEã‹ã‚‰ã€å­ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å±•é–‹
+	// RRULE¤«¤é¡¢»Ò¥ì¥³¡¼¥É¤òÅ¸³«
 	if( $event->rrule != '' ) {
 		$this->rrule_extract( $event_id ) ;
 	}
 
-	// GIJ TODO category ã®è‡ªå‹•ç™»éŒ² class,groupid ã®å‡¦ç†
+	// GIJ TODO category ¤Î¼«Æ°ÅĞÏ¿ class,groupid ¤Î½èÍı
 }
 
 
 /*******************************************************************/
-/*        RRULE å‡¦ç†é–¢æ•°                                           */
+/*        RRULE ½èÍı´Ø¿ô                                           */
 /*******************************************************************/
 
-// rruleã‚’è‡ªç„¶è¨€èªã«ç¿»è¨³ã™ã‚‹ã‚¯ãƒ©ã‚¹é–¢æ•°
+// rrule¤ò¼«Á³¸À¸ì¤ËËİÌõ¤¹¤ë¥¯¥é¥¹´Ø¿ô
 function rrule_to_human_language( $rrule )
 {
 	$rrule = trim( $rrule ) ;
 	if( $rrule == '' ) return '' ;
 
-	// rrule ã®å„è¦ç´ ã‚’å¤‰æ•°ã«å±•é–‹
+	// rrule ¤Î³ÆÍ×ÁÇ¤òÊÑ¿ô¤ËÅ¸³«
 	$rrule = strtoupper( $rrule ) ;
 //HACK by domifara for php5.3+
 //	$rules = split( ';' , $rrule ) ;
@@ -3282,7 +3282,7 @@ function rrule_to_human_language( $rrule )
 	if( empty( $FREQ ) ) $FREQ = 'DAILY' ;
 	if( empty( $INTERVAL ) || $INTERVAL <= 0 ) $INTERVAL = 1 ;
 
-	// é »åº¦æ¡ä»¶è§£æ
+	// ÉÑÅÙ¾ò·ï²òÀÏ
 	$ret_freq = '' ;
 	$ret_day = '' ;
 	switch( $FREQ ) {
@@ -3291,7 +3291,7 @@ function rrule_to_human_language( $rrule )
 			else $ret_freq = sprintf( _PICAL_RR_PERDAY , $INTERVAL ) ;
 			break ;
 		case 'WEEKLY' :
-			if( empty( $BYDAY ) ) break ;	// BYDAY å¿…é ˆ
+			if( empty( $BYDAY ) ) break ;	// BYDAY É¬¿Ü
 			$ret_day = strtr( $BYDAY , $this->byday2langday_w ) ;
 			if( $INTERVAL == 1 ) $ret_freq = _PICAL_RR_EVERYWEEK ;
 			else $ret_freq = sprintf( _PICAL_RR_PERWEEK , $INTERVAL ) ;
@@ -3307,7 +3307,7 @@ function rrule_to_human_language( $rrule )
 			} else if( isset( $BYDAY ) ) {
 				$ret_day = strtr( $BYDAY , $this->byday2langday_m ) ;
 			} else {
-				break ;		// BYDAY ã¾ãŸã¯ BYMONTHDAY å¿…é ˆ
+				break ;		// BYDAY ¤Ş¤¿¤Ï BYMONTHDAY É¬¿Ü
 			}
 			if( $INTERVAL == 1 ) $ret_freq = _PICAL_RR_EVERYMONTH ;
 			else $ret_freq = sprintf( _PICAL_RR_PERMONTH , $INTERVAL ) ;
@@ -3329,13 +3329,13 @@ function rrule_to_human_language( $rrule )
 			break ;
 	}
 
-	// çµ‚äº†æ¡ä»¶è§£æ
+	// ½ªÎ»¾ò·ï²òÀÏ
 	$ret_terminator = '' ;
-	// UNTIL ã¨ COUNT ã®ä¸¡æ–¹ãŒã‚ã‚‹æ™‚ã¯ COUNT å„ªå…ˆ
+	// UNTIL ¤È COUNT ¤ÎÎ¾Êı¤¬¤¢¤ë»ş¤Ï COUNT Í¥Àè
 	if( isset( $COUNT ) && $COUNT > 0 ) {
 		$ret_terminator = sprintf( _PICAL_RR_COUNT , $COUNT ) ;
 	} else if( isset( $UNTIL ) ) {
-		// UNTIL ã¯ã€å…¨æ—¥æ¡ä»¶ã§ã‚ã‚‹ã¨ç„¡æ¡ä»¶ã§è¦‹ãªã™
+		// UNTIL ¤Ï¡¢Á´Æü¾ò·ï¤Ç¤¢¤ë¤ÈÌµ¾ò·ï¤Ç¸«¤Ê¤¹
 		$year = substr( $UNTIL , 0 , 4 ) ;
 		$month = substr( $UNTIL , 4 , 2 ) ;
 		$date = substr( $UNTIL , 6 , 2 ) ;
@@ -3347,10 +3347,10 @@ function rrule_to_human_language( $rrule )
 
 
 
-// rruleã‚’ç·¨é›†ç”¨ãƒ•ã‚©ãƒ¼ãƒ ã«å±•é–‹ã™ã‚‹ã‚¯ãƒ©ã‚¹é–¢æ•°
+// rrule¤òÊÔ½¸ÍÑ¥Õ¥©¡¼¥à¤ËÅ¸³«¤¹¤ë¥¯¥é¥¹´Ø¿ô
 function rrule_to_form( $rrule , $until_init )
 {
-	// å„åˆæœŸå€¤ã®è¨­å®š
+	// ³Æ½é´üÃÍ¤ÎÀßÄê
 	$norrule_checked = '' ;
 	$daily_checked = '' ;
 	$weekly_checked = '' ;
@@ -3374,7 +3374,7 @@ function rrule_to_form( $rrule , $until_init )
 		$norrule_checked = "checked='checked'" ;
 	} else {
 
-		// rrule ã®å„è¦ç´ ã‚’å¤‰æ•°ã«å±•é–‹
+		// rrule ¤Î³ÆÍ×ÁÇ¤òÊÑ¿ô¤ËÅ¸³«
 		$rrule = strtoupper( $rrule ) ;
 //HACK by domifara for php5.3+
 //		$rules = split( ';' , $rrule ) ;
@@ -3388,14 +3388,14 @@ function rrule_to_form( $rrule , $until_init )
 		if( empty( $FREQ ) ) $FREQ = 'DAILY' ;
 		if( empty( $INTERVAL ) || $INTERVAL <= 0 ) $INTERVAL = 1 ;
 
-		// é »åº¦æ¡ä»¶è§£æ
+		// ÉÑÅÙ¾ò·ï²òÀÏ
 		switch( $FREQ ) {
 			case 'DAILY' :
 				$daily_interval_init = $INTERVAL ;
 				$daily_checked = "checked='checked'" ;
 				break ;
 			case 'WEEKLY' :
-				if( empty( $BYDAY ) ) break ;	// BYDAY å¿…é ˆ
+				if( empty( $BYDAY ) ) break ;	// BYDAY É¬¿Ü
 				$weekly_interval_init = $INTERVAL ;
 				$weekly_checked = "checked='checked'" ;
 				$wdays = explode( ',' , $BYDAY , 7 ) ;
@@ -3409,7 +3409,7 @@ function rrule_to_form( $rrule , $until_init )
 				} else if( isset( $BYMONTHDAY ) ) {
 					$bymonthday_init = $BYMONTHDAY ;
 				} else {
-					break ;	// BYDAY ã¾ãŸã¯ BYMONTHDAY å¿…é ˆ
+					break ;	// BYDAY ¤Ş¤¿¤Ï BYMONTHDAY É¬¿Ü
 				}
 				$monthly_interval_init = $INTERVAL ;
 				$monthly_checked = "checked='checked'" ;
@@ -3427,35 +3427,35 @@ function rrule_to_form( $rrule , $until_init )
 				break ;
 		}
 
-		// çµ‚äº†æ¡ä»¶è§£æ
-		// UNTIL ã¨ COUNT ã®ä¸¡æ–¹ãŒã‚ã‚‹æ™‚ã¯ COUNT å„ªå…ˆ
+		// ½ªÎ»¾ò·ï²òÀÏ
+		// UNTIL ¤È COUNT ¤ÎÎ¾Êı¤¬¤¢¤ë»ş¤Ï COUNT Í¥Àè
 		if( isset( $COUNT ) && $COUNT > 0 ) {
 			$count_init = $COUNT ;
 			$count_checked = "checked='checked'" ;
 		} else if( isset( $UNTIL ) ) {
-			// UNTIL ã¯ã€å…¨æ—¥ãƒ‡ãƒ¼ã‚¿ã§ã‚ã‚‹ã¨ç„¡æ¡ä»¶ã§è¦‹ãªã™
+			// UNTIL ¤Ï¡¢Á´Æü¥Ç¡¼¥¿¤Ç¤¢¤ë¤ÈÌµ¾ò·ï¤Ç¸«¤Ê¤¹
 			$year = substr( $UNTIL , 0 , 4 ) ;
 			$month = substr( $UNTIL , 4 , 2 ) ;
 			$date = substr( $UNTIL , 6 , 2 ) ;
 			$until_init = "$year-$month-$date" ;
 			$until_checked = "checked='checked'" ;
 		} else {
-			// ä¸¡è€…ã¨ã‚‚æŒ‡å®šãŒãªã‘ã‚Œã°ã€çµ‚äº†æ¡ä»¶ãªã—
+			// Î¾¼Ô¤È¤â»ØÄê¤¬¤Ê¤±¤ì¤Ğ¡¢½ªÎ»¾ò·ï¤Ê¤·
 			$noterm_checked = "checked='checked'" ;
 		}
 
 	}
 
-	// UNTIL ã‚’æŒ‡å®šã™ã‚‹ãŸã‚ã®ãƒœãƒƒã‚¯ã‚¹
+	// UNTIL ¤ò»ØÄê¤¹¤ë¤¿¤á¤Î¥Ü¥Ã¥¯¥¹
 	$textbox_until = $this->get_formtextdateselect( 'rrule_until' , $until_init ) ;
 
-	// æ›œæ—¥é¸æŠãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®å±•é–‹
+	// ÍËÆüÁªÂò¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÅ¸³«
 	$wdays_checkbox = '' ;
 	foreach( $this->byday2langday_w as $key => $val ) {
 		$wdays_checkbox .= "<input type='checkbox' name='rrule_weekly_bydays[]' value='$key' {$wdays_checked[$key]} />$val &nbsp; \n" ;
 	}
 
-	// æœˆé¸æŠãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®å±•é–‹
+	// ·îÁªÂò¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÅ¸³«
 	$bymonth_checkbox = "<table border='0' cellpadding='2'><tr>\n" ;
 	foreach( $bymonths_checked as $key => $val ) {
 		$bymonth_checkbox .= "<td><input type='checkbox' name='rrule_bymonths[]' value='$key' $val />{$this->month_short_names[$key]}</td>\n" ;
@@ -3463,7 +3463,7 @@ function rrule_to_form( $rrule , $until_init )
 	}
 	$bymonth_checkbox .= "</tr></table>\n" ;
 
-	// ç¬¬Næ›œæ—¥é¸æŠOPTIONã®å±•é–‹
+	// ÂèNÍËÆüÁªÂòOPTION¤ÎÅ¸³«
 	$byday_m_options = '' ;
 	foreach( $this->byday2langday_m as $key => $val ) {
 		if( $byday_m_init == $key ) {
@@ -3518,13 +3518,13 @@ function rrule_to_form( $rrule , $until_init )
 
 
 
-// POSTã•ã‚ŒãŸrruleé–¢é€£ã®è¨­å®šå€¤ã‚’ã€RRULEæ–‡å­—åˆ—ã«çµ„ã¿ä¸Šã’ã‚‹ã‚¯ãƒ©ã‚¹é–¢æ•°
+// POST¤µ¤ì¤¿rrule´ØÏ¢¤ÎÀßÄêÃÍ¤ò¡¢RRULEÊ¸»úÎó¤ËÁÈ¤ß¾å¤²¤ë¥¯¥é¥¹´Ø¿ô
 function rrule_from_post( $start , $allday_flag )
 {
-	// ç¹°ã‚Šè¿”ã—ç„¡ã—ãªã‚‰ã€ç„¡æ¡ä»¶ã§ç©ºæ–‡å­—åˆ—ã‚’è¿”ã™
+	// ·«¤êÊÖ¤·Ìµ¤·¤Ê¤é¡¢Ìµ¾ò·ï¤Ç¶õÊ¸»úÎó¤òÊÖ¤¹
 	if( $_POST['rrule_freq'] == 'none' ) return '' ;
 
-	// é »åº¦æ¡ä»¶
+	// ÉÑÅÙ¾ò·ï
 	switch( strtoupper( $_POST['rrule_freq'] ) ) {
 		case 'DAILY' :
 			$ret_freq = "FREQ=DAILY;INTERVAL=" . abs( intval( $_POST['rrule_daily_interval'] ) ) ;
@@ -3532,7 +3532,7 @@ function rrule_from_post( $start , $allday_flag )
 		case 'WEEKLY' :
 			$ret_freq = "FREQ=WEEKLY;INTERVAL=" . abs( intval( $_POST['rrule_weekly_interval'] ) ) ;
 			if( empty( $_POST['rrule_weekly_bydays'] ) ) {
-				// æ›œæ—¥ã®æŒ‡å®šãŒä¸€ã¤ã‚‚ãªã‘ã‚Œã°ã€é–‹å§‹æ—¥ã¨åŒã˜æ›œæ—¥ã«ã™ã‚‹
+				// ÍËÆü¤Î»ØÄê¤¬°ì¤Ä¤â¤Ê¤±¤ì¤Ğ¡¢³«»ÏÆü¤ÈÆ±¤¸ÍËÆü¤Ë¤¹¤ë
 				$bydays = array_keys( $this->byday2langday_w ) ;
 				$byday = $bydays[ date( 'w' , $start ) ] ;
 			} else {
@@ -3548,22 +3548,22 @@ function rrule_from_post( $start , $allday_flag )
 		case 'MONTHLY' :
 			$ret_freq = "FREQ=MONTHLY;INTERVAL=" . abs( intval( $_POST['rrule_monthly_interval'] ) ) ;
 			if( $_POST['rrule_monthly_byday'] != '' ) {
-				// ç¬¬Næ›œæ—¥ã«ã‚ˆã‚‹æŒ‡å®š
+				// ÂèNÍËÆü¤Ë¤è¤ë»ØÄê
 				$byday = substr( trim( $_POST['rrule_monthly_byday'] ) , 0 , 4 ) ;				if( preg_match( '/[^\w-]+/' , $byday ) ) die( "Some injection was tried" ) ;
 				$ret_freq .= ";BYDAY=$byday" ;
 			} else if( $_POST['rrule_bymonthday'] != '' ) {
-				// æ—¥ä»˜ã«ã‚ˆã‚‹æŒ‡å®š
+				// ÆüÉÕ¤Ë¤è¤ë»ØÄê
 				$bymonthday = preg_replace( '/[^0-9,]+/' , '' , $_POST['rrule_bymonthday'] ) ;
 				$ret_freq .= ";BYMONTHDAY=$bymonthday" ;
 			} else {
-				// ç¬¬Næ›œæ—¥ã‚„æ—¥ä»˜ã®æŒ‡å®šãŒãªã‘ã‚Œã°ã€é–‹å§‹æ—¥ã¨åŒã˜æ—¥ä»˜ã¨ã™ã‚‹
+				// ÂèNÍËÆü¤äÆüÉÕ¤Î»ØÄê¤¬¤Ê¤±¤ì¤Ğ¡¢³«»ÏÆü¤ÈÆ±¤¸ÆüÉÕ¤È¤¹¤ë
 				$ret_freq .= ";BYMONTHDAY=" . date( 'j' , $start ) ;
 			}
 			break ;
 		case 'YEARLY' :
 			$ret_freq = "FREQ=YEARLY;INTERVAL=" . abs( intval( $_POST['rrule_yearly_interval'] ) ) ;
 			if( empty( $_POST['rrule_bymonths'] ) ) {
-				// æœˆã®æŒ‡å®šãŒä¸€ã¤ã‚‚ãªã‘ã‚Œã°ã€é–‹å§‹æ—¥ã¨åŒã˜æœˆã«ã™ã‚‹
+				// ·î¤Î»ØÄê¤¬°ì¤Ä¤â¤Ê¤±¤ì¤Ğ¡¢³«»ÏÆü¤ÈÆ±¤¸·î¤Ë¤¹¤ë
 				$bymonth = date( 'n' , $start ) ;
 			} else {
 				$bymonth = '' ;
@@ -3573,7 +3573,7 @@ function rrule_from_post( $start , $allday_flag )
 				$bymonth = substr( $bymonth , 0 , -1 ) ;
 			}
 			if( $_POST['rrule_yearly_byday'] != '' ) {
-				// ç¬¬Næ›œæ—¥ã«ã‚ˆã‚‹æŒ‡å®š
+				// ÂèNÍËÆü¤Ë¤è¤ë»ØÄê
 				$byday = substr( trim( $_POST['rrule_yearly_byday'] ) , 0 , 4 ) ;
 				if( preg_match( '/[^\w-]+/' , $byday ) ) die( "Some injection was tried" ) ;
 				$ret_freq .= ";BYDAY=$byday" ;
@@ -3584,21 +3584,21 @@ function rrule_from_post( $start , $allday_flag )
 			return '' ;
 	}
 
-	// çµ‚äº†æ¡ä»¶
+	// ½ªÎ»¾ò·ï
 	if( empty( $_POST['rrule_terminator'] ) ) $_POST['rrule_terminator'] = '' ;
 	switch( strtoupper( $_POST['rrule_terminator'] ) ) {
 		case 'COUNT' :
 			$ret_term = ';COUNT=' . abs( intval( $_POST['rrule_count'] ) ) ;
 			break ;
 		case 'UNTIL' :
-			// UNTILã®UnixtimeåŒ–
+			// UNTIL¤ÎUnixtime²½
 			list( $until , $until_date , $use_default ) = $this->parse_posted_date( $this->mb_convert_kana( $_POST[ 'rrule_until' ] , "a" ) , $this->unixtime ) ;
-			// 1970ä»¥å‰ãƒ»2038å¹´ä»¥é™ãªã‚‰ã€UNTILç„¡åŠ¹
+			// 1970°ÊÁ°¡¦2038Ç¯°Ê¹ß¤Ê¤é¡¢UNTILÌµ¸ú
 			if( $until_date ) {
 				$ret_term = '' ;
 			} else {
 				if( ! $allday_flag ) {
-					// å…¨æ—¥ã‚¤ãƒ™ãƒ³ãƒˆã§ãªã‘ã‚Œã°åŒæ—¥ã®23:59:59ã‚’çµ‚äº†æ™‚åˆ»ã¨è¦‹ãªã—ã¦ã€ UTC ã¸æ™‚å·®è¨ˆç®—ã™ã‚‹
+					// Á´Æü¥¤¥Ù¥ó¥È¤Ç¤Ê¤±¤ì¤ĞÆ±Æü¤Î23:59:59¤ò½ªÎ»»ş¹ï¤È¸«¤Ê¤·¤Æ¡¢ UTC ¤Ø»şº¹·×»»¤¹¤ë
 					$event_tz = isset( $_POST['event_tz'] ) ? $_POST['event_tz'] : $this->user_TZ ;
 					$until = $until - intval( $event_tz * 3600 ) + 86400 - 1 ;
 				}
@@ -3611,14 +3611,14 @@ function rrule_from_post( $start , $allday_flag )
 			break ;
 	}
 
-	// WKSTã¯ã€è‡ªå‹•ã§å…¥ã‚Œã‚‹
+	// WKST¤Ï¡¢¼«Æ°¤ÇÆş¤ì¤ë
 	$ret_wkst = $this->week_start ? ';WKST=MO' : ';WKST=SU' ;
 
 	return $ret_freq . $ret_term . $ret_wkst ;
 }
 
 
-// æ¸¡ã•ã‚ŒãŸevent_idã‚’åˆå›(è¦ª)ã¨ã—ã¦ã€RRULEã‚’å±•é–‹ã—ã¦ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«åæ˜ 
+// ÅÏ¤µ¤ì¤¿event_id¤ò½é²ó(¿Æ)¤È¤·¤Æ¡¢RRULE¤òÅ¸³«¤·¤Æ¥Ç¡¼¥¿¥Ù¡¼¥¹¤ËÈ¿±Ç
 function rrule_extract( $event_id )
 {
 	$yrs = mysql_query( "SELECT *,TO_DAYS(end_date)-TO_DAYS(start_date) AS date_diff FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
@@ -3627,7 +3627,7 @@ function rrule_extract( $event_id )
 
 	if( $event->rrule == '' ) return ;
 
-	// rrule ã®å„è¦ç´ ã‚’å¤‰æ•°ã«å±•é–‹
+	// rrule ¤Î³ÆÍ×ÁÇ¤òÊÑ¿ô¤ËÅ¸³«
 	$rrule = strtoupper( $event->rrule ) ;
 //HACK by domifara for php5.3+
 //	$rules = split( ';' , $rrule ) ;
@@ -3638,11 +3638,11 @@ function rrule_extract( $event_id )
 		$$key = trim( $val ) ;
 	}
 
-	// æ™‚å·®ã«ã‚ˆã£ã¦ã€RRULEã®æ—¥ä»˜æŒ‡å®šãŒã©ã†ç½®ãæ›ã‚ã‚‹ã‹ã®è¨ˆç®—
+	// »şº¹¤Ë¤è¤Ã¤Æ¡¢RRULE¤ÎÆüÉÕ»ØÄê¤¬¤É¤¦ÃÖ¤­´¹¤ï¤ë¤«¤Î·×»»
 	if( $event->allday ) {
 		$tzoffset_date = 0 ;
 	} else {
-		// ã‚¤ãƒ™ãƒ³ãƒˆè‡ªèº«ã®TZã§å±•é–‹ã™ã‚‹
+		// ¥¤¥Ù¥ó¥È¼«¿È¤ÎTZ¤ÇÅ¸³«¤¹¤ë
 		$tzoffset_s2e = intval( ( $event->event_tz - $this->server_TZ ) * 3600 ) ;
 		$tzoffset_date = date( 'z' , $event->start + $tzoffset_s2e ) - date( 'z' , $event->start ) ;
 		if( $tzoffset_date > 1 ) $tzoffset_date = -1 ;
@@ -3652,18 +3652,18 @@ function rrule_extract( $event_id )
 	if( empty( $FREQ ) ) $FREQ = 'DAILY' ;
 	if( empty( $INTERVAL ) || $INTERVAL <= 0 ) $INTERVAL = 1 ;
 
-	// ãƒ™ãƒ¼ã‚¹ã¨ãªã‚‹SQLæ–‡
+	// ¥Ù¡¼¥¹¤È¤Ê¤ëSQLÊ¸
 	$base_sql = "INSERT INTO $this->table SET uid='$event->uid',groupid='$event->groupid',summary='".addslashes($event->summary)."',location='".addslashes($event->location)."',organizer='".addslashes($event->organizer)."',sequence='$event->sequence',contact='".addslashes($event->contact)."',tzid='$event->tzid',description='".addslashes($event->description)."',dtstamp='$event->dtstamp',categories='".addslashes($event->categories)."',transp='$event->transp',priority='$event->priority',admission='$event->admission',class='$event->class',rrule='".addslashes($event->rrule)."',unique_id='$event->unique_id',allday='$event->allday',start_date=null,end_date=null,cid='$event->cid',event_tz='$event->event_tz',server_tz='$event->server_tz',poster_tz='$event->poster_tz',extkey0='$event->extkey0',extkey1='$event->extkey1',rrule_pid='$event_id'" ;
 
-	// çµ‚äº†æ¡ä»¶è§£æ
-	// ã‚«ã‚¦ãƒ³ãƒˆ
+	// ½ªÎ»¾ò·ï²òÀÏ
+	// ¥«¥¦¥ó¥È
 	$count = $this->max_rrule_extract ;
 	if( isset( $COUNT ) && $COUNT > 0 && $COUNT < $count ) {
 		$count = $COUNT ;
 	}
-	// å±•é–‹çµ‚äº†æ—¥
+	// Å¸³«½ªÎ»Æü
 	if( isset( $UNTIL ) ) {
-		// UNTIL ã¯ã€å…¨æ—¥æ¡ä»¶ã§ã‚ã‚‹ã¨ç„¡æ¡ä»¶ã§è¦‹ãªã™
+		// UNTIL ¤Ï¡¢Á´Æü¾ò·ï¤Ç¤¢¤ë¤ÈÌµ¾ò·ï¤Ç¸«¤Ê¤¹
 		$year = substr( $UNTIL , 0 , 4 ) ;
 		$month = substr( $UNTIL , 4 , 2 ) ;
 		$date = substr( $UNTIL , 6 , 2 ) ;
@@ -3671,9 +3671,9 @@ function rrule_extract( $event_id )
 		else {
 			$until = gmmktime( 23 , 59 , 59 , $month , $date , $year , 0 ) ;
 			if( ! $event->allday ) {
-				// ã‚µãƒ¼ãƒæ™‚é–“ã¨ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“ã§æ—¥ä»˜ãŒç•°ãªã‚‹å ´åˆã«ã¯UNTILã‚‚ãšã‚‰ã™
+				// ¥µ¡¼¥Ğ»ş´Ö¤È¥¤¥Ù¥ó¥È»ş´Ö¤ÇÆüÉÕ¤¬°Û¤Ê¤ë¾ì¹ç¤Ë¤ÏUNTIL¤â¤º¤é¤¹
 				$until -= intval( $tzoffset_date * 86400 ) ;
-				// UTC -> server_TZ ã®æ™‚å·®è¨ˆç®—ã¯è¡Œã‚ãªã„
+				// UTC -> server_TZ ¤Î»şº¹·×»»¤Ï¹Ô¤ï¤Ê¤¤
 				// $until -= intval( $this->server_TZ * 3600 ) ;
 			}
 		}
@@ -3682,22 +3682,22 @@ function rrule_extract( $event_id )
 	// WKST
 	if( empty( $WKST ) ) $WKST = 'MO' ;
 
-	// UnixTimestampç¯„å›²å¤–ã®å‡¦ç†
+	// UnixTimestampÈÏ°Ï³°¤Î½èÍı
 	if( isset( $event->start_date ) ) {
-		// é–‹å§‹ã‚„çµ‚äº†ãŒ2038å¹´ä»¥é™ãªã‚‰å±•é–‹ã—ãªã„
+		// ³«»Ï¤ä½ªÎ»¤¬2038Ç¯°Ê¹ß¤Ê¤éÅ¸³«¤·¤Ê¤¤
 		if( date( 'Y' , $event->start ) >= 2038 ) return ;
 		if( date( 'Y' , $event->end ) >= 2038 ) return ;
 
-		// 1971å¹´ã®åŒæœˆåŒæ—¥ã‚’å±•é–‹ãƒ™ãƒ¼ã‚¹ã®startã¨ã™ã‚‹
+		// 1971Ç¯¤ÎÆ±·îÆ±Æü¤òÅ¸³«¥Ù¡¼¥¹¤Îstart¤È¤¹¤ë
 		$event->start = mktime( 0 , 0 , 0 , substr( $event->start_date , 5 , 2 ) , substr( $event->start_date , 8 , 2 ) , 1970 + 1 ) ;
 
-		// endã‚‚1970ä»¥å‰ãªã‚‰ã€å·®ã‚’ã¨ã£ã¦åæ˜ ã€‚ãã†ã§ãªã„å ´åˆã¯ã¨ã‚Šã‚ãˆãšæ”¾ç½® TODO
+		// end¤â1970°ÊÁ°¤Ê¤é¡¢º¹¤ò¤È¤Ã¤ÆÈ¿±Ç¡£¤½¤¦¤Ç¤Ê¤¤¾ì¹ç¤Ï¤È¤ê¤¢¤¨¤ºÊüÃÖ TODO
 		if( isset( $event->end_date ) ) {
 			$event->end = $event->start + ( $event->date_diff + 1 ) * 86400 ;
 		}
 	}
 
-	// é »åº¦æ¡ä»¶è§£æ
+	// ÉÑÅÙ¾ò·ï²òÀÏ
 	$sqls = array() ;
 	switch( $FREQ ) {
 		case 'DAILY' :
@@ -3723,7 +3723,7 @@ function rrule_extract( $event_id )
 			$year = gmdate( 'Y' , $gmstart ) ;
 			$week_top = gmmktime( 0 , 0 , 0 , $month , $wtop_date , $year ) ;
 			$c = 1 ;
-			// æ•°å€¤åŒ–æ›œæ—¥é…åˆ—ã®ä½œæˆ
+			// ¿ôÃÍ²½ÍËÆüÇÛÎó¤ÎºîÀ®
 			$temp_dates = explode( ',' , $BYDAY ) ;
 			$wdays = array_keys( $this->byday2langday_w ) ;
 			if( $WKST != 'SU' ) {
@@ -3743,7 +3743,7 @@ function rrule_extract( $event_id )
 			if( ! count( $dates ) ) return ;
 			while( 1 ) {
 				foreach( $dates as $date ) {
-					// ã‚µãƒ¼ãƒæ™‚é–“ã¨ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“ã§æ›œæ—¥ãŒç•°ãªã‚‹å ´åˆã®å‡¦ç†è¿½åŠ 
+					// ¥µ¡¼¥Ğ»ş´Ö¤È¥¤¥Ù¥ó¥È»ş´Ö¤ÇÍËÆü¤¬°Û¤Ê¤ë¾ì¹ç¤Î½èÍıÄÉ²Ã
 					$gmstart = $week_top + ( $date - $tzoffset_date ) * 86400 + $secondofday ;
 					if( $gmstart <= $gmstartbase ) continue ;
 					$gmend = $gmstart + $duration ;
@@ -3767,23 +3767,23 @@ function rrule_extract( $event_id )
 //HACK by domifara for php5.3+
 //			if( isset( $BYDAY ) && ereg( '^(-1|[1-4])(SU|MO|TU|WE|TH|FR|SA)' , $BYDAY , $regs ) ) {
 			if( isset( $BYDAY ) && preg_match( '/^(-1|[1-4])(SU|MO|TU|WE|TH|FR|SA)/i' , $BYDAY , $regs ) ) {
-				// ç¬¬Næ›œæ—¥æŒ‡å®š(BYDAY)ã®å ´åˆï¼ˆè¤‡æ•°ä¸å¯ï¼‰
-				// ç›®çš„ã®æ›œæ—¥ç•ªå·ã‚’å–å¾—
+				// ÂèNÍËÆü»ØÄê(BYDAY)¤Î¾ì¹ç¡ÊÊ£¿ôÉÔ²Ä¡Ë
+				// ÌÜÅª¤ÎÍËÆüÈÖ¹æ¤ò¼èÆÀ
 				$wdays = array_keys( $this->byday2langday_w ) ;
 				$wday = array_search( $regs[2] , $wdays ) ;
 				$first_ymw = gmdate( 'Ym' , $gmstart ) . intval( ( gmdate( 'j' , $gmstart ) - 1 ) / 7 ) ;
 				if( $regs[1] == -1 ) {
-					// æœ€çµ‚é€±æŒ‡å®šã®å ´åˆã®ãƒ«ãƒ¼ãƒ—
+					// ºÇ½ª½µ»ØÄê¤Î¾ì¹ç¤Î¥ë¡¼¥×
 					$monthday_bottom = gmmktime( 0 , 0 , 0 , $month , 0 , $year ) ;
 					while( 1 ) {
 						for( $i = 0 ; $i < $INTERVAL ; $i ++ ) {
 							$monthday_bottom += gmdate( 't' , $monthday_bottom + 86400 ) * 86400 ;
 						}
-						// æœ€çµ‚æ—¥ã®æ›œæ—¥ã‚’èª¿ã¹ã‚‹
+						// ºÇ½ªÆü¤ÎÍËÆü¤òÄ´¤Ù¤ë
 						$last_monthdays_wday = gmdate( 'w' , $monthday_bottom ) ;
 						$date_back = $wday - $last_monthdays_wday ;
 						if( $date_back > 0 ) $date_back -= 7 ;
-						// ã‚µãƒ¼ãƒæ™‚é–“ã¨ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“ã§æ›œæ—¥ãŒç•°ãªã‚‹å ´åˆã®å‡¦ç†è¿½åŠ 
+						// ¥µ¡¼¥Ğ»ş´Ö¤È¥¤¥Ù¥ó¥È»ş´Ö¤ÇÍËÆü¤¬°Û¤Ê¤ë¾ì¹ç¤Î½èÍıÄÉ²Ã
 						$gmstart = $monthday_bottom + ( $date_back - $tzoffset_date ) * 86400 + $secondofday ;
 						if( $gmstart <= $gmstartbase ) continue ;
 						$gmend = $gmstart + $duration ;
@@ -3792,18 +3792,18 @@ function rrule_extract( $event_id )
 						$sqls[] = $base_sql . ",start=UNIX_TIMESTAMP('".gmdate("Y-m-d H:i:s", $gmstart)."'),end=UNIX_TIMESTAMP('".gmdate("Y-m-d H:i:s", $gmend)."')";
 					}
 				} else {
-					// ç¬¬Né€±æŒ‡å®šã®å ´åˆã®ãƒ«ãƒ¼ãƒ—
+					// ÂèN½µ»ØÄê¤Î¾ì¹ç¤Î¥ë¡¼¥×
 					$monthday_top = gmmktime( 0 , 0 , 0 , $month , 1 , $year ) ;
 					$week_number_offset = ( $regs[1] - 1 ) * 7 * 86400 ;
 					while( 1 ) {
 						for( $i = 0 ; $i < $INTERVAL ; $i ++ ) {
 							$monthday_top += gmdate( 't' , $monthday_top ) * 86400 ;
 						}
-						// ç¬¬Né€±åˆæ—¥ã®æ›œæ—¥ã‚’èª¿ã¹ã‚‹
+						// ÂèN½µ½éÆü¤ÎÍËÆü¤òÄ´¤Ù¤ë
 						$week_numbers_top_wday = gmdate( 'w' , $monthday_top + $week_number_offset ) ;
 						$date_ahead = $wday - $week_numbers_top_wday ;
 						if( $date_ahead < 0 ) $date_ahead += 7 ;
-						// ã‚µãƒ¼ãƒæ™‚é–“ã¨ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“ã§æ›œæ—¥ãŒç•°ãªã‚‹å ´åˆã®å‡¦ç†è¿½åŠ 
+						// ¥µ¡¼¥Ğ»ş´Ö¤È¥¤¥Ù¥ó¥È»ş´Ö¤ÇÍËÆü¤¬°Û¤Ê¤ë¾ì¹ç¤Î½èÍıÄÉ²Ã
 						$gmstart = $monthday_top + $week_number_offset + ( $date_ahead - $tzoffset_date ) * 86400 + $secondofday ;
 						if( $gmstart <= $gmstartbase ) continue ;
 						$gmend = $gmstart + $duration ;
@@ -3813,9 +3813,9 @@ function rrule_extract( $event_id )
 					}
 				}
 			} else if( isset( $BYMONTHDAY ) ) {
-				// æ—¥ä»˜æŒ‡å®š(BYMONTHDAY)ã®å ´åˆï¼ˆè¤‡æ•°å¯ï¼‰
+				// ÆüÉÕ»ØÄê(BYMONTHDAY)¤Î¾ì¹ç¡ÊÊ£¿ô²Ä¡Ë
 				$monthday_top = gmmktime( 0 , 0 , 0 , $month , 1 , $year ) ;
-				// BYMONTHDAY ã‚’å‰å‡¦ç†ã—ã¦ã€$datesé…åˆ—ã«ã™ã‚‹
+				// BYMONTHDAY ¤òÁ°½èÍı¤·¤Æ¡¢$datesÇÛÎó¤Ë¤¹¤ë
 				$temp_dates = explode( ',' , $BYMONTHDAY ) ;
 				$dates = array() ;
 				foreach( $temp_dates as $date ) {
@@ -3827,9 +3827,9 @@ function rrule_extract( $event_id )
 				while( 1 ) {
 					$months_day = gmdate( 't' , $monthday_top ) ;
 					foreach( $dates as $date ) {
-						// æœˆã®æœ€çµ‚æ—¥ãƒ•ãƒ­ãƒ¼ãƒã‚§ãƒƒã‚¯
+						// ·î¤ÎºÇ½ªÆü¥Õ¥í¡¼¥Á¥§¥Ã¥¯
 						if( $date > $months_day ) $date = $months_day ;
-						// ã‚µãƒ¼ãƒæ™‚é–“ã¨ã‚¤ãƒ™ãƒ³ãƒˆæ™‚é–“ã§æ—¥ä»˜ãŒç•°ãªã‚‹å ´åˆã®å‡¦ç†è¿½åŠ 
+						// ¥µ¡¼¥Ğ»ş´Ö¤È¥¤¥Ù¥ó¥È»ş´Ö¤ÇÆüÉÕ¤¬°Û¤Ê¤ë¾ì¹ç¤Î½èÍıÄÉ²Ã
 						$gmstart = $monthday_top + ( $date - 1 - $tzoffset_date ) * 86400 + $secondofday ;
 						if( $gmstart <= $gmstartbase ) continue ;
 						$gmend = $gmstart + $duration ;
@@ -3842,7 +3842,7 @@ function rrule_extract( $event_id )
 					}
 				}
 			} else {
-				// æœ‰åŠ¹ãª$BYDAYã‚‚$BYMONTHDAYã‚‚ç„¡ã‘ã‚Œã°ã€ç¹°ã‚Šè¿”ã—å‡¦ç†ã—ãªã„
+				// Í­¸ú¤Ê$BYDAY¤â$BYMONTHDAY¤âÌµ¤±¤ì¤Ğ¡¢·«¤êÊÖ¤·½èÍı¤·¤Ê¤¤
 				return ;
 			}
 			break ;
@@ -3858,7 +3858,7 @@ function rrule_extract( $event_id )
 			// empty BYMONTH
 			if( empty( $BYMONTH ) ) $BYMONTH = $gmmonth ;
 
-			// BYMONTH ã‚’å‰å‡¦ç†ã—ã¦ã€$monthsé…åˆ—ã«ã™ã‚‹ï¼ˆBYMONTHã¯è¤‡æ•°å¯ï¼‰
+			// BYMONTH ¤òÁ°½èÍı¤·¤Æ¡¢$monthsÇÛÎó¤Ë¤¹¤ë¡ÊBYMONTH¤ÏÊ£¿ô²Ä¡Ë
 			$temp_months = explode( ',' , $BYMONTH ) ;
 			$months = array() ;
 			foreach( $temp_months as $month ) {
@@ -3871,23 +3871,23 @@ function rrule_extract( $event_id )
 //HACK by domifara for php5.3+
 //			if( isset( $BYDAY ) && ereg( '^(-1|[1-4])(SU|MO|TU|WE|TH|FR|SA)' , $BYDAY , $regs ) ) {
 			if( isset( $BYDAY ) && preg_match( '/^(-1|[1-4])(SU|MO|TU|WE|TH|FR|SA)/i' , $BYDAY , $regs ) ) {
-				// ç¬¬Næ›œæ—¥æŒ‡å®šã®å ´åˆï¼ˆè¤‡æ•°ä¸å¯ï¼‰
-				// ç›®çš„ã®æ›œæ—¥ç•ªå·ã‚’å–å¾—
+				// ÂèNÍËÆü»ØÄê¤Î¾ì¹ç¡ÊÊ£¿ôÉÔ²Ä¡Ë
+				// ÌÜÅª¤ÎÍËÆüÈÖ¹æ¤ò¼èÆÀ
 				$wdays = array_keys( $this->byday2langday_w ) ;
 				$wday = array_search( $regs[2] , $wdays ) ;
 				$first_ym = gmdate( 'Ym' , $gmstart ) ;
 				$year = gmdate( 'Y' , $gmstart ) ;
 				$c = 1 ;
 				if( $regs[1] == -1 ) {
-					// æœ€çµ‚é€±æŒ‡å®šã®å ´åˆã®ãƒ«ãƒ¼ãƒ—
+					// ºÇ½ª½µ»ØÄê¤Î¾ì¹ç¤Î¥ë¡¼¥×
 					while( 1 ) {
 						foreach( $months as $month ) {
-							// æœ€çµ‚æ—¥ã®æ›œæ—¥ã‚’èª¿ã¹ã‚‹
+							// ºÇ½ªÆü¤ÎÍËÆü¤òÄ´¤Ù¤ë
 							$last_monthdays_wday = gmdate( 'w' , gmmktime( 0 , 0 , 0 , $month + 1 , 0 , $year ) ) ;
 							$date_back = $wday - $last_monthdays_wday ;
 							if( $date_back > 0 ) $date_back -= 7 ;
 							$gmstart = gmmktime( 0 , 0 , 0 , $month + 1 , $date_back - $tzoffset_date , $year ) + $secondofday ;
-							// åˆå›ã¨åŒã˜æœˆä»¥å‰ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
+							// ½é²ó¤ÈÆ±¤¸·î°ÊÁ°¤«¤É¤¦¤«¥Á¥§¥Ã¥¯
 							if( gmdate( 'Ym' , $gmstart ) <= $first_ym ) continue ;
 							$gmend = $gmstart + $duration ;
 							if( $gmstart > $until ) break 2 ;
@@ -3898,16 +3898,16 @@ function rrule_extract( $event_id )
 						if( $year >= 2038 ) break ;
 					}
 				} else {
-					// ç¬¬Né€±æŒ‡å®šã®å ´åˆã®ãƒ«ãƒ¼ãƒ—
+					// ÂèN½µ»ØÄê¤Î¾ì¹ç¤Î¥ë¡¼¥×
 					$week_numbers_top_date = 1 + ( $regs[1] - 1 ) * 7 ;
 					while( 1 ) {
 						foreach( $months as $month ) {
-							// ç¬¬Né€±åˆæ—¥ã®æ›œæ—¥ã‚’èª¿ã¹ã‚‹
+							// ÂèN½µ½éÆü¤ÎÍËÆü¤òÄ´¤Ù¤ë
 							$week_numbers_top_wday = gmdate( 'w' , gmmktime( 0 , 0 , 0 , $month , $week_numbers_top_date , $year ) ) ;
 							$date_ahead = $wday - $week_numbers_top_wday ;
 							if( $date_ahead < 0 ) $date_ahead += 7 ;
 							$gmstart = gmmktime( 0 , 0 , 0 , $month , $week_numbers_top_date + $date_ahead - $tzoffset_date , $year ) + $secondofday ;
-							// åˆå›ã¨åŒã˜æœˆä»¥å‰ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
+							// ½é²ó¤ÈÆ±¤¸·î°ÊÁ°¤«¤É¤¦¤«¥Á¥§¥Ã¥¯
 							if( gmdate( 'Ym' , $gmstart ) <= $first_ym ) continue ;
 							$gmend = $gmstart + $duration ;
 							if( $gmstart > $until ) break 2 ;
@@ -3919,16 +3919,16 @@ function rrule_extract( $event_id )
 					}
 				}
 			} else {
-				// æ—¥ä»˜æŒ‡å®šã®å ´åˆã®ãƒ«ãƒ¼ãƒ—ï¼ˆè¤‡æ•°ä¸å¯ï¼‰
+				// ÆüÉÕ»ØÄê¤Î¾ì¹ç¤Î¥ë¡¼¥×¡ÊÊ£¿ôÉÔ²Ä¡Ë
 				$first_date = gmdate( 'j' , $gmstart ) ;
 				$year = gmdate( 'Y' , $gmstart ) ;
 				$c = 1 ;
 				while( 1 ) {
 					foreach( $months as $month ) {
 						$date = $first_date ;
-						// æœˆã®æœ€çµ‚æ—¥ãƒ•ãƒ­ãƒ¼ãƒã‚§ãƒƒã‚¯
+						// ·î¤ÎºÇ½ªÆü¥Õ¥í¡¼¥Á¥§¥Ã¥¯
 						while( ! checkdate( $month , $date , $year ) && $date > 0 ) $date -- ;
-						// $date ã‚’ gmdate('j') ã‹ã‚‰å¾—ã¦ã„ã‚‹ãŸã‚ã€$tzoffset_date ã®å‡¦ç†ã¯ä¸è¦
+						// $date ¤ò gmdate('j') ¤«¤éÆÀ¤Æ¤¤¤ë¤¿¤á¡¢$tzoffset_date ¤Î½èÍı¤ÏÉÔÍ×
 						$gmstart = gmmktime( 0 , 0 , 0 , $month , $date , $year ) + $secondofday ;
 						if( $gmstart <= $gmstartbase ) continue ;
 						$gmend = $gmstart + $duration ;

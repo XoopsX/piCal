@@ -59,29 +59,29 @@ class piCal
 	var $isadmin = false ;			// Is admin or not
 
 	// ANOTHER public properties
-	var $conn ;					// MySQL�Ƃ̐ڑ��n���h�� (�\��擾�����鎞�Z�b�g)
+	var $conn ;					// MySQLとの接続ハンドル (予定取得をする時セット)
 	var $table = 'pical_event' ;		// table name for events
 	var $cat_table = 'pical_cat' ;		// table name for categories
 	var $plugin_table = 'pical_plugin' ;	// table name for plugins
 	var $base_url = '' ;
 	var $base_path = '' ;
-	var $images_url = '/include/piCal/images' ;	// ���̃t�H���_�� spacer.gif, arrow*.gif ����u���Ă���
+	var $images_url = '/include/piCal/images' ;	// このフォルダに spacer.gif, arrow*.gif 等を置いておく
 	var $images_path = 'include/piCal/images' ;
 	var $jscalendar = 'jscalendar' ; // DHTML Date/Time Selector
 	var $jscalendar_lang_file = 'calendar-jp.js' ; // language file of the jscalh
-	var $can_output_ics = true ;	// ics�t�@�C���o�͂������邩�ǂ���
-	var $connection = 'http' ;		// http �� https ��
-	var $max_rrule_extract = 100 ;	// rrule �̓W�J�̏����(COUNT)
-	var $week_start = 0 ;			// �T�̊J�n�j�� 0����j 1�����j
-	var $week_numbering = 0 ;		// �T�̐����� 0�Ȃ猎���� 1�Ȃ�N�ԒʎZ
-	var $day_start = 0 ;			// ��t�̋��E��i�b�P�ʁj
-	var $use24 = true ;				// 24���Ԑ��Ȃ�true�A12���Ԑ��Ȃ�false
-	var $now_cid = 0 ;				// �J�e�S���w��
-	var $categories = array() ;		// �A�N�Z�X�\�ȃJ�e�S���I�u�W�F�N�g�A�z�z��
-	var $groups = array() ;			// PRIVATE���ɑI���\�ȃO���[�v�̘A�z�z��
-	var $nameoruname = 'name' ;		// ���e�҂̕\���i���O�C�������n���h�������j
+	var $can_output_ics = true ;	// icsファイル出力を許可するかどうか
+	var $connection = 'http' ;		// http か https か
+	var $max_rrule_extract = 100 ;	// rrule の展開の上限数(COUNT)
+	var $week_start = 0 ;			// 週の開始曜日 0が日曜 1が月曜
+	var $week_numbering = 0 ;		// 週の数え方 0なら月ごと 1なら年間通算
+	var $day_start = 0 ;			// 日付の境界線（秒単位）
+	var $use24 = true ;				// 24時間制ならtrue、12時間制ならfalse
+	var $now_cid = 0 ;				// カテゴリ指定
+	var $categories = array() ;		// アクセス可能なカテゴリオブジェクト連想配列
+	var $groups = array() ;			// PRIVATE時に選択可能なグループの連想配列
+	var $nameoruname = 'name' ;		// 投稿者の表示（ログイン名かハンドル名か）
 	var $proxysettings = '' ;		// Proxy setting
-	var $last_summary = '' ;		// �O�����猏�����Q�Ƃ��邽�߂̃v���p�e�B
+	var $last_summary = '' ;		// 外部から件名を参照するためのプロパティ
 	var $plugins_path_monthly = 'plugins/monthly' ;
 	var $plugins_path_weekly = 'plugins/weekly' ;
 	var $plugins_path_daily = 'plugins/daily' ;
@@ -97,10 +97,10 @@ class piCal
 	var $long_event_legends = array() ;
 	var $language = "japanese" ;
 
-	// �����t���Q�Ɨp�����o
-	var $original_id ;	// $_GET['event_id']��������������ɎQ�Ɖ\
+	// 条件付き参照用メンバ
+	var $original_id ;	// $_GET['event_id']を処理した直後に参照可能
 
-	var $event = null ;	// event�̏o�̓f�[�^�i�[�p //naao
+	var $event = null ;	// event for meta discription //naao
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
@@ -109,22 +109,22 @@ class piCal
 // Constructor
 public function __construct( $target_date = "" , $language = "japanese" , $reload = false )
 {
-	// ��t�̃Z�b�g
+	// 日付のセット
 	if( $target_date ) {
 		$this->set_date( $target_date ) ;
 	} else if( isset( $_GET[ 'caldate' ] ) ) {
 		$this->set_date( $_GET[ 'caldate' ] ) ;
 	} else if( isset( $_POST[ 'pical_jumpcaldate' ] ) && isset( $_POST[ 'pical_year' ] ) ) {
 		if( empty( $_POST[ 'pical_month' ] ) ) {
-			// �N�݂̂�POST���ꂽ�ꍇ
+			// 年のみがPOSTされた場合
 			$month = 1 ;
 			$date = 1 ;
 		} else if( empty( $_POST[ 'pical_date' ] ) ) {
-			// �N�E����POST���ꂽ�ꍇ
+			// 年・月がPOSTされた場合
 			$month = intval( $_POST[ 'pical_month' ] ) ;
 			$date = 1 ;
 		} else {
-			// �N�E���E��POST���ꂽ�ꍇ
+			// 年・月・日がPOSTされた場合
 			$month = intval( $_POST[ 'pical_month' ] ) ;
 			$date = intval( $_POST[ 'pical_date' ] ) ;
 		}
@@ -136,7 +136,7 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 		$this->use_server_TZ = true ;
 	}
 
-	// SSL�̗L�����A$_SERVER['HTTPS'] �ɂĔ��f
+	// SSLの有無を、$_SERVER['HTTPS'] にて判断
 	if( defined( 'XOOPS_URL' ) ) {
 		$this->connection = substr( XOOPS_URL , 0 , 8 ) == 'https://' ? 'https' : 'http' ;
 	} else if( ! empty( $_SERVER['HTTPS'] ) ) {
@@ -1948,7 +1948,7 @@ function get_schedule_edit_html( )
 			$end_hour = 23 ;
 			$end_min = 55 ;
 		} else {
-			// �ʏ�C�x���g�ievent_tz �ł̎��ԕ\���j
+			// 通常イベント（event_tz での時間表示）
 			$select_timezone_disabled = "" ;
 			$tzoffset_s2e = intval( ( $event->event_tz - $this->server_TZ ) * 3600 ) ;
 			$event->start += $tzoffset_s2e ;
@@ -2726,7 +2726,7 @@ function get_todays_time_description( $start , $end , $ynj , $justify = true , $
 
 	$stuffing = $justify ? '     ' : '' ;
 
-	// �\�莞�Ԏw��̗L���E���F�̗L���ɂ���ăh�b�gGIF��ւ���
+	// 予定時間指定の有無・承認の有無によってドットGIFを替える
 	if( $admission ) {
 		if( $is_start_date ) $dot = "<img border='0' src='$this->images_url/dot_startday.gif' />" ;
 		else if( $is_end_date ) $dot = "<img border='0' src='$this->images_url/dot_endday.gif' />" ;

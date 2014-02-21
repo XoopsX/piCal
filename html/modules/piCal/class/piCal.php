@@ -2097,15 +2097,11 @@ function get_schedule_edit_html( )
 
 		// DHTMLテキストエリアの処理
 		if ( defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.0.0', '>=') ) {
-			$params = array();
-			$params['name'] = 'description_text';
-			$params['class'] = 'bbcode';
-			$params['cols'] = 50;
-			$params['rows'] = 6;
-			$params['value'] = $description;
-			$params['id'] = 'legacy_xoopsform_' . $params['name'];
-			$description_textarea = '';
-			XCube_DelegateUtils::call("Site.TextareaEditor.BBCode.Show", new XCube_Ref($description_textarea), $params);
+			include_once XOOPS_ROOT_PATH . '/class/xoopsform/formelement.php';
+			include_once XOOPS_ROOT_PATH . '/class/xoopsform/formdhtmltextarea.php';
+			$ele = new XoopsFormDhtmlTextArea('', 'description_text', $description, 6, 50);
+			$ele->setEditor('BBCode');
+			$description_textarea = $ele->render();
 		} else {
 			include_once( XOOPS_ROOT_PATH . "/include/xoopscodes.php" ) ;
 			ob_start();

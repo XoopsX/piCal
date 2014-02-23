@@ -1,7 +1,22 @@
-/* for eguide module */
+/* for piCal */
+.calframe {
+	width:100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+         -o-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.calframe a {
+	text-decoration:none;
+}
+.calframe .selector tr{
+	height: 30px;
+}
+
+
 .calframe p.calhead{
     background-color: #eeeeee;
-	border: solid 3px #999999;
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 3em;
@@ -10,13 +25,41 @@
     text-align: center;
 }
 .calframe table{
-	margin-left: auto;
-	margin-right: auto;
 	width:100%;
     border-spacing: 0;
 }
+table.data_table table td {
+}
+.data_weekly td {
+	border:1px solid #696969;
+}
+.data_week {
+	width: 7em;
+	border:1px solid #696969;
+}
+.data_week_data {
+	border:1px solid #696969;
+}
+.data_time {
+	width:12em;
+	background:#fff799;
+}
+h3.data_h3 {
+	font-family:'ÉqÉâÉMÉmäpÉS Pro W3','Hiragino Kaku Gothic Pro','ÉÅÉCÉäÉI',Meiryo,'ÇlÇr ÇoÉSÉVÉbÉN',sans-serif, 'Droid Serif',"Helvetica Neue", Helvetica,;
+	font-size:14px;
+	font-weight: normal;
+	margin:0;
+	background: #CCFF99;
+}
+h3.data_h3 a {
+	display:block;
+	color:#000;
+}
+h3.data_h3 a:hover {
+	background: lightgreen;
+}
+
 table#calbody {
-    border: solid 2px #999999;
     background-color: #fff;
     width: 100%;
 }	
@@ -53,7 +96,7 @@ table#calbody td{
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 1em;
-    font-style: italic;
+    width:14.28571%;
     padding: 3px;
     text-align: left;
     vertical-align: top;
@@ -74,14 +117,31 @@ table#calbody p.holiday{
     font-style: italic;
 	margin: 0;
 }
-table#calbody p.event{
+table#calbody ul.event_info{
 	clear: both;
+	text-align:left;
 	margin: 0;
+	list-style:none;
 }
-table#calbody .a {
-	position:relative;
-	float:left;
+table#calbody ul.event_info li {
+	width:100%;
 }
+
+table#calbody ul.event_info li a {
+	font-family:'ÉqÉâÉMÉmäpÉS Pro W3','Hiragino Kaku Gothic Pro','ÉÅÉCÉäÉI',Meiryo,'ÇlÇr ÇoÉSÉVÉbÉN',sans-serif, 'Droid Serif',"Helvetica Neue", Helvetica,;
+	font-size:11px;
+	font-weight:normal;
+	color:#004d25;
+	line-height:11px;
+	text-decoration:none;
+	padding:2px 2px 2px 10px;
+	margin:2px 0 2px 0;
+	background: url("../../images/pointer.gif")  no-repeat 0px 3px;
+}
+table#calbody ul.event_info li a:hover   {
+	background:lightgreen url("../../images/pointer.gif")  no-repeat 0px 3px;
+}
+
 table#calbody a.calday_holyday {
     color: #dc143c;
     font-size: 2em;
@@ -116,8 +176,6 @@ table#calbody a.event {
 ** for mini calender
 */
 .cal_selector{
-    background-color: #eeeeee;
-	border: solid 3px #999999;
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 1em;
@@ -135,11 +193,213 @@ table#calbody a.event {
 	text-align: right;
 }
 table#minical {
+	width:200px;
     background-color: #eeeeee;
-	border: solid 2px #999999;
 	color: #333333;
 	font-family: Georgia,"Times New Roman",Times,serif;
 }
+table#minical a {
+	display:block;
+	text-decoration:none;
+}
+table#minical a:hover {
+	background:lightgreen;
+}
 table#minical th {
     height: 2em;
+}
+
+table.piCal_input {
+	width:100%;
+}
+table.piCal_input td.head {
+	width:20%;
+	background:#ccc;
+}
+table.piCal_input input {
+}
+table.piCal_input select {
+	width:8em;
+}
+table#details {
+	width:100%;
+	border-collapse: collapse; /* ògê¸ÇÃï\é¶ï˚ñ@ */ 
+	border: 1px #808080 solid; /* ÉeÅ[ÉuÉãëSëÃÇÃògê¸ÅiëæÇ≥ÅEêFÅEÉXÉ^ÉCÉãÅj */ 
+}
+table#details td {
+	border-bottom: 1px #808080 solid; /* ÉZÉãÇÃògê¸ÅiëæÇ≥ÅEêFÅEÉXÉ^ÉCÉãÅj */ 
+	padding: 5px; /* ÉZÉãì‡ÇÃó]îí */ 
+}
+table#details td.head {
+	width:20%;
+	background:#ccc;
+}
+table#details td.none {
+	border:none;
+}
+
+.m_right {
+	text-align:right;
+}
+.m_left {
+	text-align:left;
+}
+.m_center {
+	text-align:center;
+}
+.s80 {
+	font-size:80%;
+}
+
+ul.data_detail {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+ul.data_detail li {
+	margin:0;
+	padding:3px;
+	border-bottom:1px dotted #a9a9a9;
+}
+ul.data_detail dl  {
+	margin:0;
+	padding:0;
+}
+ul.data_detail dl dt {
+  clear: left;
+  float: left;
+  width: 12em;
+  font-weight:normal;
+  padding-left: 5px;
+  color: #696969;
+}
+ul.data_detail dl  dd {
+  margin-left: 12em;
+}
+
+ul.data_detail dl  dd a ,
+ul.data_detail dl  dd a:visited {
+	display:block;
+	color:#0000ff;
+	padding:2px 0;
+	margin:0;
+}
+ul.data_detail dl  dd a:hover {
+	color:navy;
+	background:lightgreen;
+}
+
+.no_border ,
+.no_border dt,
+.no_border dd {
+	border:none;
+}
+
+#ymdo_selects {
+	width:500px;
+	height:40px;
+	float: right;
+}
+#ymdo_selects select {
+	width:12em;
+	margin:2px 4px 0 0;
+}
+#ymdo_selects select:nth-child(1n) {
+	width:6em;
+}
+#ymdo_selects select:nth-child(2n) {
+	width:6em;
+}
+#ymdo_selects select:nth-child(3n) {
+	width:6em;
+}
+#ymdo_selects select:nth-child(4n) {
+	width:6em;
+}
+#ymdo_selects select:nth-child(5n) {
+	width:12em;
+}
+.m_sel {
+	width: 100%;
+	text-align: center;
+	margin-top: 50px;
+}
+.piCal_input {
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+.piCal_input select {
+	height: 26px;
+	line-height: 26px;
+}
+.piCal_input tr {
+	border-bottom: 1px solid #ccc;
+}
+.piCal_input .head {
+}
+.piCal_input .even {
+	border-collapse: separate;
+	border-spacing: 2px;
+	border-bottom: 1px solid #ddd;
+}
+.piCal_input .pi_contact input ,
+.piCal_input .pi_location input,
+.piCal_input .pi_text input {
+	width: 90%;
+	height: 26px;
+}
+.piCal_input .pi_st #StartDate ,
+.piCal_input .pi_et #EndDate {
+	width:7em;
+	height: 26px;
+}
+.piCal_input .pi_st select ,
+.piCal_input .pi_et select {
+	width:5em;
+}
+legend {
+	font-size: 1em;
+	margin:0;
+	padding: 0;
+	line-height: 1em;
+	border: none;
+}
+fieldset {
+	padding:3px;
+}
+fieldset input {
+	width: 5em;
+}
+fieldset table ,
+fieldset table tr ,
+fieldset table td {
+	border:none;
+}
+fieldset table td {
+	width:4em;
+}
+.piCal_input .pi_op {
+	line-height: 20px;
+}
+select#rrule_yearly_byday {
+	width: 12em;
+}
+.piCal_input #rrule_until {
+	width: 7em;
+}
+#xoopsHiddenText {
+	margin:2px 10px;
+	font-size: 16px;
+}
+input#description_textAddtext {
+	height: 26px;
+}
+textarea#description_text {
+	width: 90%;
+}
+element.style {
+	vertical-align: middle;
+}
+@media print{
+	.no-print{display:none;}
 }

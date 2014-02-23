@@ -1,13 +1,13 @@
 <pattemplate:tmpl name="WholeBoard">
-  <table border='0' cellspacing='0' cellpadding='0' width='570'>
+  <table>
     <tr>
-      <td width='570' class='calframe'>
+      <td class='calframe'>
         <!-- header -->
-        <table border='0' cellspacing='0' cellpadding='0' style='width:640px;border-collapse:collapse;'>
+        <table class="selector">
          <tr>
            <td><img src='{SKINPATH}/spacer.gif' alt='' width='10' height='30' /></td>
            <td nowrap='nowrap' colspan='7' align='center' bgcolor='{CALHEAD_BGCOLOR}'>
-             <table border='0' cellspacing='0' cellpadding='0' width='560' class='pical-categoryform'>
+             <table border='0' cellspacing='0' cellpadding='0' class='pical-categoryform'>
              <tr>
                <td align='center' valign='middle' style='vertical-align:middle;' class='pical-categoryform'>{CATEGORIES_SELFORM}</td>
                <td width='8'><img src='{SKINPATH}/spacer.gif' alt='' width='8' height='4' /></td>
@@ -34,10 +34,10 @@
     </tr>
   </table>
   <br />
-  <table border='0' cellspacing='0' cellpadding='0' width='570'>
+  <table border='0' cellspacing='0' cellpadding='0'>
     <tr>
       <td width='10'><img src='{SKINPATH}/spacer.gif' alt='' width='10' height='10' /></td>
-      <td width='560' align='center'>
+      <td align='center'>
         <form action='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;{QUERY_STRING}' method='post'>
           {YMD_SELECTS}
           <input type='submit' name='pical_jumpcaldate' value='{LANG_JUMP}'>
@@ -47,14 +47,14 @@
       </td>
     </tr>
   </table>
-  <table border='0' cellspacing='0' cellpadding='0' width='570'>
+  <table border='0' cellspacing='0' cellpadding='0'>
     <tr>
       <td width='10'><img src='{SKINPATH}/spacer.gif' alt='' width='10' height='10' /></td>
-      <td width='560' align='right'>{COPYRIGHT}</td>
+      <td align='right'>{COPYRIGHT}</td>
     </tr>
     <tr>
       <td width='10'><img src='{SKINPATH}/spacer.gif' alt='' width='10' height='10' /></td>
-      <td width='560' align='right'><a href="{PRINT_LINK}" target="_blank"><img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" border="0" {PRINT_ATTRIB} /></a></td>
+      <td align='right'><a href="{PRINT_LINK}" target="_blank"><img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" border="0" {PRINT_ATTRIB} /></a></td>
     </tr>
   </table>
 </pattemplate:tmpl>

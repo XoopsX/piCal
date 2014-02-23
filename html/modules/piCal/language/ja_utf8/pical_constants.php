@@ -48,7 +48,7 @@ define('_PICAL_MB_NEXT_MONTH','翌月') ;
 define('_PICAL_MB_PREV_YEAR','去年') ;
 define('_PICAL_MB_NEXT_YEAR','来年') ;
 
-define('_PICAL_MB_NOEVENT','予定なし') ;
+define('_PICAL_MB_NOEVENT','予定はありません') ;
 define('_PICAL_MB_ADDEVENT','予定の追加') ;
 define('_PICAL_MB_CONTINUING','（継続中）') ;
 define('_PICAL_MB_RESTEVENT_PRE','他') ;
@@ -123,7 +123,7 @@ define('_PICAL_ERR_NOPERM_TO_SHOW','Error: 表示できません') ;
 define('_PICAL_ERR_NOPERM_TO_OUTPUTICS','Error: iCalendar出力操作は許可されていません') ;
 define('_PICAL_ERR_LACKINDISPITEM','%s が未入力です<br />ブラウザのボタンで戻ってください') ;
 
-define('_PICAL_BTN_JUMP','Jump') ;
+define('_PICAL_BTN_JUMP','移動') ;
 define('_PICAL_BTN_NEWINSERTED','新規登録') ;
 define('_PICAL_BTN_SUBMITCHANGES','　変　更　') ;
 define('_PICAL_BTN_SAVEAS','別件登録') ;

@@ -7,7 +7,7 @@
 
 if( ! class_exists( 'piCal' ) ) {
 
-define( 'PICAL_COPYRIGHT' , "<a href='http://xoops.peak.ne.jp/' target='_blank'>piCal-0.8</a>" ) ;
+define( 'PICAL_COPYRIGHT' , "<a href='http://xoops.peak.ne.jp/' target='_blank'>piCal-0.93</a>, <a href='https://github.com/XoopsX/piCal' target='_blank'>piCal > 0.93</a>" ) ;
 define( 'PICAL_EVENT_TABLE' , 'pical_event' ) ;
 define( 'PICAL_CAT_TABLE' , 'pical_cat' ) ;
 define( 'PICAL_ERR_REPORTING_LEVEL' , defined('E_STRICT')? ( E_ALL ^ E_NOTICE ^ E_STRICT ) : ( E_ALL ^ E_NOTICE ) );
@@ -313,10 +313,10 @@ function get_date_schedule( $get_target = '' )
 		if( $event->allday ) {
 			// 全日イベント
 			$ret .= "
-	       <table border='0' cellpadding='0' cellspacing='0' width='100%'>
+	       <table>
 	         <tr>
 	           <td><img border='0' src='$this->images_url/dot_allday.gif' /> &nbsp; </td>
-	           <td><font size='2'><a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary_allday'>$summary</a></font></td>
+	           <td><a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary_allday'>$summary</a></td>
 	         </tr>
 	       </table>\n" ;
 		} else {
@@ -326,10 +326,10 @@ function get_date_schedule( $get_target = '' )
 			$ret .= "
 	       <dl>
 	         <dt>
-	           <font size='2'>".$this->get_todays_time_description( $event->start , $event->end , $this->caldate , false , true )."</font>
+	           ".$this->get_todays_time_description( $event->start , $event->end , $this->caldate , false , true )."
 	         </dt>
 	         <dd>
-	           <font size='2'><a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary'>$summary</a></font>
+	           <a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary'>$summary</a>
 	         </dd>
 	       </dl>\n" ;
 		}
@@ -339,7 +339,7 @@ function get_date_schedule( $get_target = '' )
 	if( $this->insertable ) $ret .= "
 	       <dl>
 	         <dt>
-	           &nbsp; <font size='2'><a href='$get_target?smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></font>
+	           &nbsp; <a class='no-print' href='$get_target?smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a>
 	         </dt>
 	       </dl>\n" ;
 
@@ -375,7 +375,10 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 	$yrs = mysql_query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
 
-	if( $num_rows == 0 ) $ret .= _PICAL_MB_NOEVENT."\n" ;
+	if( $num_rows == 0 ) $ret .= "
+	  <dl class='no_border'><dt></dt><dd> "
+		._PICAL_MB_NOEVENT.
+		"</dd></dl>\n" ;
 	else for( $i = 0 ; $i < $num ; $i ++ ) {
 		$event = mysql_fetch_object( $yrs ) ;
 		if( $event == false ) break ;
@@ -386,10 +389,10 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 			$ret .= "
 	       <dl>
 	         <dt>
-	           <font size='2'><img border='0' src='$this->images_url/dot_allday.gif' /> ".$this->get_middle_md( $event->start )."</font>
+	           <img border='0' src='$this->images_url/dot_allday.gif' /> ".$this->get_middle_md( $event->start )."
 	         </dt>
 	         <dd>
-	           <font size='2'><a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary_allday'>$summary</a></font>
+	           <a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary_allday'>$summary</a>
 	         </dd>
 	       </dl>\n" ;
 		} else {
@@ -399,10 +402,10 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 			$ret .= "
 	       <dl>
 	         <dt>
-	           <font size='2'>".$this->get_coming_time_description( $event->start , $this->unixtime )."</font>
+	           ".$this->get_coming_time_description( $event->start , $this->unixtime )."
 	         </dt>
 	         <dd>
-	           <font size='2'><a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary'>$summary</a></font>
+	           <a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='calsummary'>$summary</a>
 	         </dd>
 	       </dl>\n" ;
 		}
@@ -410,7 +413,7 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 
 	// 残り件数の表示
 	if( $num_rows > $num ) $ret .= "
-           <table border='0' cellspacing='0' cellpadding='0' width='100%'>
+           <table>
             <tr>
              <td align='right'><small>"._PICAL_MB_RESTEVENT_PRE.($num_rows-$num)._PICAL_MB_RESTEVENT_SUF."</small></td>
             </tr>
@@ -420,7 +423,7 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 	if( $this->insertable ) $ret .= "
 	       <dl>
 	         <dt>
-	           &nbsp; <font size='2'><a href='$get_target?smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></font>
+	           &nbsp; <a href='$get_target?smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a>
 	         </dt>
 	       </dl>\n" ;
 
@@ -968,7 +971,7 @@ function get_calendar_information( $mode = 'M' )
 			}
 		}
 
-		$ret[ 'YMD_SELECTS' ] = sprintf( _PICAL_FMT_YMD , "<select name='pical_year'>{$ret['YEAR_OPTIONS']}</select> &nbsp; " , "<select name='pical_month'>{$ret['MONTH_OPTIONS']}</select> &nbsp; " , "<select name='pical_date'>$date_options</select> &nbsp; " ) ;
+		$ret[ 'YMD_SELECTS' ] = sprintf( _PICAL_FMT_YMD , "<select name='pical_year'>{$ret['YEAR_OPTIONS']}</select>" , "<select name='pical_month'>{$ret['MONTH_OPTIONS']}</select> " , "<select name='pical_date'>$date_options</select>" ) ;
 		if( $this->week_numbering ) {
 			if( $this->day == 0 && ! $this->week_start ) $weekno = date( 'W' , $this->unixtime + 86400 ) ;
 			else $weekno = date( 'W' , $this->unixtime ) ;
@@ -1101,7 +1104,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 			// スケジュールデータの表示ループ
 			$waitings = 0 ;
-			$event_str = "<p class='event'>" ;
+			$event_str = "<ul class='event_info'>" ; 			// marine mod 20130822
 			$long_event = 0 ;
 			if( $numrows_yrs > 0 ) mysql_data_seek( $yrs , 0 ) ;
 			while( $event = mysql_fetch_object( $yrs ) ) {
@@ -1124,7 +1127,9 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 					// とりあえず半角33字を上限としておく
 					$summary = mb_strcut( $event->summary , 0 , 33 ) ;
 					if( $summary != $event->summary ) $summary .= ".." ;
-					$event_str_tmp = "&bull;&nbsp;<a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' style='font-size:10px;font-weight:normal;text-decoration:none;' class='$catname'>$summary</a>" ;
+					//$event_str_tmp = "&bull;&nbsp;<a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' style='font-size:10px;font-weight:normal;text-decoration:none;' class='$catname'>$summary</a>" ;	//orginal 
+					// データをリスト構造で出力させる。カテゴリ名をclassに挿入していたが、日本語利用の場合変になるので削除
+					$event_str_tmp = "<li><a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate'>$summary</a></li>" ;	// marine mod 20130822 
 
 					$bit = array_search( $event->unique_id , $long_event_ids ) ;
 					// 本来は !== false とすべきだが、どうせ1〜4しか取らないので
@@ -1138,7 +1143,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 						$event_str = "$event_str_tmp<br />\n$event_str" ;
 					} else {
 						// なければ、日付マス内に描画
-						$event_str .= $event_str_tmp . "<br />\n" ;
+						$event_str .= $event_str_tmp  ;
 					}
 				} else {
 					// 未承認スケジュールのカウントアップ
@@ -1156,7 +1161,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 				}
 			}
-			$event_str .= "</p>";
+			$event_str .= "</ul>";
 
 
 			// 曜日タイプによる描画色振り分け
@@ -1229,17 +1234,8 @@ function get_weekly_html( )
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 
 	$ret = "
-	 <table border='0' cellspacing='0' cellpadding='0' width='100%' style='border-collapse:collapse;margin:0px;'>
-	 <tr>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='80' height='10' /></td>
-	 </tr>\n" ;
+	 <table width='100%'>
+	 \n" ;
 
 	$wtop_date = $this->date - ( $this->day - $this->week_start + 7 ) % 7 ;
 	$wtop_unixtime = mktime(0,0,0,$this->month,$wtop_date,$this->year) ;
@@ -1324,11 +1320,7 @@ function get_weekly_html( )
 		$date_part_append = '' ;
 		// スケジュール表示部のテーブル開始
 		$event_str = "
-				<table cellpadding='0' cellspacing='2' style='margin:0px;'>
-				  <tr>
-				    <td><img src='$this->images_url/spacer.gif' alt='' border='0' width='120' height='4' /></td>
-				    <td><img src='$this->images_url/spacer.gif' alt='' border='0' width='360' height='4' /></td>
-				  </tr>
+				<ul class='data_detail'>
 		\n" ;
 /*
 					} else if( $event->allday & 4 ) {
@@ -1358,7 +1350,7 @@ function get_weekly_html( )
 			if( $event->allday ) {
 				if( $event->allday & 4 ) {
 					// 記念日フラグの立っているもの
-					$date_part_append .= "<font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='cal_summary_specialday'><font color='$this->holiday_color'>$summary</font></a></font><br />\n" ;
+					$date_part_append .= "<a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='cal_summary_specialday'><font color='$this->holiday_color'>$summary</font></a><br />\n" ;
 					continue ;
 				} else {
 					// 通常の全日イベント
@@ -1372,14 +1364,12 @@ function get_weekly_html( )
 			}
 
 			$event_str .= "
-				  <tr>
-				    <td valign='top' align='center'>
-				      <pre style='margin:0px;'><font size='2'>$time_part</font></pre>
-				    </td>
-				    <td valign='top'>
-				      <font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></font>
-				    </td>
-				  </tr>
+				    <li><dl><dt>
+				      $time_part
+				    </dt>
+				    <dd>
+				      <a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a>
+				    </dd></dl></li>
 			\n" ;
 		}
 
@@ -1413,14 +1403,12 @@ function get_weekly_html( )
 				}
 
 				$event_str .= "
-					  <tr>
-					    <td valign='top' align='center'>
-					      <pre style='margin:0px;'><font size='2'>$time_part</font></pre>
-					    </td>
-					    <td valign='top'>
-					      <font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'><font color='#00FF00'>$summary ("._PICAL_MB_EVENT_NEEDADMIT.")</font></a></font>
-					    </td>
-					  </tr>
+					    <li><dl><dt>
+					      $time_part
+					    </dt>
+					    <dd>
+					      <a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'><font color='#00FF00'>$summary ("._PICAL_MB_EVENT_NEEDADMIT.")</font></a>
+					    </dd></dl></li>
 				\n" ;
 			}
 		}
@@ -1429,26 +1417,24 @@ function get_weekly_html( )
 		if( ! empty( $plugin_returns[ $date ] ) ) {
 			foreach( $plugin_returns[ $date ] as $item ) {
 				$event_str .= "
-				  <tr>
-				    <td></td>
-				    <td valign='top'>
-			          <font size='2'><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></font>
-				    </td>
-				  </tr>\n" ;
+				    <li><dl><dt></dt>
+				    <dd><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a>
+				    </dd></dl></li>
+				  \n" ;
 			}
 		}
 
 		// 予定の追加（鉛筆アイコン）
 		if( $this->insertable ) $event_str .= "
-				  <tr>
-				    <td valign='bottom' colspan='2'>
-				      &nbsp; <font size='2'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=Edit&amp;caldate=$link'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></font>
-				    </td>
-				  </tr>
+				    <li style='border:none;'>
+				    <p  class='m_right s80' >
+				      &nbsp; <a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=Edit&amp;caldate=$link'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a>
+				    </p>
+				    </li>
 		\n" ;
 
 		// スケジュール表示部のテーブル終了
-		$event_str .= "\t\t\t\t</table>\n" ;
+		$event_str .= "\t\t\t\t</ul>\n" ;
 
 		// 曜日タイプによる描画色振り分け
 		if( isset( $this->holidays[ $link ] ) ) {
@@ -1478,12 +1464,11 @@ function get_weekly_html( )
 
 		$ret .= "
 	 <tr>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='80' /></td>
-	   <td bgcolor='$bgcolor' align='center' valign='middle' style='vertical-align:middle;text-align:center;$this->frame_css;background-color:$bgcolor'>
-	     <a href='?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$link' class='calbody'><font size='3' color='$color'><b><span class='calbody'>$disp</span></b></font></a><br />
+	   <td  class='data_week' bgcolor='$bgcolor' valign='middle' style='vertical-align:middle;text-align:center;$this->frame_css;background-color:$bgcolor'>
+	     <a href='?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$link' class='calbody'><font class='size3' color='$color'><b><span class='calbody'>$disp</span></b></font></a><br />
 	     $date_part_append
 	   </td>
-	   <td valign='top' colspan='6' bgcolor='$body_bgcolor' style='$this->frame_css;background-color:$body_bgcolor'>
+	   <td  class='data_week_data' bgcolor='$body_bgcolor' style='$this->frame_css;background-color:$body_bgcolor'>
 	     $event_str
 	   </td>
 	 </tr>\n" ;
@@ -1523,21 +1508,12 @@ function get_daily_html( )
 	list( $bgcolor , $color ) =  $this->daytype_to_colors( $this->daytype ) ;
 
 	$ret = "
-	<table border='0' cellspacing='0' cellpadding='0'>
+	<table>
 	 <tr>
 	 <td class='calframe'>
-	 <table border='0' cellspacing='0' cellpadding='0' width='100%' style='margin:0px;'>
+	 <table class='data_table'>
 	 <tr>
-	   <td colspan='8'><img src='$this->images_url/spacer.gif' alt='' height='10' /></td>
-	 </tr>
-	 <tr>
-	   <td><img src='$this->images_url/spacer.gif' alt='' width='10' height='350' /></td>
 	   <td colospan='7' valign='top' bgcolor='$bgcolor' style='$this->frame_css;background-color:$bgcolor'>
-	     <table border='0' cellpadding='0' cellspacing='0' style='margin:0px;'>
-	       <tr>
-	         <td><img src='$this->images_url/spacer.gif' alt='' width='120' height='10' /></td>
-	         <td><img src='$this->images_url/spacer.gif' alt='' width='440' height='10' /></td>
-	       </tr>
 	\n" ;
 
 	// 時差を計算しつつ、WHERE節の期間に関する条件生成
@@ -1556,7 +1532,7 @@ function get_daily_html( )
 	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
 	$num_rows = mysql_num_rows( $yrs ) ;
 
-	if( $num_rows == 0 ) $ret .= "<tr><td></td><td>"._PICAL_MB_NOEVENT."</td></tr>\n" ;
+	if( $num_rows == 0 ) $ret .= "<table><tr><td></td><td>"._PICAL_MB_NOEVENT."</td></tr>\n" ;
 	else while( $event = mysql_fetch_object( $yrs ) ) {
 
 		if( $event->allday ) {
@@ -1574,13 +1550,13 @@ function get_daily_html( )
 		$summary_class = $event->allday ? "calsummary_allday" : "calsummary" ;
 
 		$ret .= "
-	       <tr>
-	         <td valign='top' align='center'>
-	           <pre style='margin:0px;'><font size='3'>$time_part</font></pre>
+	       <table class='data_weekly'><tr>
+	         <td class='data_time' valign='top'>
+	           $time_part
 	         </td>
 	         <td vlalign='top'>
-	           <font size='3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></font><br />
-	           <font size='2'>$description</font><br />
+	           <h3 class='data_h3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'>$summary</a></h3>
+	           $description<br />
 	           &nbsp;
 	         </td>
 	       </tr>\n" ;
@@ -1608,11 +1584,11 @@ function get_daily_html( )
 
 		$ret .= "
 	       <tr>
-	         <td valign='top' align='center'>
-	           <pre style='margin:0px;'><font size='3'>$time_part</font></pre>
+	         <td class='data_time' valign='top'>
+	           $time_part
 	         </td>
 	         <td vlalign='top'>
-	           <font size='3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'><font color='#00FF00'>$summary ("._PICAL_MB_EVENT_NEEDADMIT.")</font></a></font>
+	           <h3 class='data_h3'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$summary_class'><font color='#00FF00'>$summary ("._PICAL_MB_EVENT_NEEDADMIT.")</font></a></h3>
 	         </td>
 	       </tr>\n" ;
 	  }
@@ -1625,8 +1601,8 @@ function get_daily_html( )
 	       <tr>
 	         <td></td>
 	         <td valign='top'>
-	           <font size='3'><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></font><br />
-	           <font size='2'>{$item['description']}</font><br />
+	           <h3 class='data_h3'><a href='{$item['link']}' class='$summary_class'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></font></h3>
+	           {$item['description']}<br />
 	           &nbsp;
 	         </td>
 	       </tr>\n" ;
@@ -1635,14 +1611,9 @@ function get_daily_html( )
 
 	// 予定の追加（鉛筆アイコン）
 	if( $this->insertable ) $ret .= "
-	       <tr>
-	         <td valign='bottom' colspan='2'>
-	           &nbsp; <font size='2'><a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></font>
-	         </td>
-	       </tr>\n" ;
-
-	$ret .= "
 	     </table>
+			 <p class='m_right'> &nbsp; <a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></p>
+
 	   </td>
 	 </tr>
 	 </table>
@@ -1719,7 +1690,7 @@ function get_schedule_view_html( $for_print = false )
 				<input type='hidden' name='action' value='Edit' />
 				<input type='hidden' name='event_id' value='$event->id' />
 				<input type='hidden' name='caldate' value='$this->caldate' />
-				<input type='submit' value='"._PICAL_BTN_EDITEVENT."' />
+				<input class='btn' type='submit' value='"._PICAL_BTN_EDITEVENT."' />
 			</form>\n" ;
 	} else $edit_button = "" ;
 
@@ -1733,7 +1704,7 @@ function get_schedule_view_html( $for_print = false )
 				<input type='hidden' name='subevent_id' value='$event_id' />
 				<input type='hidden' name='caldate' value='$this->caldate' />
 				<input type='hidden' name='last_caldate' value='$this->caldate' />
-				<input type='submit' name='delete' value='"._PICAL_BTN_DELETE."' onclick='return confirm(\""._PICAL_CNFM_DELETE_YN."\")' />
+				<input class='btn' type='submit' name='delete' value='"._PICAL_BTN_DELETE."' onclick='return confirm(\""._PICAL_CNFM_DELETE_YN."\")' />
 				".( ! empty( $is_extracted_record ) ? "<input type='submit' name='delete_one' value='"._PICAL_BTN_DELETE_ONE."' onclick='return confirm(\""._PICAL_CNFM_DELETE_YN."\")' />" : "" )."
 				".$GLOBALS['xoopsGTicket']->getTicketHtml( __LINE__ )."
 			</form>\n" ;
@@ -1836,8 +1807,9 @@ function get_schedule_view_html( $for_print = false )
 
 	// 表示部
 	$ret = "
+<div id='piCal_page'>
 <h2>"._PICAL_MB_TITLE_EVENTINFO." <small>-"._PICAL_MB_SUBTITLE_EVENTDETAIL."-</small></h2>
-	<table border='0' cellpadding='0' cellspacing='2'>
+	<table id='details' >
 	<tr>
 		<td class='head'>"._PICAL_TH_SUMMARY."</td>
 		<td class='even'>$summary</td>
@@ -1886,21 +1858,12 @@ function get_schedule_view_html( $for_print = false )
 		<td class='head'>"._PICAL_TH_LASTMODIFIED."</td>
 		<td class='even'>$last_modified</td>
 	</tr>
-	<tr>
-		<td></td>
-		<td align='center'>
+	</table>
 			<div style='float:left; margin: 2px;'>$edit_button</div>
 			<div style='float:left; margin: 2px;'>$delete_button</div>
 			<div style='float:left; margin: 2px;'>$ics_output_button</div>
-		</td>
-	</tr>
-	<tr>
-		<td><img src='$this->images_url/spacer.gif' alt='' width='150' height='4' /></td>		<td width='100%'></td>
-	</tr>
-	<tr>
-		<td width='100%' align='right' colspan='2'>".PICAL_COPYRIGHT."</td>
-	</tr>
-	</table>\n" ;
+		  <p class='m_right'><img src='$this->images_url/spacer.gif' alt='' width='150' height='4' /></td>		<td width='100%'></p>
+	</div>\n" ;
 
 	// for meta discription // naao
 	$this->event->start_datetime_str = $start_datetime_str ;
@@ -1953,9 +1916,9 @@ function get_schedule_edit_html( )
 		$groupid = $event->groupid ;
 		$rrule = $event->rrule ;
 		$admission_status = $event->admission ? _PICAL_MB_EVENT_ADMITTED : _PICAL_MB_EVENT_NEEDADMIT ;
-		$update_button = $editable ? "<input name='update' type='submit' value='"._PICAL_BTN_SUBMITCHANGES."' />" : "" ;
-		$insert_button = "<input name='saveas' type='submit' value='"._PICAL_BTN_SAVEAS."' onclick='return confirm(\""._PICAL_CNFM_SAVEAS_YN."\")' />" ;
-		$delete_button = $deletable ? "<input name='delete' type='submit' value='"._PICAL_BTN_DELETE."' onclick='return confirm(\""._PICAL_CNFM_DELETE_YN."\")' />" : "" ;
+		$update_button = $editable ? "<input class='btn' name='update' type='submit' value='"._PICAL_BTN_SUBMITCHANGES."' />" : "" ;
+		$insert_button = "<input class='btn' name='saveas' type='submit' value='"._PICAL_BTN_SAVEAS."' onclick='return confirm(\""._PICAL_CNFM_SAVEAS_YN."\")' />" ;
+		$delete_button = $deletable ? "<input class='btn' name='delete' type='submit' value='"._PICAL_BTN_DELETE."' onclick='return confirm(\""._PICAL_CNFM_DELETE_YN."\")' />" : "" ;
 		$tz_options = $this->get_tz_options( $event->event_tz ) ;
 		$poster_tz = $event->poster_tz ;
 
@@ -2031,7 +1994,7 @@ function get_schedule_edit_html( )
 		$end_min = 0 ;
 		$admission_status = _PICAL_MB_EVENT_NOTREGISTER ;
 		$update_button = '' ;
-		$insert_button = "<input name='insert' type='submit' value='"._PICAL_BTN_NEWINSERTED."' />" ;
+		$insert_button = "<input class='btn' name='insert' type='submit' value='"._PICAL_BTN_NEWINSERTED."' />" ;
 		$delete_button = '' ;
 		$allday_checkbox = $allday_select = "" ;
 		$allday_bit1 = $allday_bit2 = $allday_bit3 = $allday_bit4 = "" ;
@@ -2126,18 +2089,14 @@ function get_schedule_edit_html( )
 	<input type='hidden' name='last_smode' value='$smode' />
 	<input type='hidden' name='last_caldate' value='$this->caldate' />
 	<input type='hidden' name='poster_tz' value='$poster_tz' />
-	<table border='0' cellpadding='0' cellspacing='2'>
+	<table class='piCal_input'>
 	<tr>
 		<td class='head'>"._PICAL_TH_SUMMARY."</td>
-		<td class='even'><input type='text' name='summary' size='60' maxlength='250' value='$summary' /></td>
-	</tr>
-	<tr>
-		<td class='head'>"._PICAL_TH_TIMEZONE."</td>
-		<td class='even'><select name='event_tz' $select_timezone_disabled>$tz_options</select></td>
+		<td class='even pi_text'><input type='text' name='summary' size='60' maxlength='250' value='$summary' /></td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_STARTDATETIME."</td>
-		<td class='even'>
+		<td class='even pi_st'>
 			$textbox_start_date &nbsp;
 			{$select_start_hour} {$select_start_min}"._PICAL_MB_MINUTE_SUF."
 </select>
@@ -2145,14 +2104,14 @@ function get_schedule_edit_html( )
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_ENDDATETIME."</td>
-		<td class='even'>
+		<td class='even pi_et'>
 			$textbox_end_date &nbsp;
 			{$select_end_hour} {$select_end_min}"._PICAL_MB_MINUTE_SUF."
 		</td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_ALLDAYOPTIONS."</td>
-		<td class='even'>
+		<td class='even pi_op'>
 			<fieldset>
 				<legend class='blockTitle'><input type='checkbox' name='allday' value='1' $allday_checkbox onClick='document.MainForm.event_tz.disabled=document.MainForm.StartHour.disabled=document.MainForm.StartMin.disabled=document.MainForm.EndHour.disabled=document.MainForm.EndMin.disabled=this.checked' />"._PICAL_MB_ALLDAY_EVENT."</legend>
 				<input type='checkbox' name='allday_bits[]' value='1' {$allday_bit1} />"._PICAL_MB_LONG_EVENT." &nbsp;  <input type='checkbox' name='allday_bits[]' value='2' {$allday_bit2} />"._PICAL_MB_LONG_SPECIALDAY." &nbsp;  <!-- <input type='checkbox' name='allday_bits[]' value='3' {$allday_bit3} />rsv3 &nbsp;  <input type='checkbox' name='allday_bits[]' value='4' {$allday_bit4} />rsv4 -->
@@ -2161,38 +2120,38 @@ function get_schedule_edit_html( )
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_LOCATION."</td>
-		<td class='even'><input type='text' name='location' size='40' maxlength='250' value='$location' /></td>
+		<td class='even pi_location'><input type='text' name='location' size='40' maxlength='250' value='$location' /></td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_CONTACT."</td>
-		<td class='even'><input type='text' name='contact' size='50' maxlength='250' value='$contact' /></td>
+		<td class='even pi_contact'><input type='text' name='contact' size='50' maxlength='250' value='$contact' /></td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_DESCRIPTION."</td>
-		<td class='even'>$description_textarea</td>
+		<td class='even pi_description'>$description_textarea</td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_CATEGORIES."</td>
-		<td class='even'>$category_checkboxes</td>
+		<td class='even pi_cat'>$category_checkboxes</td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_CLASS."</td>
-		<td class='even'><input type='radio' name='class' value='PUBLIC' $class_public onClick='document.MainForm.groupid.disabled=true' />"._PICAL_MB_PUBLIC." &nbsp;  &nbsp; <input type='radio' name='class' value='PRIVATE' $class_private onClick='document.MainForm.groupid.disabled=false' />"._PICAL_MB_PRIVATE.sprintf( _PICAL_MB_PRIVATETARGET , $select_private )."</td>
+		<td class='even pi_th'><input type='radio' name='class' value='PUBLIC' $class_public onClick='document.MainForm.groupid.disabled=true' />"._PICAL_MB_PUBLIC." &nbsp;  &nbsp; <input type='radio' name='class' value='PRIVATE' $class_private onClick='document.MainForm.groupid.disabled=false' />"._PICAL_MB_PRIVATE.sprintf( _PICAL_MB_PRIVATETARGET , $select_private )."</td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_RRULE."</td>
-		<td class='even'>" . $this->rrule_to_form( $rrule , $end_ymd ) . "</td>
+		<td class='even pi_rule'>" . $this->rrule_to_form( $rrule , $end_ymd ) . "</td>
 	</tr>
 	<tr>
 		<td class='head'>"._PICAL_TH_ADMISSIONSTATUS."</td>
-		<td class='even'>$admission_status</td>
+		<td class='even pi_ad'>$admission_status</td>
 	</tr>\n" ;
 
 	if( $editable ) {
 	$ret .= "
 	<tr>
 		<td style='text-align:center' colspan='2'>
-			<input name='reset' type='reset' value='"._PICAL_BTN_RESET."' />
+			<input class='btn' name='reset' type='reset' value='"._PICAL_BTN_RESET."' />
 			$update_button
 			$insert_button
 			$delete_button
@@ -2203,9 +2162,6 @@ function get_schedule_edit_html( )
 	$ret .= "
 	<tr>
 		<td><img src='$this->images_url/spacer.gif' alt='' width='150' height='4' /></td>		<td width='100%'></td>
-	</tr>
-	<tr>
-		<td width='100%' align='right' colspan='2'>".PICAL_COPYRIGHT."</td>
 	</tr>
 	</table>
 </form>
@@ -2453,9 +2409,13 @@ function redirect( $query )
 
 
 // -12.0〜12.0までの値を受けて、(GMT+HH:MM) という文字列を返す
+//function get_tz_for_display( $offset )
+//{
+//	return "(GMT" . ( $offset >= 0 ? "+" : "-" ) . sprintf( "%02d:%02d" , abs( $offset ) , abs( $offset ) * 60 % 60 ) . ")" ;
+//}
 function get_tz_for_display( $offset )
 {
-	return "(GMT" . ( $offset >= 0 ? "+" : "-" ) . sprintf( "%02d:%02d" , abs( $offset ) , abs( $offset ) * 60 % 60 ) . ")" ;
+	return "" ;
 }
 
 
@@ -2976,8 +2936,8 @@ function output_ics_confirm( $post_target , $target = '_self' )
 	$webcal_url = str_replace( 'http://' , 'webcal://' , $post_target ) ;
 	// 確認フォームを返す
 	return "
-	<div style='text-align:center;width:100%;'>&nbsp;<br /><b>"._PICAL_MB_ICALSELECTPLATFORM."</b><br />&nbsp;</div>
-	<table border='0' cellpadding='5' cellspacing='2' width='100%'>
+	<div>&nbsp;<br /><b>"._PICAL_MB_ICALSELECTPLATFORM."</b><br />&nbsp;</div>
+	<table>
 	<tr>
 	<td align='right' width='50%'>
 	<form action='$post_target?output_ics=1' method='post' target='$target'>
@@ -3464,7 +3424,7 @@ function rrule_to_form( $rrule , $until_init )
 	}
 
 	// 月選択チェックボックスの展開
-	$bymonth_checkbox = "<table border='0' cellpadding='2'><tr>\n" ;
+	$bymonth_checkbox = "<table><tr>\n" ;
 	foreach( $bymonths_checked as $key => $val ) {
 		$bymonth_checkbox .= "<td><input type='checkbox' name='rrule_bymonths[]' value='$key' $val />{$this->month_short_names[$key]}</td>\n" ;
 		if( $key == 6 ) $bymonth_checkbox .= "</tr>\n<tr>\n" ;
@@ -3511,7 +3471,7 @@ function rrule_to_form( $rrule , $until_init )
 					<legend class='blockTitle'><input type='radio' name='rrule_freq' value='yearly' $yearly_checked />"._PICAL_RR_FREQYEARLY."</legend>
 					"._PICAL_RR_FREQYEARLY_PRE."<input type='text' size='2' name='rrule_yearly_interval' value='$yearly_interval_init' /> "._PICAL_RR_FREQYEARLY_SUF." <br />
 					$bymonth_checkbox <br />
-					<select name='rrule_yearly_byday'>
+					<select id='rrule_yearly_byday' name='rrule_yearly_byday'>
 						<option value=''>"._PICAL_RR_S_SAMEASBDATE."</option>
 						$byday_m_options
 					</select>

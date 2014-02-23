@@ -60,6 +60,7 @@ class piCal
 	var $isadmin = false ;			// Is admin or not
 
 	// ANOTHER public properties
+	var $db ;					// xoopsDB object
 	var $conn ;					// MySQLとの接続ハンドル (予定取得をする時セット)
 	var $table = 'pical_event' ;		// table name for events
 	var $cat_table = 'pical_cat' ;		// table name for categories
@@ -110,6 +111,7 @@ class piCal
 // Constructor
 public function __construct( $target_date = "" , $language = "japanese" , $reload = false )
 {
+	$this->db = XoopsDatabaseFactory::getDatabaseConnection();
 	// 日付のセット
 	if( $target_date ) {
 		$this->set_date( $target_date ) ;
@@ -302,12 +304,12 @@ function get_date_schedule( $get_target = '' )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 当日のスケジュール取得
-	$yrs = mysql_query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
-	$num_rows = mysql_num_rows( $yrs ) ;
+	$yrs = $this->db->query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" ) ;
+	$num_rows = $this->db->getRowsNum( $yrs ) ;
 
 	if( $num_rows == 0 ) $ret .= _PICAL_MB_NOEVENT."\n" ;
-	else while( $event = mysql_fetch_object( $yrs ) ) {
-
+	else while( $event = $this->db->fetchArray( $yrs ) ) {
+		$event = (object)$event;
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
 		if( $event->allday ) {
@@ -372,15 +374,15 @@ function get_coming_schedule( $get_target = '' , $num = 5 )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 当日以降のスケジュール取得
-	$yrs = mysql_query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
-	$num_rows = mysql_num_rows( $yrs ) ;
+	$yrs = $this->db->query( "SELECT start,end,summary,id,allday FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" ) ;
+	$num_rows = $this->db->getRowsNum( $yrs ) ;
 
 	if( $num_rows == 0 ) $ret .= "
 	  <dl class='no_border'><dt></dt><dd> "
 		._PICAL_MB_NOEVENT.
 		"</dd></dl>\n" ;
 	else for( $i = 0 ; $i < $num ; $i ++ ) {
-		$event = mysql_fetch_object( $yrs ) ;
+		$event = (object)$this->db->fetchArray( $yrs ) ;
 		if( $event == false ) break ;
 		$summary = $this->text_sanitizer_for_show( $event->summary ) ;
 
@@ -457,8 +459,9 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 	// CLASS関連のWHERE条件取得
 	$whr_class = $this->get_where_about_class() ;
 
-/*	$yrs = mysql_query( "SELECT start,end,allday FROM $this->table WHERE admission > 0 AND start < ".($end + 86400)." AND end > ".($start - 86400)." AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
-	while( $event = mysql_fetch_object( $yrs ) ) {
+/*	$yrs = $this->db->query( "SELECT start,end,allday FROM $this->table WHERE admission > 0 AND start < ".($end + 86400)." AND end > ".($start - 86400)." AND ($whr_categories) AND ($whr_class)" ) ;
+	while( $event = $this->db->fetchArray( $yrs ) ) {
+		$event = (object)$event;
 		$time = $event->start > $start ? $event->start : $start ;
 		if( ! $event->allday ) {
 			$time += $tzoffset ;
@@ -474,18 +477,18 @@ function get_flags_date_has_events( $range_start_s , $range_end_s )
 
 
 	// 全日イベント以外の処理
-	$result = mysql_query( "SELECT summary,id,start FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday <= 0" , $this->conn ) ;
+	$result = $this->db->query( "SELECT summary,id,start FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday <= 0" ) ;
 
-	while( list( $title , $id , $server_time ) = mysql_fetch_row( $result ) ) {
+	while( list( $title , $id , $server_time ) = $this->db->fetchRow( $result ) ) {
 		$user_time = $server_time + $tzoffset_s2u ;
 		if( date( 'n' , $user_time ) != $this->month ) continue ;
 		$ret[ date('j',$user_time) ] = 1 ;
 	}
 
 	// 全日イベント専用の処理
-	$result = mysql_query( "SELECT summary,id,start,end FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday > 0" , $this->conn ) ;
+	$result = $this->db->query( "SELECT summary,id,start,end FROM $this->table WHERE admission > 0 AND start >= $range_start_s AND start < $range_end_s AND ($whr_categories) AND ($whr_class) AND allday > 0" ) ;
 
-	while( list( $title , $id , $start_s , $end_s ) = mysql_fetch_row( $result ) ) {
+	while( list( $title , $id , $start_s , $end_s ) = $this->db->fetchRow( $result ) ) {
 		if( $start_s < $range_start_s ) $start_s = $range_start_s ;
 		if( $end_s > $range_end_s ) $end_s = $range_end_s ;
 
@@ -1062,17 +1065,17 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 長期イベントのUnique-IDを最大4件、取得しておく
-	$rs = mysql_query( "SELECT DISTINCT unique_id FROM $this->table WHERE ($whr_term) AND ($whr_categories) AND ($whr_class) AND (allday & 2) LIMIT 4" , $this->conn ) ;
+	$rs = $this->db->query( "SELECT DISTINCT unique_id FROM $this->table WHERE ($whr_term) AND ($whr_categories) AND ($whr_class) AND (allday & 2) LIMIT 4" ) ;
 	$long_event_ids = array() ;
 	$bit = 1 ;
-	while( $event = mysql_fetch_object( $rs ) ) {
-		$long_event_ids[ $bit ] = $event->unique_id ;
+	while( $event = $this->db->fetchArray( $rs ) ) {
+		$long_event_ids[ $bit ] = $event['unique_id'] ;
 		$bit ++ ;
 	}
 
 	// 一ヶ月分のスケジュールをまとめて取得しておく
-	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,unique_id,categories FROM $this->table WHERE ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
-	$numrows_yrs = mysql_num_rows( $yrs ) ;
+	$yrs = $this->db->query( "SELECT start,end,summary,id,allday,admission,uid,unique_id,categories FROM $this->table WHERE ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" ) ;
+	$numrows_yrs = $this->db->getRowsNum( $yrs ) ;
 
 	// カレンダーBODY部表示
 	for( $week = 0 ; $week < 6 ; $week ++ ) {
@@ -1106,8 +1109,9 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			$waitings = 0 ;
 			$event_str = "<ul class='event_info'>" ; 			// marine mod 20130822
 			$long_event = 0 ;
-			if( $numrows_yrs > 0 ) mysql_data_seek( $yrs , 0 ) ;
-			while( $event = mysql_fetch_object( $yrs ) ) {
+			if( $numrows_yrs > 0 ) $this->sql_data_seek( $yrs , 0 ) ;
+			while( $event = $this->db->fetchArray( $yrs ) ) {
+				$event = (object)$event;
 				// 対象イベントがこの日にかかっているかどうかのチェック
 				if( $event->allday ) {
 					if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
@@ -1300,10 +1304,10 @@ function get_weekly_html( )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 一週間分のスケジュールをまとめて取得しておく
-	$ars = mysql_query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
-	$numrows_ars = mysql_num_rows( $ars ) ;
-	$wrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission=0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" , $this->conn ) ;
-	$numrows_wrs = mysql_num_rows( $wrs ) ;
+	$ars = $this->db->query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" ) ;
+	$numrows_ars = $this->db->getRowsNum( $ars ) ;
+	$wrs = $this->db->query( "SELECT start,end,summary,id,allday,admission,uid FROM $this->table WHERE admission=0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start" ) ;
+	$numrows_wrs = $this->db->getRowsNum( $wrs ) ;
 
 	// カレンダーBODY部表示
 	$now_date = $wtop_date ;
@@ -1331,9 +1335,9 @@ function get_weekly_html( )
 
 
 		// 承認済みスケジュールデータの表示ループ
-		if( $numrows_ars > 0 ) mysql_data_seek( $ars , 0 ) ;
-		while( $event = mysql_fetch_object( $ars ) ) {
-
+		if( $numrows_ars > 0 ) $this->sql_data_seek( $ars , 0 ) ;
+		while( $event = $this->db->fetchArray( $ars ) ) {
+			$event = (object)$event;
 			// 対象イベントがこの日にかかっているかどうかのチェック
 			if( $event->allday ) {
 				if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
@@ -1376,9 +1380,9 @@ function get_weekly_html( )
 		// 未承認スケジュールの表示ループ（uidが一致するゲスト以外のレコードのみ）
 		if( $this->isadmin || $this->user_id > 0 ) {
 
-			if( $numrows_wrs > 0 ) mysql_data_seek( $wrs , 0 ) ;
-			while( $event = mysql_fetch_object( $wrs ) ) {
-
+			if( $numrows_wrs > 0 ) $this->sql_data_seek( $wrs , 0 ) ;
+			while( $event = $this->db->fetchArray( $wrs ) ) {
+				$event = (object)$event;
 				// 対象イベントがこの日にかかっているかどうかのチェック
 				if( $event->allday ) {
 					if( $event->start >= $now_unixtime + 86400 || $event->end <= $now_unixtime ) continue ;
@@ -1529,12 +1533,12 @@ function get_daily_html( )
 	$whr_class = $this->get_where_about_class() ;
 
 	// 当日のスケジュール取得・表示
-	$yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
-	$num_rows = mysql_num_rows( $yrs ) ;
+	$yrs = $this->db->query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission>0 AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" ) ;
+	$num_rows = $this->db->getRowsNum( $yrs ) ;
 
 	if( $num_rows == 0 ) $ret .= "<table><tr><td></td><td>"._PICAL_MB_NOEVENT."</td></tr>\n" ;
-	else while( $event = mysql_fetch_object( $yrs ) ) {
-
+	else while( $event = $this->db->fetchArray( $yrs ) ) {
+		$event = (object)$event;
 		if( $event->allday ) {
 			// 全日イベント（時差計算なし）
 			$time_part = "             <img border='0' src='$this->images_url/dot_allday.gif' />" ;
@@ -1565,10 +1569,10 @@ function get_daily_html( )
 	// 未承認スケジュール取得・表示（uidが一致するゲスト以外のレコードのみ）
 	if( $this->isadmin || $this->user_id > 0 ) {
 	  $whr_uid = $this->isadmin ? "1" : "uid=$this->user_id " ;
-	  $yrs = mysql_query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission=0 AND $whr_uid AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" , $this->conn ) ;
+	  $yrs = $this->db->query( "SELECT start,end,summary,id,allday,admission,uid,description,(start>='$toptime_of_day') AS is_start_date,(end<='$bottomtime_of_day') AS is_end_date FROM $this->table WHERE admission=0 AND $whr_uid AND ($whr_term) AND ($whr_categories) AND ($whr_class) ORDER BY start,end" ) ;
 
-	  while( $event = mysql_fetch_object( $yrs ) ) {
-
+	  while( $event = $this->db->fetchArray( $yrs ) ) {
+	  	$event = (object)$event;
 		if( $event->allday ) {
 			// 全日イベント
 			$time_part = "             <img border='0' src='$this->images_url/dot_notadmit.gif' />" ;
@@ -1647,9 +1651,9 @@ function get_schedule_view_html( $for_print = false )
 	// 予定データの取得
 	if( empty( $_GET['event_id'] ) ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 	$this->original_id = $event_id = intval( $_GET['event_id'] ) ;
-	$yrs = mysql_query( "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstamp FROM $this->table WHERE id='$event_id' AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
-	if( mysql_num_rows( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
-	$event = mysql_fetch_object( $yrs ) ;
+	$yrs = $this->db->query( "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstamp FROM $this->table WHERE id='$event_id' AND ($whr_categories) AND ($whr_class)" ) ;
+	if( $this->db->getRowsNum( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
+	$event = (object)$this->db->fetchArray( $yrs ) ;
 
 	$this->event = $event ; // naao
 
@@ -1657,10 +1661,10 @@ function get_schedule_view_html( $for_print = false )
 	if( trim( $event->rrule ) != '' ) {
 		if( $event->rrule_pid != $event->id ) {
 			$event->id = $event->rrule_pid ;
-			$yrs = mysql_query( "SELECT id,start,start_date FROM $this->table WHERE id='$event->rrule_pid' AND ($whr_categories) AND ($whr_class)" , $this->conn ) ;
-			if( mysql_num_rows( $yrs ) >= 1 ) {
+			$yrs = $this->db->query( "SELECT id,start,start_date FROM $this->table WHERE id='$event->rrule_pid' AND ($whr_categories) AND ($whr_class)" ) ;
+			if( $this->db->getRowsNum( $yrs ) >= 1 ) {
 				$event->id = $event->rrule_pid ;
-				$parent_event = mysql_fetch_object( $yrs ) ;
+				$parent_event = (object)$this->db->fetchArray( $yrs ) ;
 				$this->original_id = $parent_event->id ;
 				$is_extracted_record = true ;
 			} else {
@@ -1888,9 +1892,9 @@ function get_schedule_edit_html( )
 		if( ! $this->editable ) die( "Not allowed" ) ;
 
 		$event_id = intval( $_GET[ 'event_id' ] ) ;
-		$yrs = mysql_query( "SELECT * FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
-		if( mysql_num_rows( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
-		$event = mysql_fetch_object( $yrs ) ;
+		$yrs = $this->db->query( "SELECT * FROM $this->table WHERE id='$event_id'" ) ;
+		if( $this->db->getRowsNum( $yrs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
+		$event = (object)$this->db->fetchArray( $yrs ) ;
 
 		// もともと編集・削除可能の設定でも、閲覧中のuidとレコードのuidが
 		// 一致せず、かつ、Adminモードでない時は、編集・削除不可とする
@@ -2269,16 +2273,16 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 
 		// まずは、rrule_pidを取得し、有効なidなら、同じrrule_pidを持つ
 		// 他レコードを削除
-		$rs = mysql_query( "SELECT rrule_pid FROM $this->table WHERE id='$event_id' $whr_sql_append" , $this->conn ) ;
-		if( ! ( $event = mysql_fetch_object( $rs ) ) ) die( "Record Not Exists." ) ;
+		$rs = $this->db->query( "SELECT rrule_pid FROM $this->table WHERE id='$event_id' $whr_sql_append" ) ;
+		if( ! ( $event = (object)$this->db->fetchArray( $rs ) ) ) die( "Record Not Exists." ) ;
 		if( $event->rrule_pid > 0 ) {
-			if( ! mysql_query( "DELETE FROM $this->table WHERE rrule_pid='$event->rrule_pid' AND id<>'$event_id'" , $this->conn ) ) echo mysql_error() ;
+			if( ! $this->db->query( "DELETE FROM $this->table WHERE rrule_pid='$event->rrule_pid' AND id<>'$event_id'" ) ) echo $this->db->error() ;
 		}
 
 		// 対象レコードのUPDATE処理
 		if( $rrule != '' ) $set_str .= ", rrule_pid=id" ;
 		$sql = "UPDATE $this->table SET $set_str , rrule='$rrule' , sequence=sequence+1 WHERE id='$event_id' $whr_sql_append" ;
-		if( ! mysql_query( $sql , $this->conn ) ) echo mysql_error() ;
+		if( ! $this->db->query( $sql ) ) echo $this->db->error() ;
 
 		// RRULEから、子レコードを展開
 		if( $rrule != '' ) {
@@ -2296,12 +2300,12 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 
 		// 初回(親)レコードのINSERT処理
 		$sql = "INSERT INTO $this->table SET $set_str , rrule='$rrule' , sequence=0" ;
-		if( ! mysql_query( $sql , $this->conn ) ) echo mysql_error() ;
+		if( ! $this->db->query( $sql ) ) echo $this->db->error() ;
 		// 親レコードへ unique_id,rrule_pid の計算と登録
-		$event_id = mysql_insert_id( $this->conn ) ;
+		$event_id = $this->db->getInsertId() ;
 		$unique_id = 'pical060-' . md5( "{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}$event_id") ;
 		$rrule_pid = $rrule ? $event_id : 0 ;
-		mysql_query( "UPDATE $this->table SET unique_id='$unique_id',rrule_pid='$rrule_pid' WHERE id='$event_id'" , $this->conn ) ;
+		$this->db->query( "UPDATE $this->table SET unique_id='$unique_id',rrule_pid='$rrule_pid' WHERE id='$event_id'" ) ;
 
 		// RRULEから、子レコードを展開
 		if( $rrule != '' ) {
@@ -2332,19 +2336,19 @@ function delete_schedule( $whr_sql_append = '' , $eval_after = null )
 
 		// まずは、rrule_pidを取得し、有効なidなら、同じrrule_pidを持つ
 		// 全レコードを削除
-		$rs = mysql_query( "SELECT rrule_pid FROM $this->table WHERE id='$event_id' $whr_sql_append" , $this->conn ) ;
-		if( ! ( $event = mysql_fetch_object( $rs ) ) ) die( "Record Not Exists." ) ;
+		$rs = $this->db->query( "SELECT rrule_pid FROM $this->table WHERE id='$event_id' $whr_sql_append" ) ;
+		if( ! ( $event = (object)$this->db->fetchArray( $rs ) ) ) die( "Record Not Exists." ) ;
 		if( $event->rrule_pid > 0 ) {
-			if( ! mysql_query( "DELETE FROM $this->table WHERE rrule_pid='$event->rrule_pid' $whr_sql_append" , $this->conn ) ) echo mysql_error() ;
+			if( ! $this->db->query( "DELETE FROM $this->table WHERE rrule_pid='$event->rrule_pid' $whr_sql_append" ) ) echo $this->db->error() ;
 			// 削除成功後の追加処理をevalで受ける (XOOPSでは、コメントの削除）
-			if( mysql_affected_rows() > 0 && isset( $eval_after ) ) {
+			if( $this->db->getAffectedRows() > 0 && isset( $eval_after ) ) {
 				$id = $event->rrule_pid ;
 				eval( $eval_after ) ;
 			}
 		} else {
-			if( ! mysql_query( "DELETE FROM $this->table WHERE id='$event_id' $whr_sql_append" , $this->conn ) ) echo mysql_error() ;
+			if( ! $this->db->query( "DELETE FROM $this->table WHERE id='$event_id' $whr_sql_append" ) ) echo $this->db->error() ;
 			// 削除成功後の追加処理をevalで受ける (XOOPSでは、コメントの削除）
-			if( mysql_affected_rows() == 1 && isset( $eval_after ) ) {
+			if( $this->db->getAffectedRows() == 1 && isset( $eval_after ) ) {
 				$id = $event_id ;
 				eval( $eval_after ) ;
 			}
@@ -2365,7 +2369,7 @@ function delete_schedule_one( $whr_sql_append = '' )
 
 		$event_id = intval( $_POST[ 'subevent_id' ] ) ;
 
-		if( ! mysql_query( "DELETE FROM $this->table WHERE id='$event_id' AND rrule_pid <> id $whr_sql_append" , $this->conn ) ) echo mysql_error() ;
+		if( ! $this->db->query( "DELETE FROM $this->table WHERE id='$event_id' AND rrule_pid <> id $whr_sql_append" ) ) echo $this->db->error() ;
 
 	}
 	$last_smode = preg_replace( '/[^a-zA-Z0-9_-]/' , '' , @$_POST['last_smode'] ) ;
@@ -2969,8 +2973,8 @@ function output_ics( )
 		// $_GET[ 'event_id' ] による一件だけの指定の場合
 		$event_id = intval( $_GET['event_id'] ) ;
 		$event_ids = array( $event_id ) ;
-		$rs = mysql_query( "SELECT summary AS udtstmp FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
-		if( mysql_num_rows( $rs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
+		$rs = $this->db->query( "SELECT summary AS udtstmp FROM $this->table WHERE id='$event_id'" ) ;
+		if( $this->db->getRowsNum( $rs ) < 1 ) die( _PICAL_ERR_INVALID_EVENT_ID ) ;
 		$summary = mysql_result( $rs , 0 , 0 ) ;
 		// 件名 を X-WR-CALNAME とする
 		$x_wr_calname = $summary ;
@@ -3022,8 +3026,8 @@ METHOD:PUBLISH\r\n" ;
 
 		$event_id = intval( $event_id ) ;
 		$sql = "SELECT *,UNIX_TIMESTAMP(dtstamp) AS udtstmp,DATE_ADD(end_date,INTERVAL 1 DAY) AS end_date_offseted FROM $this->table WHERE id='$event_id' AND ($whr_categories) AND ($whr_class)" ;
-		if( ! $rs = mysql_query( $sql , $this->conn ) ) echo mysql_error() ;
-		$event = mysql_fetch_object( $rs ) ;
+		if( ! $rs = $this->db->query( $sql ) ) echo $this->db->error() ;
+		$event = (object)$this->db->fetchArray( $rs ) ;
 		if( ! $event ) continue ;
 
 		if( isset( $event->start_date ) ) {
@@ -3152,8 +3156,8 @@ function import_ics_via_fopen( $uri , $force_http = true , $user_uri = '' )
 	foreach( $setsqls as $setsql ) {
 		$sql = "INSERT INTO $this->table SET $setsql,admission=1,uid=$this->user_id,poster_tz='$this->user_TZ',server_tz='$this->server_TZ'" ;
 
-		if( ! mysql_query( $sql , $this->conn ) ) die( mysql_error() ) ;
-		$this->update_record_after_import( mysql_insert_id( $this->conn ) ) ;
+		if( ! $this->db->query( $sql ) ) die( $this->db->error() ) ;
+		$this->update_record_after_import( $this->db->getInsertId() ) ;
 
 		$count ++ ;
 	}
@@ -3181,8 +3185,8 @@ function import_ics_via_upload( $userfile )
 	foreach( $setsqls as $setsql ) {
 		$sql = "INSERT INTO $this->table SET $setsql,admission=1,uid=$this->user_id,poster_tz='$this->user_TZ',server_tz='$this->server_TZ'" ;
 
-		if( ! mysql_query( $sql , $this->conn ) ) die( mysql_error() ) ;
-		$this->update_record_after_import( mysql_insert_id( $this->conn ) ) ;
+		if( ! $this->db->query( $sql ) ) die( $this->db->error() ) ;
+		$this->update_record_after_import( $this->db->getInsertId() ) ;
 
 		$count ++ ;
 	}
@@ -3195,8 +3199,8 @@ function import_ics_via_upload( $userfile )
 // １レコードを読み込み後に行う処理 （rruleの展開、categoriesのcid化など）
 function update_record_after_import( $event_id )
 {
-	$rs = mysql_query( "SELECT categories,rrule FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
-	$event = mysql_fetch_object( $rs ) ;
+	$rs = $this->db->query( "SELECT categories,rrule FROM $this->table WHERE id='$event_id'" ) ;
+	$event = (object)$this->db->fetchArray( $rs ) ;
 
 	// categories の cid化 ( '\,' -> ',' はOutlook対策)
 	$event->categories = str_replace( '\,' , ',' , $event->categories ) ;
@@ -3215,7 +3219,7 @@ function update_record_after_import( $event_id )
 	$rrule_pid = $event->rrule ? $event_id : 0 ;
 
 	// レコード更新
-	mysql_query( "UPDATE $this->table SET categories='$categories',rrule_pid='$rrule_pid' WHERE id='$event_id'" , $this->conn ) ;
+	$this->db->query( "UPDATE $this->table SET categories='$categories',rrule_pid='$rrule_pid' WHERE id='$event_id'" ) ;
 
 	// RRULEから、子レコードを展開
 	if( $event->rrule != '' ) {
@@ -3589,9 +3593,9 @@ function rrule_from_post( $start , $allday_flag )
 // 渡されたevent_idを初回(親)として、RRULEを展開してデータベースに反映
 function rrule_extract( $event_id )
 {
-	$yrs = mysql_query( "SELECT *,TO_DAYS(end_date)-TO_DAYS(start_date) AS date_diff FROM $this->table WHERE id='$event_id'" , $this->conn ) ;
-	if( mysql_num_rows( $yrs ) < 1 ) return ;
-	$event = mysql_fetch_object( $yrs ) ;
+	$yrs = $this->db->query( "SELECT *,TO_DAYS(end_date)-TO_DAYS(start_date) AS date_diff FROM $this->table WHERE id='$event_id'" ) ;
+	if( $this->db->getRowsNum( $yrs ) < 1 ) return ;
+	$event = (object)$this->db->fetchArray( $yrs ) ;
 
 	if( $event->rrule == '' ) return ;
 
@@ -3916,10 +3920,22 @@ function rrule_extract( $event_id )
 
 	// echo "<pre>" ; var_dump( $sqls ) ; echo "</pre>" ; exit ;
 	foreach( $sqls as $sql ) {
-		mysql_query( $sql , $this->conn ) ;
+		$this->db->query( $sql ) ;
 	}
 }
 
+function sql_data_seek( $result , $offset ) {
+	if (is_object($this->db->conn)) {
+		switch (get_class($this->db->conn)) {
+			case 'mysqli':
+				return mysqli_data_seek($result, $offset);
+			default:
+				return false;
+		}
+	} else {
+		return mysql_data_seek($result, $offset);
+	}
+}
 
 // The End of Class
 }

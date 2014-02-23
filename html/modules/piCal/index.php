@@ -18,8 +18,6 @@
 	// $xoopsConfig[ 'language' ] = 'french' ;
 
 	// MySQLへの接続
-	// $conn = mysql_connect( XOOPS_DB_HOST , XOOPS_DB_USER , XOOPS_DB_PASS ) or die( "Could not connect." ) ;
-	// mysql_select_db( XOOPS_DB_NAME , $conn ) ;
 	$conn = $xoopsDB->conn ;
 
 	// setting physical & virtual paths

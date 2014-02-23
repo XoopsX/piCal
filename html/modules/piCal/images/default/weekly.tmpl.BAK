@@ -54,7 +54,7 @@
     </tr>
     <tr>
       <td width='10'><img src='{SKINPATH}/spacer.gif' alt='' width='10' height='10' /></td>
-      <td align='right'><a href="{PRINT_LINK}" target="_blank"><img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" border="0" {PRINT_ATTRIB} /></a></td>
+      <td class='m_right'><a href="{PRINT_LINK}" target="_blank"><img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" border="0" {PRINT_ATTRIB} /></a></td>
     </tr>
   </table>
 </pattemplate:tmpl>

@@ -1,22 +1,27 @@
 <pattemplate:tmpl name="WholeBoard">
+<div id='piCal_TopController'><!-- Top Controller -->
+<div id='piCal_CatSelect'>{CATEGORIES_SELFORM}</div>
+<ul>
+<li><a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={CALDATE}'><img src='{SKINPATH}/month_on.gif' border='0' width='30' height='24' alt='{ICON_MONTHLY}' title='{ICON_MONTHLY}' />月表示</a></li>
+<li><a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}'><img src='{SKINPATH}/week_on.gif' border='0' width='30' height='24' alt='{ICON_WEEKLY}' title='{ICON_WEEKLY}' />週表示</a></li>
+<li><a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={CALDATE}'><img src='{SKINPATH}/day_on.gif' border='0' width='30' height='24' alt='{ICON_DAILY}' title='{ICON_DAILY}' />日表示</a></li>
+<li><a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}'><img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' />予定一覧</a></li>
+</ul>
+</div>
 <div id='piCal_page'>
-        <!-- Top Controller -->
-           <!-- <td nowrap='nowrap' colspan='7' align='center' bgcolor='{CALHEAD_BGCOLOR}'> -->
-               {CATEGORIES_SELFORM}
-               <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={PREV_YEAR}'><img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_YEAR}' title='{MB_PREV_YEAR}' /></a>
-               
-               {DISP_YEAR}
-               
-               <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={NEXT_YEAR}'><img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' /></a>
-                 
-                 <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={CALDATE}'><img src='{SKINPATH}/month_on.gif' border='0' width='30' height='24' alt='{ICON_MONTHLY}' title='{ICON_MONTHLY}' /></a>
-                 
-                 <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}'><img src='{SKINPATH}/week_on.gif' border='0' width='30' height='24' alt='{ICON_WEEKLY}' title='{ICON_WEEKLY}' /></a>
-                 
-                 <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={CALDATE}'><img src='{SKINPATH}/day_on.gif' border='0' width='30' height='24' alt='{ICON_DAILY}' title='{ICON_DAILY}' /></a>
-                 
-                 <a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}'><img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' /></a>
-                 
+<div id='piCal_year'>
+<a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={PREV_YEAR}'><img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_YEAR}' title='{MB_PREV_YEAR}' /></a>
+{DISP_YEAR}
+<a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={NEXT_YEAR}'><img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' /></a>
+
+	<div id='piCal_year_select'>
+        <form action='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;{QUERY_STRING}' method='post'>
+          <select id='pical_year' name='pical_year'>{YEAR_OPTIONS}</select> 
+          <input type='submit' id='pical_jumpcaldate' class="btn" name='pical_jumpcaldate' value='{LANG_JUMP}'>
+          <!-- <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly'>{MB_LINKTODAY}</a>  -->
+        </form>
+	</div>
+</div>                 
         <!-- body -->
         <table border='0' cellspacing='0' cellpadding='0' width='100%' style='border-collapse:collapse;'>
          <tr>
@@ -62,12 +67,7 @@
   <br />
   <!-- Controller -->
   <div class='bottom_controller controls'>
-        <form action='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;{QUERY_STRING}' method='post'>
-          <select id='pical_year' name='pical_year'>{YEAR_OPTIONS}</select> 
-          <input type='submit' id='pical_jumpcaldate' class="btn" name='pical_jumpcaldate' value='{LANG_JUMP}'>
-          <!-- <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly'>{MB_LINKTODAY}</a>  -->
-        </form>
       <p class='m_right'><a href="{PRINT_LINK}" target="_blank"><img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" {PRINT_ATTRIB} /></a></p>
   </div>
-</div>
+</div><!-- piCal_page -->
 </pattemplate:tmpl>

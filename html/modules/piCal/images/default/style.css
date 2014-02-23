@@ -1,7 +1,20 @@
-/* Style sheet for piCal (you can add embed css's here) */
+/* Style sheet for piCal (default design) */
 
 tr.pical-monthly td { width: 90px; margin: 0; word-wrap:break-word; }
 tr.pical-monthly td.pical-weekmark { width: 10px; margin: 0; }
 
 table.pical-categoryform { table-layout:fixed; }
 td.pical-categoryform { margin: 4px 0; }
+
+.bottom_controller {
+	text-align: center;
+}
+.bottom_controller select#pical_year {
+	width:8em;
+	margin-top: 2px;
+	vertical-align:middle;
+}
+.bottom_controller input#pical_jumpcaldate {
+	margin-top:-7px;
+	vertical-align:middle;	
+}

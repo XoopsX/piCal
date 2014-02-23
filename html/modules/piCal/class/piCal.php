@@ -10,7 +10,7 @@ if( ! class_exists( 'piCal' ) ) {
 define( 'PICAL_COPYRIGHT' , "<a href='http://xoops.peak.ne.jp/' target='_blank'>piCal-0.93</a>, <a href='https://github.com/XoopsX/piCal' target='_blank'>piCal > 0.93</a>" ) ;
 define( 'PICAL_EVENT_TABLE' , 'pical_event' ) ;
 define( 'PICAL_CAT_TABLE' , 'pical_cat' ) ;
-define( 'PICAL_ERR_REPORTING_LEVEL' , defined('E_STRICT')? ( E_ALL ^ E_NOTICE ^ E_STRICT ) : ( E_ALL ^ E_NOTICE ) );
+define( 'PICAL_ERR_REPORTING_LEVEL' , version_compare( PHP_VERSION, '5.4.0', '>=' )? ( E_ALL ^ E_STRICT ^ E_NOTICE ) : ( E_ALL ^ E_NOTICE ) );
 
 
 class piCal

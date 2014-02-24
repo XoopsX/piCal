@@ -180,10 +180,10 @@ table#calbody ul.event_info li a {
 	text-decoration:none;
 	padding:2px 2px 2px 10px;
 	margin:2px 0 2px 0;
-	background: url("../../images/pointer.gif")  no-repeat 0px 3px;
+	background: url("./pointer.gif")  no-repeat 0px 3px;
 }
 table#calbody ul.event_info li a:hover   {
-	background:lightgreen url("../../images/pointer.gif")  no-repeat 0px 3px;
+	background:lightgreen url("./pointer.gif")  no-repeat 0px 3px;
 }
 
 table#calbody a.calday_holyday {

@@ -1157,8 +1157,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			// drawing the result of plugins
 			if( ! empty( $plugin_returns[ $date ] ) ) {
 				foreach( $plugin_returns[ $date ] as $item ) {
-					$event_str .= "<li><a href='{$item['link']}' class='event'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></li>\n" ;
-
+					$event_str .= "<li><a href='{$item['link']}' class='event' style='background-image:url($this->images_url/{$item['dotgif']})'>{$item['title']}</a></li>\n" ;
 				}
 			}
 			$event_str .= "</ul>";

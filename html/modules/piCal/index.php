@@ -105,6 +105,13 @@
 		}
 	}
 
+	// XCL 2.2.1.1 以降でもメインメニューのサブメニューが表示されるようにモジュールキャッシュをクリア
+	if (defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.1.1', '>=')) {
+		$module_handler =& xoops_gethandler('module');
+		$thisModule =& $module_handler->getByDirname($mydirname);
+		$thisModule->modinfo = null;
+	}
+
 	// XOOPSヘッダ出力
 	include( XOOPS_ROOT_PATH.'/header.php' ) ;
 

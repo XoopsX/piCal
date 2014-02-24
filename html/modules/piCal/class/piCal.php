@@ -1866,7 +1866,6 @@ function get_schedule_view_html( $for_print = false )
 			<div style='float:left; margin: 2px;'>$edit_button</div>
 			<div style='float:left; margin: 2px;'>$delete_button</div>
 			<div style='float:left; margin: 2px;'>$ics_output_button</div>
-		  <p class='m_right'><img src='$this->images_url/spacer.gif' alt='' width='150' height='4' /></td>		<td width='100%'></p>
 	</div>\n" ;
 
 	// for meta discription // naao

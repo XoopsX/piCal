@@ -1,23 +1,9 @@
 <pattemplate:tmpl name="WholeBoard">
 <div class='calframe'>
 <!-- header -->
-  <p class='calhead'>
-  {CATEGORIES_SELFORM}
-  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_YEAR}'>
-    <img src='{SKINPATH}/arrowleftleft.gif' width='18' height='14' border='0' alt='{MB_PREV_YEAR}' title='{MB_PREV_YEAR}' />
-  </a>
-  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_MONTH}'>
-    <img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_MONTH}' title='{MB_PREV_MONTH}' />
-  </a>
-  {YEAR_MONTH_TITLE}
-  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_MONTH}'>
-    <img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' />
-  </a>
-  <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_YEAR}'>
-    <img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' />
-  </a>
-  <br />
-    <font size='1'>
+  <div class='calhead'>
+   {CATEGORIES_SELFORM}
+   <div class='calmode'>
     <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}'>
     <img src='{SKINPATH}/year_on.gif' border='0' width='30' height='24' alt='{ICON_YEARLY}' title='{ICON_YEARLY}' /></a>
     <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}'>
@@ -26,8 +12,23 @@
     <img src='{SKINPATH}/day_on.gif' border='0' width='30' height='24' alt='{ICON_DAILY}' title='{ICON_DAILY}' /></a>
     <a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}'>
     <img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' /></a>
-    </font>
-  </p>
+   </div>
+   <div class="caltitle">
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_YEAR}'>
+      <img src='{SKINPATH}/arrowleftleft.gif' width='18' height='14' border='0' alt='{MB_PREV_YEAR}' title='{MB_PREV_YEAR}' />
+    </a>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={PREV_MONTH}'>
+      <img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_MONTH}' title='{MB_PREV_MONTH}' />
+    </a>
+    {YEAR_MONTH_TITLE}
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_MONTH}'>
+      <img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' />
+    </a>
+    <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={NEXT_YEAR}'>
+      <img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' />
+    </a>
+   </div>
+  </div>
   {CALENDAR_BODY}
 </div>
   <div class = "cal_selector">

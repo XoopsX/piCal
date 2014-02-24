@@ -2465,7 +2465,7 @@ function get_categories_selform( $get_target = '' , $smode = null )
 
 	$op = empty( $_GET['op'] ) ? '' : preg_replace('/[^a-zA-Z0-9_-]/','',$_GET['op']) ;
 
-	$ret = "<form action='$get_target' method='GET' style='margin:0px;'>\n" ;
+	$ret = "<form action='$get_target' method='GET'>\n" ;
 	$ret .= "<input type='hidden' name='caldate' value='$this->caldate' />\n" ;
 	$ret .= "<input type='hidden' name='smode' value='$smode' />\n" ;
 	$ret .= "<input type='hidden' name='op' value='$op' />\n" ;

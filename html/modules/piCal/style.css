@@ -15,7 +15,7 @@
 }
 
 
-.calframe p.calhead{
+.calframe .calhead{
     background-color: #eeeeee;
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
@@ -24,6 +24,21 @@
     padding: 5px 0;
     text-align: center;
 }
+
+.calhead form {
+	display: inline;
+	margin: 0;
+	float: left;
+}
+
+.calhead .calmode {
+	float: right;
+}
+
+.calhead img {
+	vertical-align: middle;
+}
+
 .calframe table{
 	width:100%;
     border-spacing: 0;

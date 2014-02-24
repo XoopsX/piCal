@@ -15,14 +15,21 @@
 }
 
 
-.calframe .calhead{
-    background-color: #eeeeee;
-    color: #444444;
-    font-family: Georgia,"Times New Roman",Times,serif;
-    font-size: 3em;
-    margin: 15px 0 0 0;
-    padding: 5px 0;
-    text-align: center;
+.calframe div.calhead{
+	background-color: #eeeeee;
+	color: #444444;
+	font-family: Georgia,"Times New Roman",Times,serif;
+	font-size: 2em;
+	margin: 15px 0 0 0;
+	padding: 5px 0;
+	text-align: center;
+	min-height: 24px;
+}
+
+span.calhead {
+	background-color: transparent;
+	font-family: Georgia,"Times New Roman",Times,serif;
+	font-size: 1.2em;
 }
 
 .calhead form {
@@ -310,29 +317,17 @@ ul.data_detail dl  dd a:hover {
 	border:none;
 }
 
-#ymdo_selects {
-	width:500px;
-	height:40px;
-	float: right;
+.ymdo_selects {
+	width: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
-#ymdo_selects select {
-	width:12em;
+.ymdo_selects form {
+	float: none;
+}
+.ymdo_selects select {
+	max-width:12em;
 	margin:2px 4px 0 0;
-}
-#ymdo_selects select:nth-child(1n) {
-	width:6em;
-}
-#ymdo_selects select:nth-child(2n) {
-	width:6em;
-}
-#ymdo_selects select:nth-child(3n) {
-	width:6em;
-}
-#ymdo_selects select:nth-child(4n) {
-	width:6em;
-}
-#ymdo_selects select:nth-child(5n) {
-	width:12em;
 }
 .m_sel {
 	width: 100%;

@@ -1152,12 +1152,12 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			}
 
 			// 未承認スケジュールは総数だけ表示
-			if( $waitings > 0 ) $event_str .= "<span style='color:#00FF00;font-size:10px;font-weight:normal;'>".sprintf( _PICAL_NTC_NUMBEROFNEEDADMIT , $waitings )."</span><br />\n" ;
+			if( $waitings > 0 ) $event_str .= "<li><span style='color:#00FF00;font-size:10px;font-weight:normal;'>".sprintf( _PICAL_NTC_NUMBEROFNEEDADMIT , $waitings )."</span></li>\n" ;
 
 			// drawing the result of plugins
 			if( ! empty( $plugin_returns[ $date ] ) ) {
 				foreach( $plugin_returns[ $date ] as $item ) {
-					$event_str .= "<a href='{$item['link']}' class='event'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a><br />\n" ;
+					$event_str .= "<li><a href='{$item['link']}' class='event'><img src='$this->images_url/{$item['dotgif']}' alt='{$item['title']}>' />{$item['title']}</a></li>\n" ;
 
 				}
 			}

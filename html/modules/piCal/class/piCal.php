@@ -941,9 +941,9 @@ function get_calendar_information( $mode = 'M' )
 	if( empty( $_POST[ 'pical_date' ] ) ) $date = $this->date ;
 	else $date = intval( $_POST[ 'pical_date' ] ) ;
 
-	// 年の選択肢(2001〜2020 とする)
+	// 年の選択肢(現在から前後の20年間とする)
 	$year_options = "" ;
-	for( $y = 2001 ; $y <= 2020 ; $y ++ ) {
+	for( $y = date('Y') - 9 ; $y <= date('Y') + 10 ; $y ++ ) {
 		if( $y == $year ) {
 			$year_options .= "\t\t\t<option value='$y' selected='selected'>".sprintf(strip_tags(_PICAL_FMT_YEAR),$y)."</option>\n" ;
 		} else {

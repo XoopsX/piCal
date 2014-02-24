@@ -35,6 +35,8 @@
     </div>
     {CALENDAR_BODY}
   </div>
+  <div class = "minical_left">{PREV_MINICAL}</div>
+  <div class = "minical_right">{NEXT_MINICAL}</div>
   <div class = "cal_selector">
     <form action='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;{QUERY_STRING}' method='post'>
       <select name='pical_year'>{YEAR_OPTIONS}</select>
@@ -43,8 +45,6 @@
       <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly'>{MB_LINKTODAY}</a>
     </form>
   </div>
-  <div class = "minical_left">{PREV_MINICAL}</div>
-  <div class = "minical_right">{NEXT_MINICAL}</div>
   <div class = "cal_footer">
     {COPYRIGHT}
     <a href="{PRINT_LINK}" target="_blank">

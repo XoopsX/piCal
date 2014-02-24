@@ -86,11 +86,13 @@
     </div>
     <!-- Controller -->
     <div class='bottom_controller controls'>
-      <form action='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;{QUERY_STRING}' method='post'>
-        <select id='pical_year' name='pical_year'>{YEAR_OPTIONS}</select>
-        <input type='submit' id='pical_jumpcaldate' class="btn" name='pical_jumpcaldate' value='{LANG_JUMP}'>
-        <!-- <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly'>{MB_LINKTODAY}</a>  -->
-      </form>
+      <div class = "cal_selector">
+        <form action='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;{QUERY_STRING}' method='post'>
+          <select id='pical_year' name='pical_year'>{YEAR_OPTIONS}</select>
+          <input type='submit' id='pical_jumpcaldate' class="btn" name='pical_jumpcaldate' value='{LANG_JUMP}'>
+          <!-- <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly'>{MB_LINKTODAY}</a>  -->
+        </form>
+      </div>
       <p class='m_right'>
         <a href="{PRINT_LINK}" target="_blank">
           <img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" {PRINT_ATTRIB} />

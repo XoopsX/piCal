@@ -1213,7 +1213,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 				$insert_link = "<a href='$get_target?cid=$this->now_cid&amp;smode=Monthly&amp;caldate=$link' class='stencil'>
 				<img src='$this->images_url/spacer.gif' alt='' border='0' width='14' height='12' /></a>" ;
 
-			$ret .= "<td>"
+			$ret .= "<td style='$background'>"
 			.$week_index
 			."<a href='$get_target?cid=$this->now_cid&amp;smode=Daily&amp;caldate=$link' class='$colorClass'>$date</a>"
 			.$insert_link

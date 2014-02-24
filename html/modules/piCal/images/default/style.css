@@ -256,6 +256,7 @@ table#minical a:hover {
 }
 table#minical th {
     height: 2em;
+    text-align: center;
 }
 
 table.piCal_input {

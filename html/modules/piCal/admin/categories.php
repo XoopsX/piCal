@@ -17,7 +17,7 @@ function display_edit_form( $cat , $form_title , $action )
 	// Description
 	$tarea = new XoopsFormDhtmlTextArea( '' , 'cat_desc' , htmlspecialchars( $cat->cat_desc , ENT_QUOTES ) , 15 , 60 ) ;
 	if ( defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.0.0', '>=') ) {
-		$tarea->setEditor('html');
+		$tarea->setEditor('bbcode');
 	}
 	$tarea_tray =  new XoopsFormElementTray( _AM_CAT_TH_DESC , '<br />' ) ;
 	$tarea_tray->addElement( $tarea ) ;

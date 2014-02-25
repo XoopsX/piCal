@@ -64,6 +64,23 @@ span.calhead {
 	float: right;
 }
 
+.calhead .catdesc {
+	font-size: 12pt;
+	background-color: rgba(255, 255, 255, 0.7);
+	padding: 0.5em;
+	margin: 10px 30px;
+	border-radius: 20px;
+}
+
+.calhead .catdesc p {
+	margin: 0;
+}
+
+.calhead .catdesc div {
+	background-color: transparent;
+	line-height: 100%;
+}
+
 .calhead img {
 	vertical-align: middle;
 }
@@ -181,6 +198,7 @@ table#calbody ul.event_info li a {
 	padding:2px 2px 2px 10px;
 	margin:2px 0 2px 0;
 	background: url("./pointer.gif")  no-repeat 0px 3px;
+	text-shadow: -1px -1px #FFF, 1px -1px #FFF, -1px 1px #FFF, 1px 1px #FFF;
 }
 table#calbody ul.event_info li a:hover   {
 	background:lightgreen url("./pointer.gif")  no-repeat 0px 3px;
@@ -360,7 +378,7 @@ ul.data_detail dl  dd a:hover {
 .m_sel {
 	width: 100%;
 	text-align: center;
-	margin-top: 50px;
+	margin-top: 20px;
 }
 .m_sel img {
 	vertical-align: middle;

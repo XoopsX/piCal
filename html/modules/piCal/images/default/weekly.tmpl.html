@@ -1,7 +1,7 @@
 <pattemplate:tmpl name="WholeBoard">
-  <div class='calframe'>
+  <div class='calframe calframe_weekly'>
     <!-- header -->
-    <div class='calhead'>
+    <div class='calhead calhead_weekly'>
       {CATEGORIES_SELFORM}
       <div class='calmode'>
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}'>
@@ -17,7 +17,7 @@
           <img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' />
         </a>
       </div>
-      <div class="caltitle_weekly caltitle">
+      <div class="caltitle caltitle_weekly">
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={PREV_MONTH}'>
           <img src='{SKINPATH}/arrowleftleft.gif' width='18' height='14' border='0' alt='{MB_PREV_MONTH}' title='{MB_PREV_MONTH}' />
         </a>
@@ -31,6 +31,9 @@
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={NEXT_MONTH}'>
           <img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' />
         </a>
+      </div>
+      <div class="catdesc catdesc_weekly">
+        {CATEGORY_DESCRIPTION}
       </div>
     </div>
     {CALENDAR_BODY}

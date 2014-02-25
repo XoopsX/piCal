@@ -702,6 +702,9 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
+	// Category description
+	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_yearly">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
+
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'Y' ) ) ;
 
@@ -755,6 +758,9 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	// カテゴリー選択ボックス
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
+	
+	// Category description
+	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_monthly">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
 
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'M' ) ) ;
@@ -820,6 +826,9 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
+	// Category description
+	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_weekly">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
+
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'W' ) ) ;
 
@@ -862,6 +871,9 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 	// カテゴリー選択ボックス
 	$tmpl->addVar( "WholeBoard" , "CATEGORIES_SELFORM" , $this->get_categories_selform( $get_target ) ) ;
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
+
+	// Category description
+	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_daily">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
 
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'D' ) ) ;
@@ -1506,14 +1518,7 @@ function get_daily_html( )
 
 	list( $bgcolor , $color ) =  $this->daytype_to_colors( $this->daytype ) ;
 
-	$ret = "
-	<table>
-	 <tr>
-	 <td class='calframe'>
-	 <table class='data_table'>
-	 <tr>
-	   <td colospan='7' valign='top' bgcolor='$bgcolor' style='$this->frame_css;background-color:$bgcolor'>
-	\n" ;
+	$ret = '';
 
 	// 時差を計算しつつ、WHERE節の期間に関する条件生成
 	$tzoffset = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
@@ -1609,17 +1614,15 @@ function get_daily_html( )
 	}
 
 	// 予定の追加（鉛筆アイコン）
-	if( $this->insertable ) $ret .= "
-	     </table>
-			 <p class='m_right'> &nbsp; <a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></p>
-
-	   </td>
-	 </tr>
-	 </table>
-	 </td>
-	 </tr>
-	</table>\n" ;
-
+	if( $this->insertable ) {
+		$ret .= "
+	</table>
+	<p class='m_right'> &nbsp; <a href='?cid=$this->now_cid&amp;smode=Daily&amp;action=Edit&amp;caldate=$this->caldate'><img src='$this->images_url/addevent.gif' border='0' width='14' height='12' />"._PICAL_MB_ADDEVENT."</a></p>\n";
+	} else {
+		$ret .= "
+	</table>\n";
+	}
+	
 	return $ret ;
 }
 

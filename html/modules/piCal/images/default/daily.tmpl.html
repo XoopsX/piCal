@@ -1,9 +1,9 @@
 <pattemplate:tmpl name="WholeBoard">
-  <div class='calframe'>
+  <div class='calframe calframe_daily'>
     <!-- header -->
-    <div class='calhead'>
+    <div class='calhead calhead_daily'>
       {CATEGORIES_SELFORM}
-      <div class='calmode'>
+      <div class='calmode calmode_daily'>
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}'>
           <img src='{SKINPATH}/year_on.gif' border='0' width='30' height='24' alt='{ICON_YEARLY}' title='{ICON_YEARLY}' />
         </a>
@@ -17,7 +17,7 @@
           <img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' />
         </a>
       </div>
-      <div class="caltitle_daily caltitle">
+      <div class="caltitle_daily caltitle_dail">
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={PREV_MONTH}'>
           <img src='{SKINPATH}/arrowleftleft.gif' width='18' height='14' border='0' alt='{MB_PREV_MONTH}' title='{MB_PREV_MONTH}' />
         </a>
@@ -32,15 +32,20 @@
           <img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' />
         </a>
       </div>
+      <div class="catdesc catdesc_daily">
+        {CATEGORY_DESCRIPTION}
+      </div>
     </div>
     {CALENDAR_BODY}
   </div>
-  <div align="center">
+  <div class = "cal_selector">
     <form action='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;{QUERY_STRING}' method='post'>
       {YMD_SELECTS}
       <input type='submit' name='pical_jumpcaldate' value='{LANG_JUMP}'>&nbsp; 
       <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily'>{MB_LINKTODAY}</a>
     </form>
+  </div>
+  <div class = "cal_footer">
     {COPYRIGHT}
     <a href="{PRINT_LINK}" target="_blank">
       <img src="{SKINPATH}/print.gif" alt="{LANG_PRINT}" title="{LANG_PRINT}" border="0" {PRINT_ATTRIB} />

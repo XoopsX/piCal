@@ -15,8 +15,12 @@ function display_edit_form( $cat , $form_title , $action )
 	$form->addElement( new XoopsFormText( _AM_CAT_TH_TITLE , 'cat_title' , 60 , 128 , htmlspecialchars( $cat->cat_title , ENT_QUOTES ) ) , true ) ;
 
 	// Description
+	$tarea = new XoopsFormDhtmlTextArea( '' , 'cat_desc' , htmlspecialchars( $cat->cat_desc , ENT_QUOTES ) , 15 , 60 ) ;
+	if ( defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.0.0', '>=') ) {
+		$tarea->setEditor('bbcode');
+	}
 	$tarea_tray =  new XoopsFormElementTray( _AM_CAT_TH_DESC , '<br />' ) ;
-	$tarea_tray->addElement( new XoopsFormDhtmlTextArea( '' , 'cat_desc' , htmlspecialchars( $cat->cat_desc , ENT_QUOTES ) , 15 , 60 ) ) ;
+	$tarea_tray->addElement( $tarea ) ;
 	$form->addElement( $tarea_tray ) ;
 
 	// Parent Category

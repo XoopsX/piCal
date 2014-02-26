@@ -10,7 +10,7 @@ define( 'PICAL_BLOCK_MONTHLY_CALENDAR_INCLUDED' , 1 ) ;
 
 function pical_monthly_calendar_show( $options )
 {
-	global $xoopsConfig , $xoopsDB, $xoopsTpl ;
+	global $xoopsConfig , $xoopsDB , $xoopsTpl ;
 
 	$mydirname = empty( $options[0] ) ? basename( dirname( dirname( __FILE__ ) ) ) : $options[0] ;
 

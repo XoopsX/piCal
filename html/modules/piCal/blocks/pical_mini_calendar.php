@@ -95,6 +95,9 @@ function pical_mini_calendar_show( $options )
 		}
 	}
 
+	// add CSS into xoops_module_header
+	$xoopsTpl->assign( "xoops_module_header" , $cal->get_CSS_link_tag() . $xoopsTpl->get_template_vars( 'xoops_module_header' ) ) ;;
+
 	return $block ;
 }
 

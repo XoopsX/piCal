@@ -159,6 +159,9 @@ function pical_minical_ex_show( $options )
 		$block['additional_get'] = $additional_get ;
 	}
 
+	// add CSS into xoops_module_header
+	$xoopsTpl->assign( "xoops_module_header" , $cal->get_CSS_link_tag() . $xoopsTpl->get_template_vars( 'xoops_module_header' ) ) ;;
+
 	return $block ;
 }
 

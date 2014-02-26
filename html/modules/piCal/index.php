@@ -115,8 +115,8 @@
 	// XOOPSヘッダ出力
 	include( XOOPS_ROOT_PATH.'/header.php' ) ;
 
-	// embed style sheet の出力 (thx Ryuji)
-	$xoopsTpl->assign( "xoops_module_header" , '<link rel="stylesheet" href="' . $cal->images_url . '/style.css"  media="all" type="text/css" />' . "\n" . $xoopsTpl->get_template_vars( 'xoops_module_header' ) ) ;;
+	// CSS ｆｉｌｅ
+	$xoopsTpl->assign( "xoops_module_header" , $cal->get_CSS_link_tag() . $xoopsTpl->get_template_vars( 'xoops_module_header' ) ) ;;
 	
 	// クローラーにリンクをへつらせない follow -> nofollow
 	$meta_robots = str_replace( ',follow' , ',nofollow' , $xoopsTpl->get_template_vars( "xoops_meta_robots" ) ) ;

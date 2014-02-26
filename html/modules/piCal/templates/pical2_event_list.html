@@ -1,6 +1,6 @@
 <{strip}>
 <div class='calframe'>
-	<div class='calhead'>
+	<div class='calhead calhead_list' style='background-color:<{$calhead_bgcolor}>'>
 		<{$categories_selform}>
 		<{* ICONS *}>
 		<div class='calmode'>
@@ -53,6 +53,11 @@
 				<{$lang_button_jump}>' />
 			</form>
 		</div>
+		<{if $cat_desc}>
+			<div class="catdesc catdesc_list">
+				<{$cat_desc}>
+			</div>
+		<{/if}>
 	</div>
 	<div class='m_sel'>
 		<hr />
@@ -128,9 +133,6 @@
 			<hr />
 		<{/if}>
 	</div>
-	<h3>
-		<{$cat_desc}>
-	</h3>
 	<form name='MainForm' action='
 		<{$mod_url}>/index.php' target='_blank' method='post' style='margin:0px;'>
 		<table>

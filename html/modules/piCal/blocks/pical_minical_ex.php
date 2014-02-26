@@ -15,7 +15,7 @@ if( ! defined( 'XOOPS_CUBE_LEGACY' ) && substr( XOOPS_VERSION , 6 , 3 ) == 2.2 )
 
 function pical_minical_ex_show( $options )
 {
-	global $xoopsConfig , $xoopsDB , $xoopsUser ;
+	global $xoopsConfig , $xoopsDB , $xoopsUser , $xoopsTpl ;
 
 	// speed check
 	//global $GIJ_common_time ;

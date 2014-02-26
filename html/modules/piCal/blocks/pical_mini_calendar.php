@@ -11,7 +11,7 @@ define( 'PICAL_BLOCK_MINI_CALENDAR_INCLUDED' , 1 ) ;
 
 function pical_mini_calendar_show( $options )
 {
-	global $xoopsConfig , $xoopsDB , $xoopsUser ;
+	global $xoopsConfig , $xoopsDB , $xoopsUser , $xoopsTpl ;
 
 	$mydirname = empty( $options[0] ) ? basename( dirname( dirname( __FILE__ ) ) ) : $options[0] ;
 

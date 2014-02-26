@@ -32,16 +32,22 @@
           <img src='{SKINPATH}/arrowrightright.gif' width='18' height='14' border='0' alt='{MB_NEXT_MONTH}' title='{MB_NEXT_MONTH}' />
         </a>
       </div>
-      {CATEGORY_DESCRIPTION}
+      <pattemplate:tmpl name="CategoryDescription" type="SimpleCondition" requiredvars="DESCRIPTION">
+        <div class="catdesc catdesc_daily">
+          {DESCRIPTION}
+        </div>
+      </pattemplate:tmpl>
     </div>
     {CALENDAR_BODY}
   </div>
-  <div class = "cal_selector">
-    <form action='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;{QUERY_STRING}' method='post'>
-      {YMD_SELECTS}
-      <input type='submit' name='pical_jumpcaldate' value='{LANG_JUMP}'>&nbsp; 
-      <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily'>{MB_LINKTODAY}</a>
-    </form>
+  <div class="bottom_controller">
+    <div class = "cal_selector">
+      <form action='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;{QUERY_STRING}' method='post'>
+        {YMD_SELECTS}
+        <input type='submit' name='pical_jumpcaldate' value='{LANG_JUMP}'>&nbsp; 
+        <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily'>{MB_LINKTODAY}</a>
+      </form>
+    </div>
   </div>
   <div class = "cal_footer">
     {COPYRIGHT}

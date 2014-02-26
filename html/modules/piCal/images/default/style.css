@@ -60,6 +60,14 @@ span.calhead {
 	float: left;
 }
 
+.calhead_monthly_block form {
+	float: none;
+}
+
+.calhead_monthly_block form input {
+	width: auto;
+}
+
 .calhead .calmode {
 	float: right;
 }
@@ -85,6 +93,19 @@ span.calhead {
 	vertical-align: middle;
 }
 
+.long_event img {
+	margin: 0;
+	padding: 0;
+	width: 12px;
+	height: 12px;
+}
+
+.long_event li {
+	list-style-type: none;
+	display: inline-block;
+	margin: 0.5em 1em 0.5em 0em;
+}
+
 .calframe table{
 	width:100%;
     border-spacing: 0;
@@ -106,7 +127,7 @@ table.data_table table td {
 	background:#fff799;
 }
 h3.data_h3 {
-	font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3','Hiragino Kaku Gothic Pro','ƒƒCƒŠƒI',Meiryo,'‚l‚r ‚oƒSƒVƒbƒN',sans-serif, 'Droid Serif',"Helvetica Neue", Helvetica,;
+	font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3','Hiragino Kaku Gothic Pro',ƒƒCƒŠƒI,Meiryo,'‚l‚r ‚oƒSƒVƒbƒN',sans-serif, 'Droid Serif','Helvetica Neue', Helvetica;
 	font-size:14px;
 	font-weight: normal;
 	margin:0;
@@ -189,7 +210,7 @@ table#calbody ul.event_info li {
 }
 
 table#calbody ul.event_info li a {
-	font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3','Hiragino Kaku Gothic Pro','ƒƒCƒŠƒI',Meiryo,'‚l‚r ‚oƒSƒVƒbƒN',sans-serif, 'Droid Serif',"Helvetica Neue", Helvetica,;
+	font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3','Hiragino Kaku Gothic Pro',ƒƒCƒŠƒI,Meiryo,'‚l‚r ‚oƒSƒVƒbƒN',sans-serif, 'Droid Serif','Helvetica Neue', Helvetica;
 	font-size:11px;
 	font-weight:normal;
 	color:#004d25;
@@ -245,36 +266,55 @@ table#calbody a.event {
 	padding: 5px 0;
 	width: auto;
 	text-align: center;
+	display: inline-block;
 }
 .cal_selector form {
 	display: inline;
 }
-.minical_left{
+.minical_left {
 	float:left;
 }
-.minical_right{
+.minical_right {
 	float:right;
 }
-.cal_footer{
+.cal_footer {
 	clear: both;
 	text-align: right;
 }
-table#minical {
-	width:200px;
-    background-color: #eeeeee;
+
+div.minicalframe {
+	width: 180px;
+}
+div.minicalframe_block {
+	width: 100%;
+}
+table.minical {
+	width:100%;
+	background-color: rgba(255, 255, 255, 0.5);
 	color: #333333;
 	font-family: Georgia,"Times New Roman",Times,serif;
+	border-collapse: collapse;
+	margin: 0;
 }
-table#minical a {
+table.minical a {
 	display:block;
 	text-decoration:none;
 }
-table#minical a:hover {
+table.minical a:hover {
 	background:lightgreen;
 }
-table#minical th {
-    height: 2em;
-    text-align: center;
+table.minical th {
+	height: 2em;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 12px;
+}
+table.minical th a {
+	display: inline;
+}
+table.minical td {
+	text-align: center;
+	height: 20px;
 }
 
 table.piCal_input {

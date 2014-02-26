@@ -27,7 +27,11 @@
             <img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_YEAR}' title='{MB_NEXT_YEAR}' />
           </a>
         </div>
-        {CATEGORY_DESCRIPTION}
+        <pattemplate:tmpl name="CategoryDescription" type="SimpleCondition" requiredvars="DESCRIPTION">
+          <div class="catdesc catdesc_yearly">
+            {DESCRIPTION}
+          </div>
+        </pattemplate:tmpl>
       </div>
       <!-- body -->
       <table border='0' cellspacing='0' cellpadding='0' width='100%' style='border-collapse:collapse;'>

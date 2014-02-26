@@ -103,6 +103,9 @@ class piCal
 	var $original_id ;	// $_GET['event_id']を処理した直後に参照可能
 
 	var $event = null ;	// event for meta discription //naao
+	
+	// テーマ下テンプレートディレクトリ (存在しなければ空文字 )
+	private $under_theme_dir = null;
 
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
@@ -181,6 +184,12 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 
 	// ロケールファイルの読込
 	if( ! empty( $this->locale ) ) $this->read_locale() ;
+	
+	// テーマ下テンプレートディレクトリのチェック
+	if (is_null($this->under_theme_dir)) {
+		$check_dir = XOOPS_ROOT_PATH . '/themes/' .$GLOBALS['xoopsConfig']['theme_set'] . '/templates/' . basename($this->base_path);
+		$this->under_theme_dir = is_dir($check_dir)? $check_dir : '';
+	}
 }
 
 
@@ -519,23 +528,26 @@ function get_mini_calendar_html( $get_target = '' , $query_string = '' , $mode =
 	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
-	$tmpl->setBasedir( "$this->images_path" ) ;
+	//$tmpl->setBasedir( "$this->images_path" ) ;
 
 	// 表示モードに応じて、テンプレートファイルを振り分け
 	switch( $mode ) {
 		case 'NO_YEAR' :
 			// 年間表示用
-			$tmpl->readTemplatesFromFile( "minical_for_yearly.tmpl.html" ) ;
+			//$tmpl->readTemplatesFromFile( "minical_for_yearly.tmpl.html" ) ;
+			$this->set_patTemplate( $tmpl , 'minical_for_yearly.tmpl.html' ) ;
 			$target_highlight_flag = false ;
 			break ;
 		case 'NO_NAVIGATE' :
 			// 月間の下部参照用
-			$tmpl->readTemplatesFromFile( "minical_for_monthly.tmpl.html" ) ;
+			//$tmpl->readTemplatesFromFile( "minical_for_monthly.tmpl.html" ) ;
+			$this->set_patTemplate( $tmpl , 'minical_for_monthly.tmpl.html' ) ;
 			$target_highlight_flag = false ;
 			break ;
 		default :
 			// 通常のミニカレンダーブロック用
-			$tmpl->readTemplatesFromFile( "minical.tmpl.html" ) ;
+			//$tmpl->readTemplatesFromFile( "minical.tmpl.html" ) ;
+			$this->set_patTemplate( $tmpl , 'minical.tmpl.html' ) ;
 			$target_highlight_flag = true ;
 			break ;
 	}
@@ -689,7 +701,8 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
-	$tmpl->readTemplatesFromFile( "$this->images_path/yearly.tmpl.html" ) ;
+	//$tmpl->readTemplatesFromFile( "$this->images_path/yearly.tmpl.html" ) ;
+	$this->set_patTemplate( $tmpl , 'yearly.tmpl.html' ) ;
 
 	// setting skin folder
 	$tmpl->addVar( "WholeBoard" , "SKINPATH" , $this->images_url ) ;
@@ -706,8 +719,8 @@ function get_yearly( $get_target = '' , $query_string = '' , $for_print = false 
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
 	// Category description
-	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_yearly">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
-
+	$tmpl->addVar( "CategoryDescription" , "DESCRIPTION" , $this->now_cid? $this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc) : '' );
+	
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'Y' ) ) ;
 
@@ -745,7 +758,8 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
-	$tmpl->readTemplatesFromFile( "$this->images_path/monthly.tmpl.html" ) ;
+	//$tmpl->readTemplatesFromFile( "$this->images_path/monthly.tmpl.html" ) ;
+	$this->set_patTemplate( $tmpl , 'monthly.tmpl.html' ) ;
 
 	// setting skin folder
 	$tmpl->addVar( "WholeBoard" , "SKINPATH" , $this->images_url ) ;
@@ -763,7 +777,7 @@ function get_monthly( $get_target = '' , $query_string = '' , $for_print = false
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 	
 	// Category description
-	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_monthly">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
+	$tmpl->addVar( "CategoryDescription" , "DESCRIPTION" , $this->now_cid? $this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc) : '' );
 
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'M' ) ) ;
@@ -813,7 +827,8 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
-	$tmpl->readTemplatesFromFile( "$this->images_path/weekly.tmpl.html" ) ;
+	//$tmpl->readTemplatesFromFile( "$this->images_path/weekly.tmpl.html" ) ;
+	$this->set_patTemplate( $tmpl , 'weekly.tmpl.html' ) ;
 
 	// setting skin folder
 	$tmpl->addVar( "WholeBoard" , "SKINPATH" , $this->images_url ) ;
@@ -830,7 +845,7 @@ function get_weekly( $get_target = '' , $query_string = '' , $for_print = false 
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
 	// Category description
-	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_weekly">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
+	$tmpl->addVar( "CategoryDescription" , "DESCRIPTION" , $this->now_cid? $this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc) : '' );
 
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'W' ) ) ;
@@ -859,7 +874,8 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 	$original_level = error_reporting( PICAL_ERR_REPORTING_LEVEL ) ;
 	require_once( "$this->base_path/include/patTemplate.php" ) ;
 	$tmpl = new PatTemplate() ;
-	$tmpl->readTemplatesFromFile( "$this->images_path/daily.tmpl.html" ) ;
+	//$tmpl->readTemplatesFromFile( "$this->images_path/daily.tmpl.html" ) ;
+	$this->set_patTemplate( $tmpl , 'daily.tmpl.html' ) ;
 
 	// setting skin folder
 	$tmpl->addVar( "WholeBoard" , "SKINPATH" , $this->images_url ) ;
@@ -876,7 +892,7 @@ function get_daily( $get_target = '' , $query_string = '' , $for_print = false )
 	$tmpl->addVar( "WholeBoard" , "CID" , $this->now_cid ) ;
 
 	// Category description
-	$tmpl->addVar( "WholeBoard" , "CATEGORY_DESCRIPTION" , $this->now_cid? ('<div class="catdesc catdesc_daily">'.$this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc).'</div>') : '' );
+	$tmpl->addVar( "CategoryDescription" , "DESCRIPTION" , $this->now_cid? $this->textarea_sanitizer_for_show($this->categories[ $this->now_cid ]->cat_desc) : '' );
 
 	// Variables required in header part etc.
 	$tmpl->addVars( "WholeBoard" , $this->get_calendar_information( 'D' ) ) ;
@@ -3923,6 +3939,34 @@ function rrule_extract( $event_id )
 	foreach( $sqls as $sql ) {
 		$this->db->query( $sql ) ;
 	}
+}
+
+public function set_patTemplate( &$tmpl , $file )
+{
+	if ($this->under_theme_dir) {
+		$target_file = $this->under_theme_dir . '/' . $file;
+		if (is_file($target_file)) {
+			$tmpl->readTemplatesFromFile( $target_file );
+			return;
+		}
+	}
+	$tmpl->readTemplatesFromFile( $this->images_path . '/' . $file ) ;
+	return;
+}
+
+public function get_CSS_link_tag()
+{
+	static $done = false;
+	if (!$done) {
+		$done = true;
+		$css = array();
+		$css[] = '<link rel="stylesheet" href="' . $this->images_url . '/style.css"  media="all" type="text/css" />';
+		if ($this->under_theme_dir && is_file($this->under_theme_dir . '/style.css')) {
+			$css[] = '<link rel="stylesheet" href="' . str_replace(XOOPS_ROOT_PATH, XOOPS_URL, $this->under_theme_dir) . '/style.css"  media="all" type="text/css" />';
+		}
+		return join("\n", $css)."\n";
+	}
+	return '';
 }
 
 function sql_data_seek( $result , $offset ) {

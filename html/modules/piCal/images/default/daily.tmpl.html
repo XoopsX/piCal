@@ -1,20 +1,21 @@
 <pattemplate:tmpl name="WholeBoard">
   <div class='calframe calframe_daily'>
     <!-- header -->
-    <div class='calhead calhead_daily'>
+    <div class='calhead calhead_daily' style='background-color:{CALHEAD_BGCOLOR}'>
       {CATEGORIES_SELFORM}
       <div class='calmode calmode_daily'>
-        <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}'>
-          <img src='{SKINPATH}/year_on.gif' border='0' width='30' height='24' alt='{ICON_YEARLY}' title='{ICON_YEARLY}' />
+        <a href='{GET_TARGET}?cid={CID}&amp;smode=Yearly&amp;caldate={CALDATE}' title='{ICON_YEARLY}'>
+          <img src='{SKINPATH}/year_on.gif' border='0' width='30' height='24' alt='{ICON_YEARLY}' />
         </a>
-        <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={CALDATE}'>
-          <img src='{SKINPATH}/month_on.gif' border='0' width='30' height='24' alt='{ICON_MONTHLY}' title='{ICON_MONTHLY}' />
+        <a href='{GET_TARGET}?cid={CID}&amp;smode=Monthly&amp;caldate={CALDATE}' title='{ICON_MONTHLY}'>
+          <img src='{SKINPATH}/month_on.gif' border='0' width='30' height='24' alt='{ICON_MONTHLY}' />
         </a>
-        <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}'>
-          <img src='{SKINPATH}/week_on.gif' border='0' width='30' height='24' alt='{ICON_WEEKLY}' title='{ICON_WEEKLY}' />
+        <a href='{GET_TARGET}?cid={CID}&amp;smode=Weekly&amp;caldate={CALDATE}' title='{ICON_WEEKLY}'>
+          <img src='{SKINPATH}/week_on.gif' border='0' width='30' height='24' alt='{ICON_WEEKLY}' />
         </a>
-        <a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}'>
-          <img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' title='{ICON_LIST}' />
+        <img class="current" src='{SKINPATH}/day_on.gif' border='0' width='30' height='24' alt='{ICON_DAILY}' title='{ICON_DAILY}' />
+        <a href='{GET_TARGET}?cid={CID}&amp;smode=List&amp;caldate={CALDATE}' title='{ICON_LIST}'>
+          <img src='{SKINPATH}/list_on.gif' border='0' width='30' height='24' alt='{ICON_LIST}' />
         </a>
       </div>
       <div class="caltitle_daily caltitle_dail">
@@ -24,7 +25,7 @@
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={PREV_DATE}'>
           <img src='{SKINPATH}/arrowleft.gif' width='18' height='14' border='0' alt='{MB_PREV_DATE}' title='{MB_PREV_DATE}' />
         </a>
-        <span class='calhead'>{YMD_TITLE}{DISP_DAY}</span>
+        <span class='calhead' style='color:{CALHEAD_COLOR}'>{YMD_TITLE}{DISP_DAY}</span>
         <a href='{GET_TARGET}?cid={CID}&amp;smode=Daily&amp;caldate={NEXT_DATE}'>
           <img src='{SKINPATH}/arrowright.gif' width='18' height='14' border='0' alt='{MB_NEXT_DATE}' title='{MB_NEXT_DATE}' />
         </a>

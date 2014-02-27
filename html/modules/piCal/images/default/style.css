@@ -37,7 +37,7 @@ td.pical-categoryform { margin: 4px 0; }
 }
 
 
-.calframe div.calhead{
+.calframe div.calhead {
 	background-color: #eeeeee;
 	color: #444444;
 	font-family: Georgia,"Times New Roman",Times,serif;
@@ -58,6 +58,7 @@ span.calhead {
 	display: inline;
 	margin: 0;
 	float: left;
+	font-size: 1em;
 }
 
 .calhead_monthly_block form {
@@ -70,6 +71,10 @@ span.calhead {
 
 .calhead .calmode {
 	float: right;
+}
+
+.calhead .calmode img.current {
+	opacity: 0.4;
 }
 
 .calhead .catdesc {

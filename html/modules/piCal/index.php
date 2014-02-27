@@ -168,7 +168,42 @@
 		}
 		echo $cal->get_schedule_edit_html( ) ;
 	} else if( $action == 'View' ) {
-		// echo $cal->get_schedule_view_html( ) ;
+		// for head icons
+		$xoopsTpl->assign(
+			array(
+			'get_target' => '' ,
+			'now_cid' => $cal->now_cid ,
+			'images_url' => $cal->images_url ,
+			'mod_url' => $cal->base_url ,
+			'caldate' => $cal->caldate ,
+			'calhead_bgcolor' => $cal->calhead_bgcolor ,
+			'calhead_color' => $tcal->calhead_color ,
+			'alt_list' => _PICAL_ICON_LIST ,
+			'alt_daily' => _PICAL_ICON_DAILY ,
+			'alt_weekly' => _PICAL_ICON_WEEKLY ,
+			'alt_monthly' => _PICAL_ICON_MONTHLY ,
+			'alt_yearly' => _PICAL_ICON_YEARLY ,
+			'alt_print' => _PICAL_BTN_PRINT ,
+			'lang_checkeditems' => _PICAL_MB_LABEL_CHECKEDITEMS ,
+			'lang_icalendar_output' => _PICAL_MB_LABEL_OUTPUTICS ,
+			'lang_button_export' => _PICAL_BTN_EXPORT ,
+			'lang_button_jump' => _PICAL_BTN_JUMP ,
+			'lang_summary' => _PICAL_TH_SUMMARY ,
+			'lang_startdatetime' => _PICAL_TH_STARTDATETIME ,
+			'lang_enddatetime' => _PICAL_TH_ENDDATETIME ,
+			'lang_location' => _PICAL_TH_LOCATION ,
+			'lang_contact' => _PICAL_TH_CONTACT ,
+			'lang_description' => _PICAL_TH_DESCRIPTION ,
+			'lang_categories' => _PICAL_TH_CATEGORIES ,
+			'lang_submitter' => _PICAL_TH_SUBMITTER ,
+			'lang_class' => _PICAL_TH_CLASS ,
+			'lang_rrule' => _PICAL_TH_RRULE ,
+			'lang_admissionstatus' => _PICAL_TH_ADMISSIONSTATUS ,
+			'lang_lastmodified' => _PICAL_TH_LASTMODIFIED ,
+			'lang_cursortedby' => _PICAL_MB_CURSORTEDBY ,
+			'lang_sortby' => _PICAL_MB_SORTBY )
+		) ;
+
 		$xoopsTpl->assign( 'detail_body' , $cal->get_schedule_view_html( ) ) ;
 		$xoopsTpl->assign( 'xoops_pagetitle' , $cal->last_summary ) ;
 		$xoopsTpl->assign( 'xoops_default_comment_title' , 'Re: ' . $cal->last_summary ) ;

@@ -175,6 +175,9 @@ table#calbody th.sunday {
 table#calbody th.saturday {
 	color: #3333cd;
 }
+table#calbody th.calweekname {
+	color: #555;
+}
 table#calbody a {
     color: #444444;
 }

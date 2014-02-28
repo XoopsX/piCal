@@ -66,6 +66,8 @@ define("_MI_WEEKNUMBERING", "週の数え方");
 define("_MI_DAYSTARTFROM", "一日を区切る時間");
 define("_MI_TIMEZONE_USING", "サーバのタイムゾーン指定");
 define("_MI_USE24HOUR", "24時間制とする（いいえなら、12時間制）");
+define("_MI_WHATDAY_PLUGINS", "whatday プラグインの指定");
+define("_MI_DESCWHATDAY_PLUGINS", "有効にする whatday プラグインをカンマ区切りで指定 (rokuyou,24sekki,kyureki)");
 define("_MI_NAMEORUNAME" , "投稿者名の表示" ) ;
 define("_MI_DESCNAMEORUNAME" , "ログイン名かハンドル名か選択して下さい" ) ;
 define("_MI_PROXYSETTINGS" , "プロキシ設定(host:port:user:pass)" ) ;

@@ -87,6 +87,9 @@ class piCal
 	var $plugins_path_weekly = 'plugins/weekly' ;
 	var $plugins_path_daily = 'plugins/daily' ;
 
+	// Ver 0.97
+	public $whatday_plugins = '';   // 有効にする whatday プラグイン名 モジュール設定から引用される
+	
 	// private members
 	var $year ;
 	var $month ;
@@ -105,7 +108,10 @@ class piCal
 	
 	// テーマ下テンプレートディレクトリ (存在しなければ空文字 )
 	private $under_theme_dir = null;
-
+	
+	// whatday プラグインのオブジェクト保持用（オブジェクト保持時は array）
+	private $whatday = null;
+	
 /*******************************************************************/
 /*        CONSTRUCTOR etc.                                         */
 /*******************************************************************/
@@ -1021,6 +1027,8 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
 	// if( $get_target == '' ) $get_target = $PHP_SELF ;
+	
+	$this->load_whatday_plugins();
 
 	// get the result of plugins
 	$plugin_returns = array() ;
@@ -1108,7 +1116,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 		// 週表示のインデックス
 		if( $date < $last_date ) {
 			$alt_week = $this->week_numbering ? sprintf( _PICAL_FMT_WEEKNO , $week + $mtop_weekno ) : $this->week_numbers[$week+1] ;
-			$week_index = "<div class='week_index'><a href='$get_target?cid=$this->now_cid&amp;smode=Weekly&amp;caldate="
+			$week_index = "<div class='week_index'><a class='week_index' href='$get_target?cid=$this->now_cid&amp;smode=Weekly&amp;caldate="
 			.date('Y-n-j',mktime(0,0,0,$this->month,$date+1,$this->year))
 			."'><img src='$this->images_url/week_index.gif' alt='$alt_week' title='$alt_week' /></a></div>\n" ;
 		} else {
@@ -1195,7 +1203,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 			$date_part_append = '' ;
 			if( isset( $this->holidays[$link] ) ) {
 				//	Holiday
-				$colorClass = "calday_holyday";
+				$colorClass = "calday calday_holyday";
 				$bgcolor = $this->holiday_bgcolor ;
 				$color = $this->holiday_color ;
 				if( $this->holidays[ $link ] != 1 ) {
@@ -1203,19 +1211,29 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 				}
 			} elseif( $wday % 7 == 0 ) {
 				//	Sunday
-				$colorClass = "calday_sunday";
+				$colorClass = "calday calday_sunday";
 				$bgcolor = $this->sunday_bgcolor ;
 				$color = $this->sunday_color ;
 			} elseif( $wday == 6 ) {
 				//	Saturday
-				$colorClass = "calday_saturday";
+				$colorClass = "calday calday_saturday";
 				$bgcolor = $this->saturday_bgcolor ;
 				$color = $this->saturday_color ;
 			} else {
 				// Weekday
-				$colorClass = "calday_weekday";
+				$colorClass = "calday calday_weekday";
 				$bgcolor = $this->weekday_bgcolor ;
 				$color = $this->weekday_color ;
+			}
+
+			// What Day
+			if (is_array($this->whatday)) {
+				foreach ($this->whatday as $_obj) {
+					if ($whatday = $_obj->get_what_day($link)) {
+						$class = $_obj->get_css_class('whatday');
+						$date_part_append .= "<p class='{$class}'>{$whatday}</p>\n" ;
+					}
+				} 
 			}
 
 			// 選択日の背景色ハイライト処理
@@ -1259,6 +1277,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 function get_weekly_html( )
 {
 	// $PHP_SELF = $_SERVER['SCRIPT_NAME'] ;
+	$this->load_whatday_plugins();
 
 	$ret = "
 	 <table width='100%'>
@@ -1469,7 +1488,7 @@ function get_weekly_html( )
 			$bgcolor = $this->holiday_bgcolor ;
 			$color = $this->holiday_color ;
 			if( $this->holidays[ $link ] != 1 ) {
-				$date_part_append .= "<font color='$this->holiday_color'>{$this->holidays[ $link ]}</font>\n" ;
+				$date_part_append .= "<p class='holiday'>{$this->holidays[ $link ]}</p>\n" ;
 			}
 		} elseif( $wday % 7 == 0 ) {
 			//	Sunday
@@ -1483,6 +1502,16 @@ function get_weekly_html( )
 			// Weekday
 			$bgcolor = $this->weekday_bgcolor ;
 			$color = $this->weekday_color ;
+		}
+
+		// What Day
+		if (is_array($this->whatday)) {
+			foreach ($this->whatday as $_obj) {
+				if ($whatday = $_obj->get_what_day($link)) {
+					$class = $_obj->get_css_class('whatday');
+					$date_part_append .= "<p class='{$class}'>{$whatday}</p>\n" ;
+				}
+			}
 		}
 
 		// 選択日の背景色ハイライト処理
@@ -3963,6 +3992,22 @@ public function get_CSS_link_tag()
 		return join("\n", $css)."\n";
 	}
 	return '';
+}
+
+private function load_whatday_plugins() {
+	if (is_null($this->whatday)) {
+		$this->whatday = array();
+		$plugins = explode(',', $this->whatday_plugins);
+		$plugins = array_map('trim', $plugins);
+		foreach($plugins as $plugin) {
+			if (@include_once($this->base_path.'/plugins/whatday/'.$plugin.'/'.$plugin.'.php')) {
+				$class = 'piCal_whatday_'.$plugin;
+				if (class_exists($class, false)) {
+					$this->whatday[$plugin] = new $class($this);
+				}
+			}
+		}
+	}
 }
 
 // The End of Class

@@ -9,7 +9,7 @@ define('_MB_PICAL_PREV_MONTH','前月');
 define('_MB_PICAL_NEXT_MONTH','翌月');
 define('_MB_PICAL_YEAR','年');
 define('_MB_PICAL_MONTH','月');
-define('_MB_PICAL_JUMP','Jump');
+define('_MB_PICAL_JUMP','移動');
 
 // for after the day's events block
 // %s means the indicated day

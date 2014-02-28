@@ -4000,6 +4000,7 @@ public function get_CSS_link_tag()
 
 private function load_whatday_plugins() {
 	if (is_null($this->whatday)) {
+		include_once $this->base_path.'/class/piCal_whatday_abstract.php';
 		$this->whatday = array();
 		$plugins = explode(',', $this->whatday_plugins);
 		$plugins = array_map('trim', $plugins);

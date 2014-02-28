@@ -206,10 +206,10 @@ td.data_week p.holiday {
 	color: red;
     font-style: italic;
 	margin: 0;
+	padding: 0;
 }
 table#calbody p.holiday {
     font-size: .75em;
-
 }
 td.data_week p.holiday {
     font-size: .9em;
@@ -220,6 +220,7 @@ td.data_week p.whatday {
 	color: #191970;
 	margin: 0;
 	font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',メイリオ,Meiryo,'ＭＳ Ｐゴシック',sans-serif,'Droid Serif','Helvetica Neue',Helvetica;
+	padding: 0;
 }
 table#calbody p.whatday {
 	font-size: .75em;

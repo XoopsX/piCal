@@ -29,6 +29,7 @@
 	if( ! class_exists( 'piCal_xoops' ) ) {
 		require_once( "$mod_path/class/piCal.php" ) ;
 		require_once( "$mod_path/class/piCal_xoops.php" ) ;
+		require_once( "$mod_path/class/piCal_whatday_abstract.php" ) ;
 	}
 
 	// GET,POST変数の取得・前処理

@@ -41,6 +41,11 @@
 			$$key = $val ;
 		}
 	}
+	
+	// whatday_plugins ¤ÎÀµµ¬²½
+	if ($cal->whatday_plugins) {
+		$cal->whatday_plugins = trim($cal->whatday_plugins, ' ,');
+	}
 
 	// get server timezone
 	switch( $timezone_using ) {

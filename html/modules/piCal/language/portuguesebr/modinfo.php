@@ -8,6 +8,20 @@ if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( 'PICAL_MI_LOADED' ) ) {
 
 
 
+
+// Appended by Xoops Language Checker -GIJOE- in 2014-02-28 22:13:14
+define('_MI_WHATDAY_PLUGINS','whatday plugins');
+define('_MI_DESCWHATDAY_PLUGINS','Enables whatday plugins separated by comma. (rokuyou,24sekki,kyureki)');
+define('_MI_COM_DIRNAME','Comment integration directory');
+define('_MI_COM_DIRNAMEDSC','When use D3-comment integration system. <br/>write your d3forum (html) directory <br/>If you do not use comments or use xoops comment system, leave this in empty.');
+define('_MI_COM_FORUM_ID','d3forum_id');
+define('_MI_COM_FORUM_IDDSC','When you set above integration diredtory, write forum_id');
+define('_MI_COM_ORDER','Order of comment integration');
+define('_MI_COM_ORDERDSC','When you set comment integration, select display order of comment posts');
+define('_MI_COM_VIEW','View of comment-integration');
+define('_MI_COM_VIEWDSC','select flat or thread');
+define('_MI_COM_POSTSNUM','\'Max posts displayed in comment integration');
+
 // Appended by Xoops Language Checker -GIJOE- in 2006-11-05 06:41:41
 define('_MI_PROXYSETTINGS','Proxy settings (host:port:user:pass)');
 
@@ -122,17 +136,6 @@ define("_MI_PICAL_ADMENU2","Permis‰Æs globais dos grupos");
 define("_MI_PICAL_ADMENU_TM","Manutenîåo das tabelas");
 define("_MI_PICAL_ADMENU_ICAL","Importar do iCalendar");
 define('_MI_PICAL_ADMENU_MYBLOCKSADMIN','Administraîåo de blocos e grupos');
-
-//d3comment integration
-define("_MI_COM_DIRNAME","Comment integration directory");
-define("_MI_COM_DIRNAMEDSC","When use D3-comment integration system. <br/>write your d3forum (html) directory <br/>If you do not use comments or use xoops comment system, leave this in empty.");
-define("_MI_COM_FORUM_ID","d3forum_id");
-define("_MI_COM_FORUM_IDDSC","When you set above integration diredtory, write forum_id");
-define("_MI_COM_ORDER","Order of comment integration");
-define("_MI_COM_ORDERDSC","When you set comment integration, select display order of comment posts");
-define("_MI_COM_VIEW","View of comment-integration");
-define("_MI_COM_VIEWDSC","select flat or thread");
-define("_MI_COM_POSTSNUM","'Max posts displayed in comment integration");
 
 // Text for notifications
 define('_MI_PICAL_GLOBAL_NOTIFY', 'Global');

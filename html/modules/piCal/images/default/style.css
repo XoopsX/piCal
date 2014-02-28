@@ -1,4 +1,4 @@
-@charset "shift_jis";
+@charset "UTF-8";
 
 /* Style sheet for piCal (default design) */
 
@@ -23,6 +23,7 @@ td.pical-categoryform { margin: 4px 0; }
 
 .calframe {
 	width:100%;
+	font-size: 12pt;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
          -o-box-sizing: border-box;
@@ -41,7 +42,6 @@ td.pical-categoryform { margin: 4px 0; }
 	background-color: #eeeeee;
 	color: #444444;
 	font-family: Georgia,"Times New Roman",Times,serif;
-	font-size: 2em;
 	margin: 15px 0 0 0;
 	padding: 5px 0;
 	text-align: center;
@@ -51,7 +51,7 @@ td.pical-categoryform { margin: 4px 0; }
 span.calhead {
 	background-color: transparent;
 	font-family: Georgia,"Times New Roman",Times,serif;
-	font-size: 1.2em;
+	font-size: 1.6em;
 }
 
 .calhead form {
@@ -132,7 +132,7 @@ table.data_table table td {
 	background:#fff799;
 }
 h3.data_h3 {
-	font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3','Hiragino Kaku Gothic Pro',ƒƒCƒŠƒI,Meiryo,'‚l‚r ‚oƒSƒVƒbƒN',sans-serif, 'Droid Serif','Helvetica Neue', Helvetica;
+	font-family:'ãƒ’ãƒ©ã‚®ãƒè§’ã‚´ Pro W3','Hiragino Kaku Gothic Pro',ãƒ¡ã‚¤ãƒªã‚ª,Meiryo,'ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯',sans-serif, 'Droid Serif','Helvetica Neue', Helvetica;
 	font-size:14px;
 	font-weight: normal;
 	margin:0;
@@ -151,8 +151,8 @@ table#calbody {
     width: 100%;
 }	
 table#calbody th {
-	background-color: #aaaaaa;
-    border: solid 1px #999999;
+	background-color: #EEE;
+    border: solid 1px #DDD;
 	font-style: normal;
     text-align: center;
     width: 10%;
@@ -198,12 +198,44 @@ table#calbody a {
 	float:left;
 }
 
-table#calbody p.holiday{
+table#calbody p.holiday,
+td.data_week p.holiday {
 	color: red;
-    font-size: .75em;
     font-style: italic;
 	margin: 0;
 }
+table#calbody p.holiday {
+    font-size: .75em;
+
+}
+td.data_week p.holiday {
+    font-size: .9em;
+}
+
+table#calbody p.whatday,
+td.data_week p.whatday {
+	color: #191970;
+	margin: 0;
+	font-family: 'ãƒ’ãƒ©ã‚®ãƒè§’ã‚´ Pro W3','Hiragino Kaku Gothic Pro',ãƒ¡ã‚¤ãƒªã‚ª,Meiryo,'ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯',sans-serif,'Droid Serif','Helvetica Neue',Helvetica;
+}
+table#calbody p.whatday {
+	font-size: .75em;
+}
+td.data_week p.whatday {
+	font-size: .9em;
+}
+
+table#calbody p.kyureki {
+	text-align: right;
+	margin-left: 0.2em;
+	color: #444;
+}
+
+table#calbody p.taian,
+td.data_week p.taian {
+	color: red;
+}
+
 table#calbody ul.event_info{
 	clear: both;
 	text-align:left;
@@ -215,7 +247,7 @@ table#calbody ul.event_info li {
 }
 
 table#calbody ul.event_info li a {
-	font-family:'ƒqƒ‰ƒMƒmŠpƒS Pro W3','Hiragino Kaku Gothic Pro',ƒƒCƒŠƒI,Meiryo,'‚l‚r ‚oƒSƒVƒbƒN',sans-serif, 'Droid Serif','Helvetica Neue', Helvetica;
+	font-family:'ãƒ’ãƒ©ã‚®ãƒè§’ã‚´ Pro W3','Hiragino Kaku Gothic Pro',ãƒ¡ã‚¤ãƒªã‚ª,Meiryo,'ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯',sans-serif, 'Droid Serif','Helvetica Neue', Helvetica;
 	font-size:11px;
 	font-weight:normal;
 	color:#004d25;
@@ -230,28 +262,31 @@ table#calbody ul.event_info li a:hover   {
 	background:lightgreen url("./pointer.gif")  no-repeat 0px 3px;
 }
 
+table#calbody a.calday {
+	font-size: 1.8em;
+	margin-right: 5px;
+}
 table#calbody a.calday_holyday {
     color: #dc143c;
-    font-size: 2em;
 }
 table#calbody a.calday_sunday {
-	position : relative;
-	top: -4px;
 	color: #dc143c;
-    font-size: 2em;
 }
 table#calbody a.calday_saturday {
     color: #0000cd;
-    font-size: 2em;
 }
 table#calbody a.calday_weekday {
     color: #444444;
-    font-size: 2em;
 }
 table#calbody .week_index {
 	position : relative;
 	top: -5px;
 	left: -5px;
+}
+table#calbody a.week_index {
+	position : absolute;
+	top: 0px;
+	left: 0px;
 }
 table#calbody a.stencil {
 	float: right;
@@ -336,12 +371,12 @@ table.piCal_input select {
 }
 table#details {
 	width:100%;
-	border-collapse: collapse; /* ˜gü‚Ì•\¦•û–@ */ 
-	border: 1px #808080 solid; /* ƒe[ƒuƒ‹‘S‘Ì‚Ì˜güi‘¾‚³EFEƒXƒ^ƒCƒ‹j */ 
+	border-collapse: collapse; /* æ ç·šã®è¡¨ç¤ºæ–¹æ³• */ 
+	border: 1px #808080 solid; /* ãƒ†ãƒ¼ãƒ–ãƒ«å…¨ä½“ã®æ ç·šï¼ˆå¤ªã•ãƒ»è‰²ãƒ»ã‚¹ã‚¿ã‚¤ãƒ«ï¼‰ */ 
 }
 table#details td {
-	border-bottom: 1px #808080 solid; /* ƒZƒ‹‚Ì˜güi‘¾‚³EFEƒXƒ^ƒCƒ‹j */ 
-	padding: 5px; /* ƒZƒ‹“à‚Ì—]”’ */ 
+	border-bottom: 1px #808080 solid; /* ã‚»ãƒ«ã®æ ç·šï¼ˆå¤ªã•ãƒ»è‰²ãƒ»ã‚¹ã‚¿ã‚¤ãƒ«ï¼‰ */ 
+	padding: 5px; /* ã‚»ãƒ«å†…ã®ä½™ç™½ */ 
 }
 table#details td.head {
 	width:20%;

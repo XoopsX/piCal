@@ -3,6 +3,25 @@
 if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( 'PICAL_MI_LOADED' ) ) {
 
 
+
+
+
+
+
+
+// Appended by Xoops Language Checker -GIJOE- in 2014-02-28 22:13:17
+define('_MI_WHATDAY_PLUGINS','whatday plugins');
+define('_MI_DESCWHATDAY_PLUGINS','Enables whatday plugins separated by comma. (rokuyou,24sekki,kyureki)');
+define('_MI_COM_DIRNAME','Comment integration directory');
+define('_MI_COM_DIRNAMEDSC','When use D3-comment integration system. <br/>write your d3forum (html) directory <br/>If you do not use comments or use xoops comment system, leave this in empty.');
+define('_MI_COM_FORUM_ID','d3forum_id');
+define('_MI_COM_FORUM_IDDSC','When you set above integration diredtory, write forum_id');
+define('_MI_COM_ORDER','Order of comment integration');
+define('_MI_COM_ORDERDSC','When you set comment integration, select display order of comment posts');
+define('_MI_COM_VIEW','View of comment-integration');
+define('_MI_COM_VIEWDSC','select flat or thread');
+define('_MI_COM_POSTSNUM','\'Max posts displayed in comment integration');
+
 // Appended by Xoops Language Checker -GIJOE- in 2006-11-05 06:41:39
 define('_MI_PROXYSETTINGS','Proxy settings (host:port:user:pass)');
 
@@ -84,25 +103,25 @@ define("_MI_WEEKSTARTFROM", "Inizio della settimana");
 define("_MI_WEEKNUMBERING", "Numerazione delle settimane");
 define("_MI_DAYSTARTFROM", "Ora limite per separare i giorni");
 define("_MI_NAMEORUNAME" , "Nome visualizzato" ) ;
-define("_MI_DESCNAMEORUNAME" , "Scegli quale 'nome' visualizzato" ) ;
+define("_MI_DESCNAMEORUNAME" , "Scegli quale 'nome' è visualizzato" ) ;
 
 // Description of each config items
 define("_MI_EDITBYGUESTDSC", "Permessi degli ospiti di inserire eventi");
 
 // Options of each config items
-define("_MI_OPT_AUTH_NONE", "non puinserire");
-define("_MI_OPT_AUTH_WAIT", "puinserire ma necessita approvazione");
-define("_MI_OPT_AUTH_POST", "puinserire senza approvazione");
+define("_MI_OPT_AUTH_NONE", "non può inserire");
+define("_MI_OPT_AUTH_WAIT", "può inserire ma necessita approvazione");
+define("_MI_OPT_AUTH_POST", "puà inserire senza approvazione");
 define("_MI_OPT_AUTH_BYGROUP", "Speficificato nei permessi di gruppo");
 define("_MI_OPT_MINI_PHPSELF", "Pagina attuale");
 define("_MI_OPT_MINI_MONTHLY", "calendario mensile");
 define("_MI_OPT_MINI_WEEKLY", "calendario settimanale");
 define("_MI_OPT_MINI_DAILY", "calendario giornaliero");
 define("_MI_OPT_MINI_LIST", "lista eventi");
-define("_MI_OPT_CANOUTPUTICS", "puesportare");
-define("_MI_OPT_CANNOTOUTPUTICS", "non puesportare");
+define("_MI_OPT_CANOUTPUTICS", "può esportare");
+define("_MI_OPT_CANNOTOUTPUTICS", "non può esportare");
 define("_MI_OPT_STARTFROMSUN", "Domenica");
-define("_MI_OPT_STARTFROMMON", "Luned);
+define("_MI_OPT_STARTFROMMON", "Lunedì");
 define("_MI_OPT_WEEKNOEACHMONTH", "per ogni mese");
 define("_MI_OPT_WEEKNOWHOLEYEAR", "per l'intero anno");
 define("_MI_OPT_USENAME" , "Nickname" ) ;
@@ -118,17 +137,6 @@ define("_MI_PICAL_ADMENU_TM","Manutenzione Tabella");
 define("_MI_PICAL_ADMENU_ICAL","Importazione iCalendar");
 define("_MI_PICAL_ADMENU_MYBLOCKSADMIN","Amministrazione Blocchi&Gruppi");
 
-//d3comment integration
-define("_MI_COM_DIRNAME","Comment integration directory");
-define("_MI_COM_DIRNAMEDSC","When use D3-comment integration system. <br/>write your d3forum (html) directory <br/>If you do not use comments or use xoops comment system, leave this in empty.");
-define("_MI_COM_FORUM_ID","d3forum_id");
-define("_MI_COM_FORUM_IDDSC","When you set above integration diredtory, write forum_id");
-define("_MI_COM_ORDER","Order of comment integration");
-define("_MI_COM_ORDERDSC","When you set comment integration, select display order of comment posts");
-define("_MI_COM_VIEW","View of comment-integration");
-define("_MI_COM_VIEWDSC","select flat or thread");
-define("_MI_COM_POSTSNUM","'Max posts displayed in comment integration");
-
 // Text for notifications
 define('_MI_PICAL_GLOBAL_NOTIFY', 'Globale');
 define('_MI_PICAL_GLOBAL_NOTIFYDSC', 'Opzioni globali di notifica piCal.');
@@ -143,8 +151,8 @@ define('_MI_PICAL_GLOBAL_NEWEVENT_NOTIFYDSC', 'Ricevi notifica quando un nuovo e
 define('_MI_PICAL_GLOBAL_NEWEVENT_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notifica : Nuovo evento');
 
 define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFY', 'Nuovo Evento nella Categoria');
-define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYCAP', 'Notifica quando un nuovo evento creato nella Categoria.');
-define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYDSC', 'Ricevi notifica quando un nuovo evento creato nella Categoria.');
+define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYCAP', 'Notifica quando un nuovo evento è creato nella Categoria.');
+define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYDSC', 'Ricevi notifica quando un nuovo evento è creato nella Categoria.');
 define('_MI_PICAL_CATEGORY_NEWEVENT_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notifica : Nuovo Evento in {CATEGORY_TITLE}');
 
 }

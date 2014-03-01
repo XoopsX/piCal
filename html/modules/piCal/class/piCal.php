@@ -107,9 +107,6 @@ class piCal
 
 	var $event = null ;	// event for meta discription //naao
 	
-	// テーマ下テンプレートディレクトリ (存在しなければ空文字 )
-	private $under_theme_dir = null;
-	
 	// whatday プラグインのオブジェクト保持用（オブジェクト保持時は array）
 	private $whatday = null;
 	
@@ -191,11 +188,6 @@ public function __construct( $target_date = "" , $language = "japanese" , $reloa
 	// ロケールファイルの読込
 	if( ! empty( $this->locale ) ) $this->read_locale() ;
 	
-	// テーマ下テンプレートディレクトリのチェック
-	if (is_null($this->under_theme_dir)) {
-		$check_dir = XOOPS_ROOT_PATH . '/themes/' .$GLOBALS['xoopsConfig']['theme_set'] . '/templates/' . basename($this->base_path);
-		$this->under_theme_dir = is_dir($check_dir)? $check_dir : '';
-	}
 }
 
 
@@ -3972,15 +3964,112 @@ function rrule_extract( $event_id )
 
 public function set_patTemplate( &$tmpl , $file )
 {
-	if ($this->under_theme_dir) {
-		$target_file = $this->under_theme_dir . '/' . $file;
-		if (is_file($target_file)) {
-			$tmpl->readTemplatesFromFile( $target_file );
-			return;
+	if (! $target = $this->get_template( $file )) {
+		$target = $this->images_path . '/' . $file ;
+	}
+	$tmpl->readTemplatesFromFile( $target ) ;
+}
+
+private function get_template($tpl_name)
+{
+	static $cache = array();
+	static $theme = null;
+	static $theme_default = null;
+	static $entries = null;
+	static $themeD3 = '';
+	static $themeDefaultD3 = '';
+	static $mydir_prefix;
+	
+	global $xoopsConfig;
+	
+	// 1st, check the cache
+	if (isset($cache[$tpl_name])) {
+		return $cache[$tpl_name];
+	}
+	
+	$mytrustdirname = 'piCal';
+	
+	if (is_null($theme)) {
+		$theme = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+	
+		if (($_pos = strpos($theme, '_')) && substr($theme, $_pos) !== '_default') {
+			$theme_default = XOOPS_THEME_PATH . '/' . substr($theme, 0, $_pos) . '_default/templates/';
+		} else {
+			$theme_default = '';
+		}
+		
+		$theme = XOOPS_THEME_PATH . '/' . $theme . '/templates/';
+		
+		if (defined('XOOPS_CUBE_LEGACY')) {
+			$root = XCube_Root::getSingleton();
+			$resourceDiscoveryOrder = $root->getSiteConfig('Smarty', 'ResourceDiscoveryOrder');
+		} else {
+			$resourceDiscoveryOrder = null;
+		}
+		if (! $resourceDiscoveryOrder) {
+			$resourceDiscoveryOrder = 'Theme,ThemeD3,ThemeDefault,ThemeDefaultD3';
+		}
+		$entries = array_map('strtoupper', array_map('trim', explode(',', $resourceDiscoveryOrder)));
+		if (in_array('THEMED3', $entries)) {
+			$themeD3 = $theme . $mytrustdirname ;
+			is_dir($themeD3) || $themeD3 = '';
+		}
+		if (in_array('THEMEDEFAULTD3', $entries)) {
+			$themeDefaultD3 = $theme_default . $mytrustdirname ;
+			is_dir($themeDefaultD3) || $themeDefaultD3 = '';
+		}
+		$mydir_prefix = basename($this->base_path) . '_';
+	}
+	
+	
+	foreach($entries as $entry) {
+		switch($entry) {
+			case 'THEME':
+				// check templates under themes/(theme)/templates/ (file template)
+				$filepath = $theme . $mydir_prefix . $tpl_name ;
+				if (is_file($filepath)) {
+					return $cache[$tpl_name] = $filepath ;
+				}
+				break;
+	
+			case 'THEMED3':
+				// check templates under themes/(theme)/templates/(trust based template)
+				if($themeD3 && $mytrustdirname) {
+					$filepath = $theme . $mytrustdirname . '/' . $tpl_name ;
+					if (is_file($filepath)) {
+						return $cache[$tpl_name] = $filepath ;
+					}
+				}
+				break;
+	
+			case 'THEMEDEFAULT':
+				// check templates under themes/(theme prefix)_default/templates/ (file template)
+				if ($theme_default) {
+					$filepath = $theme_default . $mydir_prefix . $tpl_name ;
+					if (is_file($filepath)) {
+						return $cache[$tpl_name] = $filepath ;
+					}
+				}
+				break;
+	
+			case 'THEMEDEFAULTD3':
+				// check templates under themes/(theme prefix)_default/templates/(trust based template)
+				if($themeDefaultD3 && $theme_default && $mytrustdirname) {
+					$filepath = $theme_default . $mytrustdirname . '/' . $tpl_name ;
+					if (is_file($filepath)) {
+						return $cache[$tpl_name] = $filepath ;
+					}
+				}
+				break;
+	
+			case 'DBTPLSET':
+			DEFAULT:
 		}
 	}
-	$tmpl->readTemplatesFromFile( $this->images_path . '/' . $file ) ;
-	return;
+	
+	isset($cache[$tpl_name]) || $cache[$tpl_name] = '' ;
+	
+	return $cache[$tpl_name];
 }
 
 public function get_CSS_link_tag()
@@ -3990,8 +4079,8 @@ public function get_CSS_link_tag()
 		$done = true;
 		$css = array();
 		$css[] = '<link rel="stylesheet" href="' . $this->images_url . '/style.css"  media="all" type="text/css" />';
-		if ($this->under_theme_dir && is_file($this->under_theme_dir . '/style.css')) {
-			$css[] = '<link rel="stylesheet" href="' . str_replace(XOOPS_ROOT_PATH, XOOPS_URL, $this->under_theme_dir) . '/style.css"  media="all" type="text/css" />';
+		if ($target = $this->get_template('style.css')) {
+			$css[] = '<link rel="stylesheet" href="' . str_replace(XOOPS_ROOT_PATH, XOOPS_URL, $target) . '"  media="all" type="text/css" />';
 		}
 		return join("\n", $css)."\n";
 	}

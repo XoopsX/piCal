@@ -2101,7 +2101,7 @@ function get_schedule_edit_html( )
 	if( defined( 'XOOPS_ROOT_PATH' ) ) {
 
 		// DHTMLテキストエリアの処理
-		if ( defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.0.0', '>=') ) {
+		if ( defined('LEGACY_BASE_VERSION') && version_compare(LEGACY_BASE_VERSION, '2.2.2.1', '>=') ) {
 			include_once XOOPS_ROOT_PATH . '/class/xoopsform/formelement.php';
 			include_once XOOPS_ROOT_PATH . '/class/xoopsform/formdhtmltextarea.php';
 			$ele = new XoopsFormDhtmlTextArea('', 'description_text', $description, 6, 50);

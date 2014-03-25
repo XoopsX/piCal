@@ -1117,6 +1117,8 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 		} else {
 			break ;
 		}
+		
+		$ret .= "<tr>\n";
 
 		for( $wday = $this->week_start ; $wday < $wday_end ; $wday ++ ) {
 			$date ++;

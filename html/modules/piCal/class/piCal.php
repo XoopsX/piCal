@@ -1029,7 +1029,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 	$plugin_returns = array() ;
 	if( strtolower( get_class( $this ) ) == 'pical_xoops' ) {
 		$db =& Database::getInstance() ;
-		$myts =& MyTextSanitizer::getInstance() ;
+		(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance() ;
 		$now = time() ;
 		$just1gif = 0 ;
 
@@ -1289,7 +1289,7 @@ function get_weekly_html( )
 	$plugin_returns = array() ;
 	if( strtolower( get_class( $this ) ) == 'pical_xoops' ) {
 		$db =& Database::getInstance() ;
-		$myts =& MyTextSanitizer::getInstance() ;
+		(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance() ;
 		$now = time() ;
 		$just1gif = 0 ;
 
@@ -1544,7 +1544,7 @@ function get_daily_html( )
 	$plugin_returns = array() ;
 	if( strtolower( get_class( $this ) ) == 'pical_xoops' ) {
 		$db =& Database::getInstance() ;
-		$myts =& MyTextSanitizer::getInstance() ;
+		(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance() ;
 		$now = time() ;
 		$just1gif = 0 ;
 

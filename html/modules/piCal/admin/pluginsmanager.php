@@ -40,7 +40,7 @@ $cal->images_path = "$mod_path/images/$skin_folder" ;
 
 
 // XOOPS関連の初期化
-$myts =& MyTextSanitizer::getInstance();
+(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 // get block instances of minicalex
 $mcx_blocks = array() ;

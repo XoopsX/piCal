@@ -11,31 +11,31 @@ class piCal_xoops extends piCal {
 
 function textarea_sanitizer_for_show( $data )
 {
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	return $myts->displayTarea($data,0,1,1,1,1);
 }
 
 function textarea_sanitizer_for_edit( $data )
 {
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	return $myts->makeTareaData4Edit($data);
 }
 
 function textarea_sanitizer_for_export_ics( $data )
 {
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	return $myts->displayTarea($data,0,1,1,1,1);
 }
 
 function text_sanitizer_for_show( $data )
 {
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	return $myts->makeTboxData4Show( $data ) ;
 }
 
 function text_sanitizer_for_edit( $data )
 {
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	return $myts->makeTboxData4Edit( $data ) ;
 }
 
@@ -173,7 +173,7 @@ function get_xoops_search_result( $keywords , $andor , $limit , $offset , $uid )
 
 	$ret = array() ;
 	$context = '' ;
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	while( $event = $this->db->fetchArray( $rs ) ) {
 		$event = (object)$event;
 		if( isset( $event->start_date ) ) $start_str = $event->start_date ;
@@ -854,7 +854,7 @@ function import_ics_via_fopen( $uri , $force_http = true , $user_uri = '' )
 function get_minical_ex( $gifaday = 2 , $just1gif = 0 , $plugins = array() )
 {
 	$db =& Database::getInstance() ;
-	$myts =& MyTextSanitizer::getInstance() ;
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance() ;
 
 	$tzoffset_s2u = intval( ( $this->user_TZ - $this->server_TZ ) * 3600 ) ;
 	$now = time() ;
@@ -995,7 +995,7 @@ function get_plugins( $type )
 	global $xoopsUser ;
 
 	// MyTextSanitizer
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 
 	// allowed modules
 	$moduleperm_handler =& xoops_gethandler('groupperm');

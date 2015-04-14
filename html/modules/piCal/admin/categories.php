@@ -151,7 +151,7 @@ $cal->images_path = "$mod_path/images/$skin_folder" ;
 
 
 // XOOPS関連の初期化
-$myts =& MyTextSanitizer::getInstance();
+(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 $cattree = new XoopsTree( $cal->cat_table , "cid" , "pid" ) ;
 $gperm_handler =& xoops_gethandler('groupperm');
 

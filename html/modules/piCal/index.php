@@ -176,7 +176,7 @@
 			'mod_url' => $cal->base_url ,
 			'caldate' => $cal->caldate ,
 			'calhead_bgcolor' => $cal->calhead_bgcolor ,
-			'calhead_color' => $tcal->calhead_color ,
+			'calhead_color' => $cal->calhead_color ,
 			'alt_list' => _PICAL_ICON_LIST ,
 			'alt_daily' => _PICAL_ICON_DAILY ,
 			'alt_weekly' => _PICAL_ICON_WEEKLY ,

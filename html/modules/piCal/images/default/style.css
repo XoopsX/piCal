@@ -214,6 +214,9 @@ table#calbody p.holiday {
 td.data_week p.holiday {
     font-size: .9em;
 }
+td.data_week p.specialday {
+	font-size: .9em;
+}
 
 table#calbody p.whatday,
 td.data_week p.whatday {

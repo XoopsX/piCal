@@ -1137,7 +1137,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 
 			// スケジュールデータの表示ループ
 			$waitings = 0 ;
-			$event_str = "<ul class='event_info'>" ; 			// marine mod 20130822
+			$event_str = "" ;
 			$long_event = 0 ;
 			if( $numrows_yrs > 0 ) $this->sql_data_seek( $yrs , 0 ) ;
 			while( $event = $this->db->fetchArray( $yrs ) ) {
@@ -1194,7 +1194,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 					$event_str .= "<li><a href='{$item['link']}' class='event' style='background-image:url($this->images_url/{$item['dotgif']})'>{$item['title']}</a></li>\n" ;
 				}
 			}
-			$event_str .= "</ul>";
+			$event_str = "<ul class='event_info'>{$event_str}</ul>";
 
 
 			// 曜日タイプによる描画色振り分け
@@ -1394,7 +1394,7 @@ function get_weekly_html( )
 			if( $event->allday ) {
 				if( $event->allday & 4 ) {
 					// 記念日フラグの立っているもの
-					$date_part_append .= "<a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='cal_summary_specialday'><font color='$this->holiday_color'>$summary</font></a><br />\n" ;
+					$date_part_append .= "<p class='specialday'><a href='?cid=$this->now_cid&amp;smode=Weekly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='cal_summary_specialday'><font color='$this->holiday_color'>$summary</font></a></p>\n" ;
 					continue ;
 				} else {
 					// 通常の全日イベント

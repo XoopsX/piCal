@@ -183,6 +183,7 @@ table#calbody a {
 }
 
 table#calbody td{
+	position: relative;
     color: #444444;
     font-family: Georgia,"Times New Roman",Times,serif;
     font-size: 1em;
@@ -272,6 +273,7 @@ table#calbody ul.event_info li a:hover   {
 table#calbody a.calday {
 	font-size: 1.8em;
 	margin-right: 5px;
+	margin-top: -3px;
 }
 table#calbody a.calday_holyday {
     color: #dc143c;
@@ -296,7 +298,13 @@ table#calbody a.week_index {
 	left: 0px;
 }
 table#calbody a.stencil {
-	float: right;
+	position: absolute;
+	right: -5px;
+	top: -2px;
+}
+table#calbody a.week_index img,
+table#calbody a.stencil img {
+	vertical-align: top;
 }
 table#calbody a.event {
     font-size: 1em;

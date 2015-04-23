@@ -2157,8 +2157,8 @@ function get_schedule_edit_html( )
 		<td class='head'>"._PICAL_TH_ALLDAYOPTIONS."</td>
 		<td class='even pi_op'>
 			<fieldset>
-				<legend class='blockTitle'><input type='checkbox' name='allday' value='1' $allday_checkbox onClick='document.MainForm.event_tz.disabled=document.MainForm.StartHour.disabled=document.MainForm.StartMin.disabled=document.MainForm.EndHour.disabled=document.MainForm.EndMin.disabled=this.checked' />"._PICAL_MB_ALLDAY_EVENT."</legend>
-				<input type='checkbox' name='allday_bits[]' value='1' {$allday_bit1} />"._PICAL_MB_LONG_EVENT." &nbsp;  <input type='checkbox' name='allday_bits[]' value='2' {$allday_bit2} />"._PICAL_MB_LONG_SPECIALDAY." &nbsp;  <!-- <input type='checkbox' name='allday_bits[]' value='3' {$allday_bit3} />rsv3 &nbsp;  <input type='checkbox' name='allday_bits[]' value='4' {$allday_bit4} />rsv4 -->
+				<legend class='blockTitle'><input type='checkbox' name='allday' value='1' $allday_checkbox onClick='document.MainForm.StartHour.disabled=document.MainForm.StartMin.disabled=document.MainForm.EndHour.disabled=document.MainForm.EndMin.disabled=this.checked' />"._PICAL_MB_ALLDAY_EVENT."</legend>
+				<input type='checkbox' name='allday_bits[]' id='allday_bits_1' value='1' {$allday_bit1} onClick='document.MainForm.allday.checked=(this.checked||document.MainForm.allday_bits_2.checked)' />"._PICAL_MB_LONG_EVENT." &nbsp;  <input type='checkbox' name='allday_bits[]' id='allday_bits_2' value='2' {$allday_bit2} onClick='document.MainForm.allday.checked=(this.checked||document.MainForm.allday_bits_1.checked)' />"._PICAL_MB_LONG_SPECIALDAY." &nbsp;  <!-- <input type='checkbox' name='allday_bits[]' value='3' {$allday_bit3} onClick='document.MainForm.allday.checked=this.checked' />rsv3 &nbsp;  <input type='checkbox' name='allday_bits[]' value='4' {$allday_bit4} onClick='document.MainForm.allday.checked=this.checked' />rsv4 -->
 			</fieldset>
 		</td>
 	</tr>
@@ -2236,6 +2236,7 @@ function update_schedule( $set_sql_append = '' , $whr_sql_append = '' , $notify_
 	// allday 属性のビットを立てる
 	$allday = 1 ;
 	if( isset( $_POST[ 'allday_bits' ] ) ) {
+		$_POST[ 'allday' ] = 1;
 		$bits = $_POST[ 'allday_bits' ] ;
 		if( is_array( $bits ) ) foreach( $bits as $bit ) {
 			if( $bit > 0 && $bit < 8 ) {

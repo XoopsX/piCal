@@ -1163,7 +1163,7 @@ function get_monthly_html( $get_target = '' , $query_string = '' )
 					if( $summary != $event->summary ) $summary .= ".." ;
 					//$event_str_tmp = "&bull;&nbsp;<a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' style='font-size:10px;font-weight:normal;text-decoration:none;' class='$catname'>$summary</a>" ;	//orginal 
 					// データをリスト構造で出力させる。カテゴリ名をclassに挿入していたが、日本語利用の場合変になるので削除
-					$event_str_tmp = "<li><a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate'>$summary</a></li>" ;	// marine mod 20130822 
+					$event_str_tmp = "<li class='$catname'><a href='$get_target?smode=Monthly&amp;action=View&amp;event_id=$event->id&amp;caldate=$this->caldate' class='$catname'>$summary</a></li>" ;	// marine mod 20130822 
 
 					$bit = array_search( $event->unique_id , $long_event_ids ) ;
 					// 本来は !== false とすべきだが、どうせ1〜4しか取らないので
